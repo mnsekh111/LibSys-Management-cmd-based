@@ -1,7 +1,9 @@
 /* Create Database */
+
 CREATE DATABASE  IF NOT EXISTS `csc540`;
 
 /* Create Tables */
+
 DROP TABLE IF EXISTS `Scores`;
 CREATE TABLE `Scores` (
   `Team` varchar(45) NOT NULL,
