@@ -11,7 +11,7 @@ public class MySQLAccess {
 
     public void connectToDB() throws Exception {
         Class.forName("com.mysql.jdbc.Driver");
-        connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/csc540?createDatabaseIfNotExist=true", "root", "");
+        connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/csc540", "root", "");
     }
 
     public void readDB() throws Exception {
