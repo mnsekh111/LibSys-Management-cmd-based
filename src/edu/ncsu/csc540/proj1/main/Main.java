@@ -8,7 +8,7 @@ public class Main {
         Class.forName("com.mysql.jdbc.Driver");
 
         //Build the DB
-        DBBuilder builder = new DBBuilder("sql/createTables.sql");
+        DBBuilder builder = new DBBuilder();
         builder.createTables();
 
         //Read the DB

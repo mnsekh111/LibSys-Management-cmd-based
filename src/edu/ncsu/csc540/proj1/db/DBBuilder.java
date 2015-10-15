@@ -11,14 +11,15 @@ import java.util.ArrayList;
 
 public class DBBuilder {
 
-    private String filepath;
+    private String createTablesPath = "sql/createTables.sql";
+    private String dropTablesPath = "sql/dropTables.sql";
 
-    public DBBuilder(String filepath) {
-        this.filepath = filepath;
+    public DBBuilder() {
+
     }
 
     public void createTables() {
-        ArrayList<String> queryList = parseSQLFile();
+        ArrayList<String> queryList = parseSQLFile(createTablesPath);
 
         try {
             Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/csc540?createDatabaseIfNotExist=true", "root", "");
@@ -33,11 +34,11 @@ public class DBBuilder {
         }
     }
 
-    public ArrayList<String> parseSQLFile() {
+    public ArrayList<String> parseSQLFile(String path) {
         ArrayList<String> queryList = new ArrayList<String>();
 
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(new File(filepath)));
+            BufferedReader reader = new BufferedReader(new FileReader(new File(path)));
             String line = "";
             String currentQuery = "";
             while((line = reader.readLine()) != null) {
