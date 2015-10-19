@@ -9,20 +9,40 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * Builds the database for the project
+ * @author Dixon Crews
+ */
 public class DBBuilder {
 
+    /**
+     * Path to the createTables.sql file
+     */
     private String createTablesPath = "sql/createTables.sql";
-    private String dropTablesPath = "sql/dropTables.sql";
 
-    public DBBuilder() {
+    /**
+     * JDBC URL for NCSU's Oracle server
+     */
+    private static final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl";
 
-    }
+    /**
+     * Username for NCSU Oracle Server (unity ID)
+     */
+    private String user = "dccrews";
 
+    /**
+     * Password for NCSU Oracle Server (ID#)
+     */
+    private String password = "001068830";
+
+    /**
+     * Creates the tables defined in sql/createTables.sql.
+     */
     public void createTables() {
         ArrayList<String> queryList = parseSQLFile(createTablesPath);
 
         try {
-            Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/csc540?createDatabaseIfNotExist=true", "root", "");
+            Connection connect = DriverManager.getConnection(jdbcURL, user, password);
             for(String sql : queryList) {
                 java.sql.Statement stmt = connect.createStatement();
                 stmt.execute(sql);
@@ -34,6 +54,12 @@ public class DBBuilder {
         }
     }
 
+    /**
+     * Reads in an SQL file and parses it to split up queries. Returns the list
+     * of queries as an ArrayList<String>
+     * @param path path to the SQL file
+     * @return an ArrayList<String> with one query per entry
+     */
     public ArrayList<String> parseSQLFile(String path) {
         ArrayList<String> queryList = new ArrayList<String>();
 
