@@ -1,12 +1,31 @@
-CREATE TABLE Patron (
+CREATE TABLE Nationality (
+	country_name varchar2(50) NOT NULL,
+	
+	CONSTRAINT pk_country_name PRIMARY KEY (country_name)
+);
+
+CREATE TABLE Degree_Program (
+	program varchar2(25) NOT NULL,
+	
+	CONSTRAINT pk_degree_program PRIMARY KEY (program)
+);
+
+CREATE TABLE Faculty_Category (
+	category varchar2(25) NOT NULL,
+	
+	CONSTRAINT pk_faculty_category PRIMARY KEY (category)
+);
+
+CREATE TABLE Patron(
 	fname varchar2(25) NOT NULL,
 	lname varchar2(25) NOT NULL,
 	id number(10) NOT NULL,
-	status ENUM('GOOD','BAD'),
+	status varchar2(25) NOT NULL,
 	country_name varchar2(50) NOT NULL,
 	
 	CONSTRAINT fk_patron_nationality FOREIGN KEY (country_name) REFERENCES Nationality (country_name),
-	CONSTRAINT pk_patron PRIMARY KEY id
+	CONSTRAINT pk_patron PRIMARY KEY (id),
+    CONSTRAINT chk_status CHECK(status IN ('GOOD','BAD'))
 );
 
 CREATE TABLE Student (
@@ -19,9 +38,9 @@ CREATE TABLE Student (
 	postcode varchar2(25) NOT NULL,
 	id number(10) NOT NULL,
 	program varchar2(25) NOT NULL,
-	year number(2)
+	year number(2),
 	
-	CONSTRAINT pk_student PRIMARY KEY id,
+	CONSTRAINT pk_student PRIMARY KEY (id),
 	CONSTRAINT fk_student FOREIGN KEY (id) REFERENCES Patron (id),
 	CONSTRAINT fk_student_program FOREIGN KEY (program) REFERENCES Degree_Program (program)
 );
@@ -30,27 +49,9 @@ CREATE TABLE Faculty (
 	category varchar2(25) NOT NULL,
 	id number(10) NOT NULL,
 	
-	CONSTRAINT pk_faculty PRIMARY KEY id,
+	CONSTRAINT pk_faculty PRIMARY KEY (id),
 	CONSTRAINT fk_faculty FOREIGN KEY (id) REFERENCES Patron (id),
 	CONSTRAINT fk_faculty_category FOREIGN KEY (category) REFERENCES Faculty_Category (category)
-);
-
-CREATE TABLE Nationality (
-	country_name varchar2(50) NOT NULL,
-	
-	CONSTRAINT pk_country_name PRIMARY KEY country_name
-);
-
-CREATE TABLE Faculty_Category (
-	category varchar2(25) NOT NULL,
-	
-	CONSTRAINT pk_faculty_category PRIMARY KEY category
-);
-
-CREATE TABLE Degree_Program (
-	program varchar2(25) NOT NULL,
-	
-	CONSTRAINT pk_degree_program PRIMARY KEY program
 );
 
 CREATE TABLE Reminders (
@@ -59,24 +60,24 @@ CREATE TABLE Reminders (
 	time_sent date NOT NULL,
 	patron_id  number(20) NOT NULL,
 	
-	CONSTRAINT pk_reminders PRIMARY KEY id,
+	CONSTRAINT pk_reminders PRIMARY KEY (id),
 	CONSTRAINT fk_reminders_patrons FOREIGN KEY (patron_id) REFERENCES Patron (id)
 );
 
 CREATE TABLE Fines (
 	id number(10),
 	amount number(10) NOT NULL,
-	status ENUM('PAID','UNPAID'),
+    status varchar2(25),
 	
-	CONSTRAINT pk_fines PRIMARY KEY id,
-	
+	CONSTRAINT pk_fines PRIMARY KEY (id),
+    CONSTRAINT chk_fine_status CHECK(status IN ('PAID','UNPAID'))
 );
 
 CREATE TABLE Departments(
 	abbreviation varchar2(3),
 	name varchar2(50),
 	
-	CONSTRAINT pk_departments PRIMARY KEY abbreviation,
+	CONSTRAINT pk_departments PRIMARY KEY (abbreviation)
 );
 
 CREATE TABLE Courses (
@@ -96,8 +97,7 @@ CREATE TABLE Course_Taken (
 	semester number(2),
 	
 	CONSTRAINT pk_courses_taken PRIMARY KEY (patron_id, dep_abbreviation, id),
-	CONSTRAINT fk_courses_taken_1 FOREIGN KEY (dep_abbreviation) REFERENCES Courses (abbreviation),
-	CONSTRAINT fk_courses_taken_2 FOREIGN KEY (id) REFERENCES Courses (id)
+	CONSTRAINT fk_courses_taken_1 FOREIGN KEY (id, dep_abbreviation) REFERENCES Courses (id, dep_abbreviation)
 );
 
 
@@ -153,34 +153,39 @@ CREATE TABLE Written_by(
 	
 	CONSTRAINT fk_written_by_authors FOREIGN KEY (aid) REFERENCES Authors(id),
 	CONSTRAINT fk_written_by_publications FOREIGN KEY (pid) REFERENCES Publications(id),
-	CONSTRAINT pk_written_by PRIMARY KEY (pid,cid)
-
-);
-
-
-CREATE TABLE Reservation(
-	id number(10) NOT NULL,
-	start date NOT NULL,
-	end data NOT NULL,
-
-	CONSTRAINT pk_reservation PRIMARY KEY (cid,id,start,end)
-
+	CONSTRAINT pk_written_by PRIMARY KEY (pid,aid)
 );
 
 CREATE TABLE Library(
 	id number(10),
-	name varchar2(50)
+	name varchar2(50),
 	
 	CONSTRAINT pk_library PRIMARY KEY (id)
 );
 
 CREATE TABLE Copies(
 	id number(10),
-	copy_type ENUM("ELECTRONIC","HARD"),
+    copy_type varchar2(25),
 	lib_id number(10),
 	
 	CONSTRAINT pk_copies PRIMARY KEY (id),
 	CONSTRAINT fk_copies_library FOREIGN KEY (id) REFERENCES Library(id),
+    CONSTRAINT chk_copy_type CHECK(copy_type IN ('ELECTRONIC','HARD'))
+);
+
+
+CREATE TABLE Reservation(
+    course_id number(10), 
+    dep_abbreviation varchar2(3), 
+    copy_id number(10),
+    start_time date,
+    end_time date,
+
+    CONSTRAINT pk_reservation PRIMARY KEY (course_id, copy_id, dep_abbreviation, start_time, end_time),
+    CONSTRAINT fk_reserv_dep_abbrev FOREIGN KEY (course_id, dep_abbreviation) REFERENCES Courses(id, dep_abbreviation),
+    CONSTRAINT fk_reservation_copy FOREIGN KEY (copy_id) REFERENCES Copies(id)
+    
+    
 );
 
 CREATE TABLE Rooms(
@@ -188,10 +193,11 @@ CREATE TABLE Rooms(
 	capacity number(3) NOT NULL,
 	library_id number(10) NOT NULL,
 	floor_no number(2) NOT NULL,
-	room_type ENUM("CONF","STUDY"),
+    room_type varchar2(25),
 	
 	CONSTRAINT pk_rooms PRIMARY KEY (room_number),
 	CONSTRAINT fk_rooms_library FOREIGN KEY (library_id) REFERENCES Library(id),
+    CONSTRAINT chk_room_type CHECK(room_type IN ('CONF','STUDY'))
 	
 );
 
@@ -203,7 +209,7 @@ CREATE TABLE Cameras(
 	lid VARCHAR(20),
 	memory VARCHAR2(20),
 	
-	CONSTRAINT pk_cameras PRIMARY KEY (id),
+	CONSTRAINT pk_cameras PRIMARY KEY (id)
 	
 );
 
@@ -215,7 +221,7 @@ CREATE TABLE CHECKS_OUT(
 	
 	CONSTRAINT pk_checks_out PRIMARY KEY (patron_id, copy_id, start_time, end_time),
 	CONSTRAINT fk_checks_out_patron FOREIGN KEY (patron_id) REFERENCES Patron(id),
-	CONSTRAINT fk_checks_out_copies FOREIGN KEY (copy_id) REFERENCES Copies(id),
+	CONSTRAINT fk_checks_out_copies FOREIGN KEY (copy_id) REFERENCES Copies(id)
 );
 
 
