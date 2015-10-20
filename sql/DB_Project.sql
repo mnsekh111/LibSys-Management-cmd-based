@@ -183,146 +183,64 @@ CREATE TABLE Copies(
 	CONSTRAINT fk_copies_library FOREIGN KEY (id) REFERENCES Library(id),
 );
 
-Rooms and cameras are pending
-
-------------------------------------------------------------------------------------------------
-
-
-
-drop table Department;
-
-create table Department(
-  did number(3),
-  dname varchar2(25) NOT NULL,
-  constraint pk_dept PRIMARY KEY (did)
+CREATE TABLE Rooms(
+	room_number number(10),
+	capacity number(3) NOT NULL,
+	library_id number(10) NOT NULL,
+	floor_no number(2) NOT NULL,
+	room_type ENUM("CONF","STUDY"),
+	
+	CONSTRAINT pk_rooms PRIMARY KEY (room_number),
+	CONSTRAINT fk_rooms_library FOREIGN KEY (library_id) REFERENCES Library(id),
+	
 );
 
-create table Course(
-  cid varchar2(6),
-  cname varchar2(25) NOT NULL,
-  did number(3) default 0,
-  
-  constraint fk_course_dept foreign key (did) references Department (did)
-  on delete cascade,
-  constraint pk_course PRIMARY KEY (cid)
+CREATE TABLE Cameras(
+	id number(10),
+	make varchar2(20),
+	model VARCHAR2(20) NOT NULL,
+	config VARCHAR2(20),
+	lid VARCHAR(20),
+	memory VARCHAR2(20),
+	
+	CONSTRAINT pk_cameras PRIMARY KEY (id),
+	
 );
 
-insert into Department VALUES (0, 'UN_KNOWN');
-insert into Department VALUES (1, 'Computer Science');
-insert into Department VALUES (2, 'Electrical Engineering');
-insert into Department VALUES (3, 'Mechanical Engineering');
-insert into Department VALUES (4, 'Social Science');
-insert into Department VALUES (5, 'Recreation and Sports');
-
-insert into Course VALUES ('CSC500','Database',1);
-insert into Course VALUES ('CSC501','Operating Systems',1);
-insert into Course VALUES ('ECE500','Comp Architcture',2);
-insert into Course VALUES ('ECE300','Basic Electric',2);
-insert into Course VALUES ('MEC100','Automotive',3);
-insert into Course VALUES ('MEC200','Industrial',3);
-insert into Course VALUES ('SS222','History',4);
-insert into Course VALUES ('SS231','Civilization',4);
-insert into Course VALUES ('SS111','Welcome to SS',4);
-insert into Course VALUES ('CSC600','Cricket',5);
-
-
-create table Student(
-
-snumber number(9),
-sfname varchar2(20) NOT NULL,
-slname varchar2(20) NOT NULL, 
-sphNum number(10) NOT NULL,
-saltphNum number(10) NOT NULL,
-dob date NOT NULL,
-nationality varchar2(20) NOT NULL,
-did number(3) default 000,
-sclassif varchar2(10) default 'B.S',
-
-constraint fk_student_dept foreign key (did) REFERENCES Department (did),
-constraint pk_student primary key (snumber)
-);
-
-create table Faculty(
-
-fnumber number(9),
-fname varchar2(20) NOT NULL,
-dob date NOT NULL,
-nationality varchar2(20) NOT NULL,
-did number(3) default 0,
-fcategory varchar2(10) NOT NULL,
-
-constraint fk_faculty_dept foreign key (did) REFERENCES Department (did),
-constraint pk_faculty primary key (fnumber)
-);
-
-create table Student_Course(
-snumber number(9),
-cid varchar2(6),
-
-constraint pk_student_course primary key (snumber,cid),
-constraint fk_student_course_1 foreign key (cid) references Course (cid) on delete cascade,
-constraint fk_student_course_2 foreign key (snumber) references Student (snumber) 
-on delete cascade
-);
-
-create table Address(
-  
-  addressid number(10),
-  street varchar2(20) not null,
-  city varchar2(20) not null,
-  postCode number(10) not null,
-  snumber number(9) not null,
-  
-  constraint fk_address_student foreign key (snumber) references Student (snumber)
-  on delete cascade,
-  constraint pk_address primary key (snumber,addressid)
+CREATE TABLE CHECKS_OUT(
+	patron_id number(10),
+	copy_id number(10),
+	start_time date,
+	end_time date,
+	
+	CONSTRAINT pk_checks_out PRIMARY KEY (patron_id, copy_id, start_time, end_time),
+	CONSTRAINT fk_checks_out_patron FOREIGN KEY (patron_id) REFERENCES Patron(id),
+	CONSTRAINT fk_checks_out_copies FOREIGN KEY (copy_id) REFERENCES Copies(id),
 );
 
 
-create table Authors(
-  aid varchar2(10),
-  aname varchar2(50) not null,
-  isbn varchar2(25)not null,
-  
-  constraint fk_authors_books foreign key (isbn) references Books (isbn),
-  constraint fk_authors_jour foreign key (isbn) references Journal (isbn),
-  constraint pk_authors primary key (aid,isbn)
-);
-
-create table ConfAuthors(
-  aid varchar2(10),
-  aname varchar2(50) not null,
-  confNum number(5),
-  
-  constraint fk_cauthors_conf foreign key (confNum) references Conference (confNum),
-  constraint pk_cauthors primary key (aid,confNum)
+CREATE TABLE Booked(
+	patron_id number(10),
+	room_number number(10),
+	start_time date,
+	end_time date,
+	checked_out date,
+	checked_in date,
+	
+	CONSTRAINT pk_booked PRIMARY KEY (patron_id, room_number, start_time, end_time),
+	CONSTRAINT fk_booked_patron FOREIGN KEY (patron_id) REFERENCES Patron(id),
+	CONSTRAINT fk_booked_rooms FOREIGN KEY (room_number) REFERENCES Rooms(room_number)
+	
 );
 
 
-create table Books(
-  isbn varchar2(25),
-  title varchar2(100) not null,
-  edition number(3) not null,
-  publisher varchar2(25)not null,
-  yop date not null,
-  
-  constraint pk_books primary key (isbn)
-);
-
-create table Journal(
-  isbn varchar2(25),
-  title varchar2(100) not null,
-  yop date not null,
-  
-  constraint pk_journal primary key (isbn)
-);
-
-
-create table Conference(
-  confNum number(5),
-  confName varchar2(25) not null,
-  title varchar2(100) not null,
-  yop date not null,
-  
-  constraint pk_conference primary key (confNum)
+CREATE TABLE Booked_Cams(
+	cam_id number(10),
+	patron_id number(10),
+	start_time date,
+	end_time date,
+	
+	CONSTRAINT pk_booked_cams PRIMARY KEY (patron_id, cam_id, start_time, end_time),
+	CONSTRAINT fk_booked_cams_patron FOREIGN KEY (patron_id) REFERENCES Patron(id),
+	CONSTRAINT fk_booked_cams_cameras FOREIGN KEY (cam_id) REFERENCES Cameras(id)
 );
