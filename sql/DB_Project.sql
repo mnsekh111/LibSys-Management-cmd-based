@@ -266,8 +266,8 @@ CREATE TABLE Cam_Fines (
     status varchar2(25),
     fine_date date,
 	
-	CONSTRAINT pk_fines PRIMARY KEY (id),
+	CONSTRAINT pk_cam_fines PRIMARY KEY (id),
 	CONSTRAINT fk_fines_booked_cams FOREIGN KEY (booked_cam_id) REFERENCES Booked_Cams(id),
-    CONSTRAINT chk_fine_status CHECK(status IN ('PAID','UNPAID'))
+    CONSTRAINT chk_cam_fine_status CHECK(status IN ('PAID','UNPAID'))
 );
 
