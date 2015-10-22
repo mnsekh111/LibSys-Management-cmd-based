@@ -33,26 +33,31 @@ public class Main {
 
         //New MenuPage object
         MenuPage menu = new MenuPage();
+        do{
+        	//Welcome message
+        	System.out.println("Welcome to the library system.\n");
 
-        //Welcome message
-        System.out.println("Welcome to the library system.\n");
+        	//Display login option
+        	Scanner in = new Scanner(System.in);
+        	int patron_id = 0;
+        	while(patron_id == 0) {
+        		patron_id = menu.loginMenu(in);
+        	}
 
-        //Display login option
-        Scanner in = new Scanner(System.in);
-        int patron_id = 0;
-        while(patron_id == 0) {
-            patron_id = menu.loginMenu(in);
-        }
+        	
 
-        System.out.println("\nPatron " + patron_id + " has successfully logged in.\n");
+        	//Find out if a patron is a student or faculty to display menu
+        	int userType = dao.getUserType(patron_id);
 
-        //Find out if a patron is a student or faculty to display menu
-        boolean isStudent = dao.isStudent(patron_id);
-
-        if(isStudent) {
-            menu.studentMenu(in);
-        } else {
-            menu.facultyMenu(in);
-        }
+        	if(userType == 1) {
+        		System.out.println("\nStuden " + patron_id + " has successfully logged in.\n");
+        		menu.studentMenu(in, patron_id);
+        	} else if(userType == 2){
+        		System.out.println("\nFaculty " + patron_id + " has successfully logged in.\n");
+        		menu.facultyMenu(in, patron_id);
+        	}else{
+        		System.out.println(" \n **** User Not Found **** \n");
+        	}
+        }while(true);
     }
 }

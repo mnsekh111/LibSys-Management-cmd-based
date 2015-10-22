@@ -15,7 +15,7 @@ public class MenuPage {
         return user_id;
     }
 
-    public void studentMenu(Scanner in) {
+    public void studentMenu(Scanner in, int patronId) {
         System.out.println("Please select an option:");
         System.out.println("\t1. Profile");
         System.out.println("\t2. Resources");
@@ -25,7 +25,7 @@ public class MenuPage {
         System.out.println("\t6. Balance Due");
     }
 
-    public void facultyMenu(Scanner in) {
+    public void facultyMenu(Scanner in, int patronId) {
         System.out.println("Please select an option:");
         System.out.println("\t1. Profile");
         System.out.println("\t2. Resources");
