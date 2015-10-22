@@ -268,6 +268,6 @@ CREATE TABLE Cam_Fines (
 	
 	CONSTRAINT pk_fines PRIMARY KEY (id),
 	CONSTRAINT fk_fines_booked_cams FOREIGN KEY (booked_cam_id) REFERENCES Booked_Cams(id),
-    CONSTRAINT chk_fine_status CHECK(status IN ('PAID','UNPAID'))
+    CONSTRAINT chk_cam_fine_status CHECK(status IN ('PAID','UNPAID'))
 );
 
