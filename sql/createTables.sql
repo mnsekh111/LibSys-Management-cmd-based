@@ -66,8 +66,8 @@ CREATE TABLE Reminders (
 
 
 
-CREATE TABLE Departments(
-    abbreviation varchar2(3),
+CREATE TABLE Departments (
+    abbreviation varchar2(5),
     name varchar2(50),
 
     CONSTRAINT pk_departments PRIMARY KEY (abbreviation)
@@ -266,7 +266,8 @@ CREATE TABLE Cam_Fines (
     status varchar2(25),
     fine_date date,
 
-    CONSTRAINT pk_fines_cams PRIMARY KEY (id),
+    CONSTRAINT pk_cam_fines PRIMARY KEY (id),
     CONSTRAINT fk_fines_booked_cams FOREIGN KEY (booked_cam_id) REFERENCES Booked_Cams(id),
-    CONSTRAINT chk_fine_status_cams CHECK(status IN ('PAID','UNPAID'))
+    CONSTRAINT chk_cam_fine_status CHECK(status IN ('PAID','UNPAID'))
 );
+
