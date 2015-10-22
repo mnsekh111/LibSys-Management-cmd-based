@@ -64,14 +64,7 @@ CREATE TABLE Reminders (
 	CONSTRAINT fk_reminders_patrons FOREIGN KEY (patron_id) REFERENCES Patron (id)
 );
 
-CREATE TABLE Fines (
-	id number(10),
-	amount number(10) NOT NULL,
-    status varchar2(25),
-	
-	CONSTRAINT pk_fines PRIMARY KEY (id),
-    CONSTRAINT chk_fine_status CHECK(status IN ('PAID','UNPAID'))
-);
+
 
 CREATE TABLE Departments(
 	abbreviation varchar2(3),
@@ -208,22 +201,35 @@ CREATE TABLE Cameras(
 	config VARCHAR2(20),
 	lid VARCHAR(20),
 	memory VARCHAR2(20),
+	status number(1),
 	
 	CONSTRAINT pk_cameras PRIMARY KEY (id)
 	
 );
 
 CREATE TABLE CHECKS_OUT(
+	id number(10),
 	patron_id number(10),
 	copy_id number(10),
 	start_time date,
 	end_time date,
 	
-	CONSTRAINT pk_checks_out PRIMARY KEY (patron_id, copy_id, start_time, end_time),
+	CONSTRAINT pk_checks_out PRIMARY KEY (id),
 	CONSTRAINT fk_checks_out_patron FOREIGN KEY (patron_id) REFERENCES Patron(id),
 	CONSTRAINT fk_checks_out_copies FOREIGN KEY (copy_id) REFERENCES Copies(id)
 );
 
+CREATE TABLE Fines (
+	id number(10),
+	checks_out_id number(10),
+	amount number(10) NOT NULL,
+    status varchar2(25),
+    fine_date date,
+	
+	CONSTRAINT pk_fines PRIMARY KEY (id),
+	CONSTRAINT fk_fines_checks_out FOREIGN KEY (checks_out_id) REFERENCES CHECKS_OUT(id),
+    CONSTRAINT chk_fine_status CHECK(status IN ('PAID','UNPAID'))
+);
 
 CREATE TABLE Booked(
 	patron_id number(10),
@@ -241,12 +247,27 @@ CREATE TABLE Booked(
 
 
 CREATE TABLE Booked_Cams(
+	id number(10),
 	cam_id number(10),
 	patron_id number(10),
 	start_time date,
 	end_time date,
 	
-	CONSTRAINT pk_booked_cams PRIMARY KEY (patron_id, cam_id, start_time, end_time),
+	CONSTRAINT pk_booked_cams PRIMARY KEY (id),
 	CONSTRAINT fk_booked_cams_patron FOREIGN KEY (patron_id) REFERENCES Patron(id),
 	CONSTRAINT fk_booked_cams_cameras FOREIGN KEY (cam_id) REFERENCES Cameras(id)
 );
+
+
+CREATE TABLE Cam_Fines (
+	id number(10),
+	booked_cam_id number(10),
+	amount number(10) NOT NULL,
+    status varchar2(25),
+    fine_date date,
+	
+	CONSTRAINT pk_fines PRIMARY KEY (id),
+	CONSTRAINT fk_fines_booked_cams FOREIGN KEY (booked_cam_id) REFERENCES Booked_Cams(id),
+    CONSTRAINT chk_fine_status CHECK(status IN ('PAID','UNPAID'))
+);
+
