@@ -26,6 +26,11 @@ public class DBBuilder {
     private static String dropTablesPath = "sql/dropTables.sql";
 
     /**
+     * Path to the test_data.sql file
+     */
+    private static String testDataPath = "sql/test_data.sql";
+
+    /**
      * JDBC URL for NCSU's Oracle server
      */
     private static final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl";
@@ -47,11 +52,35 @@ public class DBBuilder {
     public static void main(String[] args) {
         System.out.println("Building database...");
         long startTime = System.currentTimeMillis();
+        System.out.println("Dropping tables...");
         dropTables();
+        System.out.println("Creating tables...");
         createTables();
+        System.out.println("Inserting test data...");
+        generateTestData();
         long endTime = System.currentTimeMillis();
         long timeTaken = endTime - startTime;
         System.out.println("Operation completed in " + timeTaken + "ms.");
+    }
+
+    /**
+     * Inserts all of the test data in test_data.sql
+     */
+    public static void generateTestData() {
+        ArrayList<String> queryList = parseSQLFile(testDataPath);
+
+        try {
+            Connection connect = DriverManager.getConnection(jdbcURL, user, password);
+            for(String sql : queryList) {
+                //System.out.println(sql);
+                java.sql.Statement stmt = connect.createStatement();
+                stmt.execute(sql);
+                stmt.close();
+            }
+            connect.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

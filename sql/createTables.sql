@@ -66,8 +66,8 @@ CREATE TABLE Reminders (
 
 
 
-CREATE TABLE Departments(
-    abbreviation varchar2(3),
+CREATE TABLE Departments (
+    abbreviation varchar2(5),
     name varchar2(50),
 
     CONSTRAINT pk_departments PRIMARY KEY (abbreviation)
