@@ -72,6 +72,11 @@ public class OracleAccess {
         }
     }
 
+
+    public boolean isStudent(int id) {
+        return false;
+    }
+
     /**
      * Closes the Connection object
      */

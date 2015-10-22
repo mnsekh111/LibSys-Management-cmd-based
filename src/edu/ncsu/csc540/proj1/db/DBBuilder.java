@@ -18,7 +18,12 @@ public class DBBuilder {
     /**
      * Path to the createTables.sql file
      */
-    private String createTablesPath = "sql/createTables.sql";
+    private static String createTablesPath = "sql/createTables.sql";
+
+    /**
+     * Path to the dropTables.sql file
+     */
+    private static String dropTablesPath = "sql/dropTables.sql";
 
     /**
      * JDBC URL for NCSU's Oracle server
@@ -28,22 +33,57 @@ public class DBBuilder {
     /**
      * Username for NCSU Oracle Server (unity ID)
      */
-    private String user = "dccrews";
+    private static String user = "dccrews";
 
     /**
      * Password for NCSU Oracle Server (ID#)
      */
-    private String password = "001068830";
+    private static String password = "001068830";
 
     /**
-     * Creates the tables defined in sql/createTables.sql.
+     * Main method to build database
+     * @param args
      */
-    public void createTables() {
+    public static void main(String[] args) {
+        System.out.println("Building database...");
+        long startTime = System.currentTimeMillis();
+        dropTables();
+        createTables();
+        long endTime = System.currentTimeMillis();
+        long timeTaken = endTime - startTime;
+        System.out.println("Operation completed in " + timeTaken + "ms.");
+    }
+
+    /**
+     * Drops the tables defined in dropTables file.
+     */
+    public static void dropTables() {
+        ArrayList<String> queryList = parseSQLFile(dropTablesPath);
+
+        try {
+            Connection connect = DriverManager.getConnection(jdbcURL, user, password);
+            for(String sql : queryList) {
+                //System.out.println(sql);
+                java.sql.Statement stmt = connect.createStatement();
+                stmt.execute(sql);
+                stmt.close();
+            }
+            connect.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Creates the tables defined in createTables file.
+     */
+    public static void createTables() {
         ArrayList<String> queryList = parseSQLFile(createTablesPath);
 
         try {
             Connection connect = DriverManager.getConnection(jdbcURL, user, password);
             for(String sql : queryList) {
+                //System.out.println(sql);
                 java.sql.Statement stmt = connect.createStatement();
                 stmt.execute(sql);
                 stmt.close();
@@ -60,7 +100,7 @@ public class DBBuilder {
      * @param path path to the SQL file
      * @return an ArrayList<String> with one query per entry
      */
-    public ArrayList<String> parseSQLFile(String path) {
+    public static ArrayList<String> parseSQLFile(String path) {
         ArrayList<String> queryList = new ArrayList<String>();
 
         try {
