@@ -5,10 +5,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DbConnector {
-	
-	public Connection conn = null;
 
-	/**
+    public Connection conn = null;
+
+    /**
      * JDBC URL for NCSU's Oracle server
      */
     public static final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl";
@@ -16,33 +16,28 @@ public class DbConnector {
     /**
      * Username for NCSU Oracle Server (unity ID)
      */
-    private String user = "";
+    private String user = "dccrews";
 
     /**
      * Password for NCSU Oracle Server (ID#)
      */
-    private String password = "";
+    private String password = "001068830";
 
-    public DbConnector(){
-    	
-    }
-    
-    public Connection getConnection(){
-    	try {
+    public Connection getConnection() {
+        try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             conn = DriverManager.getConnection(jdbcURL, user, password);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
-    	return conn;
+        return conn;
     }
-    
+
     public void closeConnection(){
-    	try {
-			conn.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        try {
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
