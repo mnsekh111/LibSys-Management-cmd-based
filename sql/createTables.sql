@@ -76,7 +76,7 @@ CREATE TABLE Departments (
 CREATE TABLE Courses (
     id number(10),
     name varchar2(50),
-    dep_abbreviation varchar2(3),
+    dep_abbreviation varchar2(5),
 
     CONSTRAINT pk_courses PRIMARY KEY (id, dep_abbreviation),
     CONSTRAINT fk_courses_departments FOREIGN KEY (dep_abbreviation) REFERENCES Departments (abbreviation)
