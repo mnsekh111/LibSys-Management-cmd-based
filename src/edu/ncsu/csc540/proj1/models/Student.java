@@ -8,17 +8,17 @@ import java.sql.SQLException;
 import edu.ncsu.csc540.proj1.db.DbConnector;
 
 public class Student {
-	/**
+    /**
      * Connection object
      */
     private DbConnector db = null;
-    
-    public Student(){
-    	this.db = new DbConnector();
+
+    public Student() {
+        this.db = new DbConnector();
     }
 
     public boolean isStudent(int id) {
-    	PreparedStatement ps = null;
+        PreparedStatement ps = null;
         ResultSet rs = null;
         Connection conn = db.getConnection();
         boolean isStudent = false;
@@ -27,20 +27,19 @@ public class Student {
             ps.setInt(1, id);
             rs = ps.executeQuery();
             if (rs.next()) {
-            	isStudent = true;
+                isStudent = true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {
-        	try {
-				ps.close();
-				rs.close();
-				db.closeConnection();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+            try {
+                ps.close();
+                rs.close();
+                db.closeConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
         return isStudent;
     }
 }
