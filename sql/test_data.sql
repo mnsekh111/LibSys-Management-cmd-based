@@ -391,53 +391,14 @@ INSERT INTO Faculty_Category (category) VALUES('Associate Professor');
 INSERT INTO Faculty_Category (category) VALUES('Professor');
 INSERT INTO Faculty_Category (category) VALUES('Lecturer');
 
-CREATE or replace FUNCTION insert_student (fname in varchar2,lname in varchar2,id in number,
-  status in varchar2,country_name in varchar2,phone in varchar2,
-  alt_phone in varchar2, dob in date, sex in varchar2,street in varchar2,city in varchar2,
-  postcode in varchar2,program in varchar2,year in number) return integer 
-  is
-  pragma autonomous_transaction;
-  begin
-  
-  insert into patron values (fname,lname,id,status,country_name);
-  commit;
-  insert into student values (phone,alt_phone,dob,sex,street,city,postcode,id,program,year);
-  commit;
-  
-  return 1;
-  end;
-  
-  
-CREATE or replace FUNCTION insert_faculty (fname in varchar2,lname in varchar2,id in number,
-  status in varchar2,country_name in varchar2,category in varchar2) return integer 
-  is
-  
-  pragma autonomous_transaction;
-  begin
-  
-  insert into patron values (fname,lname,id,status,country_name);
-  commit;
-  insert into faculty values (category,id);
-  commit;
-  
-  return 1;
-  end;
-  
-  select INSERT_FACULTY('Rob','St Amant',0001,'GOOD','USA (United States of America)','Professor') from dual;
-  select INSERT_FACULTY('Robert','Baratheon',0002,'GOOD','India','Professor') from dual;
-  select INSERT_FACULTY('Ash','Katchem',0003,'GOOD','USA (United States of America)','Professor') from dual;
-  select INSERT_FACULTY('Matteo','Darmian',0004,'GOOD','Italy','Assistant Professor') from dual;
-  select INSERT_FACULTY('Cristiano','Naldo',0005,'GOOD','Portugal','Lecturer') from dual;
-  
-    select INSERT_STUDENT('Maria','Shara',10,'GOOD','Russia','929786773','8900020020','12-Jun-1993','Female',
-    '23-Wilson Road','Raleigh',27606,'M.S.',1) from dual;
-      select INSERT_STUDENT('Roger','Fedex',12,'GOOD','Serbia','929996773','8909020022','12-May-1993','Male',
-    '15-Basel ROad','Basel',22606,'M.A.',2) from dual;
-      select INSERT_STUDENT('Sania','Mir',13,'GOOD','India','9999333','8900020','12-OCT-1992','Female',
-    '19-Yawn Road','Raleigh',27606,'M.S.',2) from dual;
-      select INSERT_STUDENT('Ton','Hewitt',14,'GOOD','Australia','929786773','8901020020','12-Jun-1993','Male',
-    '45-Snorlax Road','Raleigh',27606,'B.S.',1) from dual;
-      select INSERT_STUDENT('Rafa','Nadal',15,'GOOD','Spain','829746773','9944020020','12-Jan-1988','Male',
-    '25-Estona Road','Madrid',25606,'M.S.',1) from dual;
+SELECT INSERT_FACULTY('Rob','St Amant',0001,'GOOD','USA (United States of America)','Professor') FROM DUAL;
+SELECT INSERT_FACULTY('Robert','Baratheon',0002,'GOOD','India','Professor') FROM DUAL;
+SELECT INSERT_FACULTY('Ash','Katchem',0003,'GOOD','USA (United States of America)','Professor') FROM DUAL;
+SELECT INSERT_FACULTY('Matteo','Darmian',0004,'GOOD','Italy','Assistant Professor') FROM DUAL;
+SELECT INSERT_FACULTY('Cristiano','Naldo',0005,'GOOD','Portugal','Lecturer') FROM DUAL;
 
-
+SELECT INSERT_STUDENT('Maria','Shara',10,'GOOD','Russia','929786773','8900020020','12-Jun-1993','Female','23-Wilson Road','Raleigh',27606,'M.S.',1) FROM DUAL;
+SELECT INSERT_STUDENT('Roger','Fedex',12,'GOOD','Serbia','929996773','8909020022','12-May-1993','Male','15-Basel ROad','Basel',22606,'M.A.',2) FROM DUAL;
+SELECT INSERT_STUDENT('Sania','Mir',13,'GOOD','India','9999333','8900020','12-OCT-1992','Female','19-Yawn Road','Raleigh',27606,'M.S.',2) FROM DUAL;
+SELECT INSERT_STUDENT('Ton','Hewitt',14,'GOOD','Australia','929786773','8901020020','12-Jun-1993','Male','45-Snorlax Road','Raleigh',27606,'B.S.',1) FROM DUAL;
+SELECT INSERT_STUDENT('Rafa','Nadal',15,'GOOD','Spain','829746773','9944020020','12-Jan-1988','Male','25-Estona Road','Madrid',25606,'M.S.',1) FROM DUAL;

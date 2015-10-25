@@ -132,17 +132,33 @@ public class DBBuilder {
     public static ArrayList<String> parseSQLFile(String path) {
         ArrayList<String> queryList = new ArrayList<String>();
 
+        boolean useDashDelimeter = path.equals(createTablesPath);
+
         try {
             BufferedReader reader = new BufferedReader(new FileReader(new File(path)));
             String line = "";
             String currentQuery = "";
             while((line = reader.readLine()) != null) {
-                for(int i = 0; i < line.length(); i++) {
-                    if(line.charAt(i) == ';') {
+                if(useDashDelimeter) {
+                    if(line.endsWith("end;---")) {
+                        currentQuery += line.substring(0, line.length() - 3);
+                        queryList.add(currentQuery);
+                        currentQuery = "";
+                    } else if(line.endsWith("---")) {
+                        currentQuery += line.substring(0, line.length() - 4);
                         queryList.add(currentQuery);
                         currentQuery = "";
                     } else {
-                        currentQuery += line.charAt(i);
+                        currentQuery += line;
+                    }
+                } else {
+                    for(int i = 0; i < line.length(); i++) {
+                        if(line.charAt(i) == ';') {
+                            queryList.add(currentQuery);
+                            currentQuery = "";
+                        } else {
+                            currentQuery += line.charAt(i);
+                        }
                     }
                 }
             }
