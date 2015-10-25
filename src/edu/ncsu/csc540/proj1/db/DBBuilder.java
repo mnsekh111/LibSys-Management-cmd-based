@@ -59,8 +59,7 @@ public class DBBuilder {
         System.out.println("Inserting test data...");
         generateTestData();
         long endTime = System.currentTimeMillis();
-        long timeTaken = endTime - startTime;
-        System.out.println("Operation completed in " + timeTaken + "ms.");
+        System.out.println("Operation completed in " + (endTime - startTime) + "ms.");
     }
 
     /**
@@ -72,7 +71,7 @@ public class DBBuilder {
         try {
             Connection connect = DriverManager.getConnection(jdbcURL, user, password);
             for(String sql : queryList) {
-                //System.out.println(sql);
+                System.out.println(sql);
                 java.sql.Statement stmt = connect.createStatement();
                 stmt.execute(sql);
                 stmt.close();
@@ -92,7 +91,7 @@ public class DBBuilder {
         try {
             Connection connect = DriverManager.getConnection(jdbcURL, user, password);
             for(String sql : queryList) {
-                //System.out.println(sql);
+                System.out.println(sql);
                 java.sql.Statement stmt = connect.createStatement();
                 stmt.execute(sql);
                 stmt.close();
@@ -112,7 +111,7 @@ public class DBBuilder {
         try {
             Connection connect = DriverManager.getConnection(jdbcURL, user, password);
             for(String sql : queryList) {
-                //System.out.println(sql);
+                System.out.println(sql);
                 java.sql.Statement stmt = connect.createStatement();
                 stmt.execute(sql);
                 stmt.close();
@@ -132,6 +131,7 @@ public class DBBuilder {
     public static ArrayList<String> parseSQLFile(String path) {
         ArrayList<String> queryList = new ArrayList<String>();
 
+        //Using the delimeter of --- in createTables.sql
         boolean useDashDelimeter = path.equals(createTablesPath);
 
         try {

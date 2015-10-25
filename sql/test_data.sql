@@ -391,18 +391,6 @@ INSERT INTO Faculty_Category (category) VALUES('Associate Professor');
 INSERT INTO Faculty_Category (category) VALUES('Professor');
 INSERT INTO Faculty_Category (category) VALUES('Lecturer');
 
-SELECT INSERT_FACULTY('Rob','St Amant',0001,'GOOD','USA (United States of America)','Professor') FROM DUAL;
-SELECT INSERT_FACULTY('Robert','Baratheon',0002,'GOOD','India','Professor') FROM DUAL;
-SELECT INSERT_FACULTY('Ash','Katchem',0003,'GOOD','USA (United States of America)','Professor') FROM DUAL;
-SELECT INSERT_FACULTY('Matteo','Darmian',0004,'GOOD','Italy','Assistant Professor') FROM DUAL;
-SELECT INSERT_FACULTY('Cristiano','Naldo',0005,'GOOD','Portugal','Lecturer') FROM DUAL;
-
-SELECT INSERT_STUDENT('Maria','Shara',10,'GOOD','Russia','929786773','8900020020','12-Jun-1993','Female','23-Wilson Road','Raleigh',27606,'M.S.',1) FROM DUAL;
-SELECT INSERT_STUDENT('Roger','Fedex',12,'GOOD','Serbia','929996773','8909020022','12-May-1993','Male','15-Basel ROad','Basel',22606,'M.A.',2) FROM DUAL;
-SELECT INSERT_STUDENT('Sania','Mir',13,'GOOD','India','9999333','8900020','12-OCT-1992','Female','19-Yawn Road','Raleigh',27606,'M.S.',2) FROM DUAL;
-SELECT INSERT_STUDENT('Ton','Hewitt',14,'GOOD','Australia','929786773','8901020020','12-Jun-1993','Male','45-Snorlax Road','Raleigh',27606,'B.S.',1) FROM DUAL;
-SELECT INSERT_STUDENT('Rafa','Nadal',15,'GOOD','Spain','829746773','9944020020','12-Jan-1988','Male','25-Estona Road','Madrid',25606,'M.S.',1) FROM DUAL;
-
 INSERT INTO Courses (id,name,dep_abbreviation) VALUES(111,'Intro to Computing: Python','CSC');
 INSERT INTO Courses (id,name,dep_abbreviation) VALUES(112,'Introduction to Computing','CSC');
 INSERT INTO Courses (id,name,dep_abbreviation) VALUES(113,'Introduction to Computing','CSC');
@@ -543,4 +531,17 @@ INSERT INTO Courses (id,name,dep_abbreviation) VALUES(895,'Doctoral Dissertation
 INSERT INTO Courses (id,name,dep_abbreviation) VALUES(896,'Summer Dissertation Research','CSC');
 INSERT INTO Courses (id,name,dep_abbreviation) VALUES(899,'Doctoral Dissertation Preparation','CSC');
 
-INSERT INTO Course_Taken (patron_id,dep_abbreviation,id,year,semester) VALUES (12345,'CSC',540,15,2);
+INSERT INTO Library (id,name) VALUES(0,'James B. Hunt, Jr. Library');
+INSERT INTO Library (id,name) VALUES(1,'D.H. Hill Library');
+
+SELECT INSERT_FACULTY('Rob','St Amant',0001,'GOOD','USA (United States of America)','Professor','CSC',540) FROM DUAL;
+SELECT INSERT_FACULTY('Robert','Baratheon',0002,'GOOD','India','Professor','CSC',116) FROM DUAL;
+SELECT INSERT_FACULTY('Ash','Katchem',0003,'GOOD','USA (United States of America)','Professor','CSC',216) FROM DUAL;
+SELECT INSERT_FACULTY('Matteo','Darmian',0004,'GOOD','Italy','Assistant Professor','CSC',316) FROM DUAL;
+SELECT INSERT_FACULTY('Cristiano','Naldo',0005,'GOOD','Portugal','Lecturer','CSC',326) FROM DUAL;
+
+SELECT INSERT_STUDENT('Maria','Shara',10,'GOOD','Russia','929786773','8900020020','12-Jun-1993','Female','23-Wilson Road','Raleigh',27606,'M.S.',1,'CSC') FROM DUAL;
+SELECT INSERT_STUDENT('Roger','Fedex',12,'GOOD','Serbia','929996773','8909020022','12-May-1993','Male','15-Basel ROad','Basel',22606,'M.A.',2,'CSC') FROM DUAL;
+SELECT INSERT_STUDENT('Sania','Mir',13,'GOOD','India','9999333','8900020','12-OCT-1992','Female','19-Yawn Road','Raleigh',27606,'M.S.',2,'CSC') FROM DUAL;
+SELECT INSERT_STUDENT('Ton','Hewitt',14,'GOOD','Australia','929786773','8901020020','12-Jun-1993','Male','45-Snorlax Road','Raleigh',27606,'B.S.',1,'CSC') FROM DUAL;
+SELECT INSERT_STUDENT('Rafa','Nadal',15,'GOOD','Spain','829746773','9944020020','12-Jan-1988','Male','25-Estona Road','Madrid',25606,'M.S.',1,'CSC') FROM DUAL;
