@@ -55,10 +55,12 @@ CREATE TABLE Student (
     id number(10) NOT NULL,
     program varchar2(25) NOT NULL,
     year number(2),
+    dept varchar2(5) NOT NULL,
 
     CONSTRAINT pk_student PRIMARY KEY (id),
     CONSTRAINT fk_student FOREIGN KEY (id) REFERENCES Patron (id),
-    CONSTRAINT fk_student_program FOREIGN KEY (program) REFERENCES Degree_Program (program)
+    CONSTRAINT fk_student_program FOREIGN KEY (program) REFERENCES Degree_Program (program),
+    CONSTRAINT fk_student_dept FOREIGN KEY (dept) REFERENCES Departments (abbreviation)
 );---
 
 CREATE TABLE Faculty (
@@ -103,7 +105,7 @@ CREATE TABLE Authors(
 );---
 
 CREATE TABLE Publications(
-    title varchar2(50) NOT NULL,
+    title varchar2(300) NOT NULL,
     id varchar2(10),
     year_of_pub date NOT NULL,
 
@@ -157,10 +159,12 @@ CREATE TABLE Copies(
     id number(10),
     copy_type varchar2(25),
     lib_id number(10),
+    status varchar2(5),
 
     CONSTRAINT pk_copies PRIMARY KEY (id),
     CONSTRAINT fk_copies_library FOREIGN KEY (id) REFERENCES Library(id),
-    CONSTRAINT chk_copy_type CHECK(copy_type IN ('ELECTRONIC','HARD'))
+    CONSTRAINT chk_copy_type CHECK(copy_type IN ('ELECTRONIC','HARD')),
+    CONSTRAINT chk_status CHECK(status IN('IN','OUT'))
 );---
 
 CREATE TABLE Reservation(
@@ -195,11 +199,12 @@ CREATE TABLE Cameras(
     make varchar2(20),
     model VARCHAR2(20) NOT NULL,
     config VARCHAR2(20),
-    lid VARCHAR(20),
+    lid number(1),
     memory VARCHAR2(20),
     status number(1),
 
-    CONSTRAINT pk_cameras PRIMARY KEY (id)
+    CONSTRAINT pk_cameras PRIMARY KEY (id),
+    CONSTRAINT fk_library FOREIGN KEY (lid) REFERNECES Library(id)
 
 );---
 
@@ -268,14 +273,14 @@ CREATE TABLE Cam_Fines (
 CREATE or replace FUNCTION insert_student (fname in varchar2,lname in varchar2,id in number,
   status in varchar2,country_name in varchar2,phone in varchar2,
   alt_phone in varchar2, dob in date, sex in varchar2,street in varchar2,city in varchar2,
-  postcode in varchar2,program in varchar2,year in number) return integer
+  postcode in varchar2,program in varchar2,year in number,dept in varchar2) return integer
   is
   pragma autonomous_transaction;
   begin
 
   insert into patron values (fname,lname,id,status,country_name);
   commit;
-  insert into student values (phone,alt_phone,dob,sex,street,city,postcode,id,program,year);
+  insert into student values (phone,alt_phone,dob,sex,street,city,postcode,id,program,year,dept);
   commit;
 
   return 1;

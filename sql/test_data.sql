@@ -540,8 +540,8 @@ SELECT INSERT_FACULTY('Ash','Katchem',0003,'GOOD','USA (United States of America
 SELECT INSERT_FACULTY('Matteo','Darmian',0004,'GOOD','Italy','Assistant Professor','CSC',316) FROM DUAL;
 SELECT INSERT_FACULTY('Cristiano','Naldo',0005,'GOOD','Portugal','Lecturer','CSC',326) FROM DUAL;
 
-SELECT INSERT_STUDENT('Maria','Shara',10,'GOOD','Russia','929786773','8900020020','12-Jun-1993','Female','23-Wilson Road','Raleigh',27606,'M.S.',1) FROM DUAL;
-SELECT INSERT_STUDENT('Roger','Fedex',12,'GOOD','Serbia','929996773','8909020022','12-May-1993','Male','15-Basel ROad','Basel',22606,'M.A.',2) FROM DUAL;
-SELECT INSERT_STUDENT('Sania','Mir',13,'GOOD','India','9999333','8900020','12-OCT-1992','Female','19-Yawn Road','Raleigh',27606,'M.S.',2) FROM DUAL;
-SELECT INSERT_STUDENT('Ton','Hewitt',14,'GOOD','Australia','929786773','8901020020','12-Jun-1993','Male','45-Snorlax Road','Raleigh',27606,'B.S.',1) FROM DUAL;
-SELECT INSERT_STUDENT('Rafa','Nadal',15,'GOOD','Spain','829746773','9944020020','12-Jan-1988','Male','25-Estona Road','Madrid',25606,'M.S.',1) FROM DUAL;
+SELECT INSERT_STUDENT('Maria','Shara',10,'GOOD','Russia','929786773','8900020020','12-Jun-1993','Female','23-Wilson Road','Raleigh',27606,'M.S.',1,'CSC') FROM DUAL;
+SELECT INSERT_STUDENT('Roger','Fedex',12,'GOOD','Serbia','929996773','8909020022','12-May-1993','Male','15-Basel ROad','Basel',22606,'M.A.',2,'CSC') FROM DUAL;
+SELECT INSERT_STUDENT('Sania','Mir',13,'GOOD','India','9999333','8900020','12-OCT-1992','Female','19-Yawn Road','Raleigh',27606,'M.S.',2,'CSC') FROM DUAL;
+SELECT INSERT_STUDENT('Ton','Hewitt',14,'GOOD','Australia','929786773','8901020020','12-Jun-1993','Male','45-Snorlax Road','Raleigh',27606,'B.S.',1,'CSC') FROM DUAL;
+SELECT INSERT_STUDENT('Rafa','Nadal',15,'GOOD','Spain','829746773','9944020020','12-Jan-1988','Male','25-Estona Road','Madrid',25606,'M.S.',1,'CSC') FROM DUAL;
