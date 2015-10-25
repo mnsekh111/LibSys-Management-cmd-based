@@ -531,6 +531,9 @@ INSERT INTO Courses (id,name,dep_abbreviation) VALUES(895,'Doctoral Dissertation
 INSERT INTO Courses (id,name,dep_abbreviation) VALUES(896,'Summer Dissertation Research','CSC');
 INSERT INTO Courses (id,name,dep_abbreviation) VALUES(899,'Doctoral Dissertation Preparation','CSC');
 
+INSERT INTO Library (id,name) VALUES(0,'James B. Hunt, Jr. Library');
+INSERT INTO Library (id,name) VALUES(1,'D.H. Hill Library');
+
 SELECT INSERT_FACULTY('Rob','St Amant',0001,'GOOD','USA (United States of America)','Professor','CSC',540) FROM DUAL;
 SELECT INSERT_FACULTY('Robert','Baratheon',0002,'GOOD','India','Professor','CSC',116) FROM DUAL;
 SELECT INSERT_FACULTY('Ash','Katchem',0003,'GOOD','USA (United States of America)','Professor','CSC',216) FROM DUAL;

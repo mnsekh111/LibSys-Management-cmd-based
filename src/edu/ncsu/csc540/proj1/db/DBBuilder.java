@@ -53,7 +53,7 @@ public class DBBuilder {
         System.out.println("Building database...");
         long startTime = System.currentTimeMillis();
         System.out.println("Dropping tables...");
-        //dropTables();
+        dropTables();
         System.out.println("Creating tables...");
         createTables();
         System.out.println("Inserting test data...");
