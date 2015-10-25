@@ -49,7 +49,7 @@ public class Faculty {
         Connection conn = db.getConnection();
 
         try {
-            ps = conn.prepareStatement("SELECT F.category, F.id, F.dept, "
+            ps = conn.prepareStatement("SELECT F.category, F.id, F.dept, F.course_id, "
                     + "P.fname, P.lname, P.country_name FROM FACULTY F, "
                     + "PATRON P WHERE F.id = P.id AND F.id = ?");
             ps.setInt(1, id);
@@ -62,6 +62,7 @@ public class Faculty {
                 System.out.println("ID#: " + rs.getString("id"));
                 System.out.println("Category: " + rs.getString("category"));
                 System.out.println("Department: " + rs.getString("dept"));
+                System.out.println("Course: " + rs.getString("course_id"));
             }
 
             ps.close();
