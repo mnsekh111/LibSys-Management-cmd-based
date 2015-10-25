@@ -59,8 +59,7 @@ public class DBBuilder {
         System.out.println("Inserting test data...");
         generateTestData();
         long endTime = System.currentTimeMillis();
-        long timeTaken = endTime - startTime;
-        System.out.println("Operation completed in " + timeTaken + "ms.");
+        System.out.println("Operation completed in " + (endTime - startTime) + "ms.");
     }
 
     /**
@@ -132,6 +131,7 @@ public class DBBuilder {
     public static ArrayList<String> parseSQLFile(String path) {
         ArrayList<String> queryList = new ArrayList<String>();
 
+        //Using the delimeter of --- in createTables.sql
         boolean useDashDelimeter = path.equals(createTablesPath);
 
         try {
