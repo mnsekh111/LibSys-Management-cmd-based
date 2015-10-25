@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -31,19 +30,9 @@ public class DBBuilder {
     private static String testDataPath = "sql/test_data.sql";
 
     /**
-     * JDBC URL for NCSU's Oracle server
+     * DbConnector object to get a database connection
      */
-    private static final String jdbcURL = "jdbc:oracle:thin:@ora.csc.ncsu.edu:1521:orcl";
-
-    /**
-     * Username for NCSU Oracle Server (unity ID)
-     */
-    private static String user = "dccrews";
-
-    /**
-     * Password for NCSU Oracle Server (ID#)
-     */
-    private static String password = "001068830";
+    private static DbConnector conn;
 
     /**
      * Main method to build database
@@ -69,14 +58,15 @@ public class DBBuilder {
         ArrayList<String> queryList = parseSQLFile(testDataPath);
 
         try {
-            Connection connect = DriverManager.getConnection(jdbcURL, user, password);
+            conn = new DbConnector();
+            Connection connect = conn.getConnection();
             for(String sql : queryList) {
-                System.out.println(sql);
+                //System.out.println(sql);
                 java.sql.Statement stmt = connect.createStatement();
                 stmt.execute(sql);
                 stmt.close();
             }
-            connect.close();
+            conn.closeConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -89,14 +79,15 @@ public class DBBuilder {
         ArrayList<String> queryList = parseSQLFile(dropTablesPath);
 
         try {
-            Connection connect = DriverManager.getConnection(jdbcURL, user, password);
+            conn = new DbConnector();
+            Connection connect = conn.getConnection();
             for(String sql : queryList) {
-                System.out.println(sql);
+                //System.out.println(sql);
                 java.sql.Statement stmt = connect.createStatement();
                 stmt.execute(sql);
                 stmt.close();
             }
-            connect.close();
+            conn.closeConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -109,14 +100,15 @@ public class DBBuilder {
         ArrayList<String> queryList = parseSQLFile(createTablesPath);
 
         try {
-            Connection connect = DriverManager.getConnection(jdbcURL, user, password);
+            conn = new DbConnector();
+            Connection connect = conn.getConnection();
             for(String sql : queryList) {
-                System.out.println(sql);
+                //System.out.println(sql);
                 java.sql.Statement stmt = connect.createStatement();
                 stmt.execute(sql);
                 stmt.close();
             }
-            connect.close();
+            conn.closeConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }

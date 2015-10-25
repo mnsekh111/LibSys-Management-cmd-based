@@ -164,7 +164,7 @@ CREATE TABLE Copies(
     CONSTRAINT pk_copies PRIMARY KEY (id),
     CONSTRAINT fk_copies_library FOREIGN KEY (id) REFERENCES Library(id),
     CONSTRAINT chk_copy_type CHECK(copy_type IN ('ELECTRONIC','HARD')),
-    CONSTRAINT chk_status CHECK(status IN('IN','OUT'))
+    CONSTRAINT chk_copy_status CHECK(status IN('IN','OUT'))
 );---
 
 CREATE TABLE Reservation(
@@ -204,7 +204,7 @@ CREATE TABLE Cameras(
     status number(1),
 
     CONSTRAINT pk_cameras PRIMARY KEY (id),
-    CONSTRAINT fk_library FOREIGN KEY (lid) REFERNECES Library(id)
+    CONSTRAINT fk_library FOREIGN KEY (lid) REFERENCES Library(id)
 
 );---
 
