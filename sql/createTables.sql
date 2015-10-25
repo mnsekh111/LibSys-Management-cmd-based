@@ -2,19 +2,19 @@ CREATE TABLE Nationality (
     country_name varchar2(50) NOT NULL,
 
     CONSTRAINT pk_country_name PRIMARY KEY (country_name)
-);
+);---
 
 CREATE TABLE Degree_Program (
     program varchar2(25) NOT NULL,
 
     CONSTRAINT pk_degree_program PRIMARY KEY (program)
-);
+);---
 
 CREATE TABLE Faculty_Category (
     category varchar2(25) NOT NULL,
 
     CONSTRAINT pk_faculty_category PRIMARY KEY (category)
-);
+);---
 
 CREATE TABLE Patron(
     fname varchar2(25) NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE Patron(
     CONSTRAINT fk_patron_nationality FOREIGN KEY (country_name) REFERENCES Nationality (country_name),
     CONSTRAINT pk_patron PRIMARY KEY (id),
     CONSTRAINT chk_status CHECK(status IN ('GOOD','BAD'))
-);
+);---
 
 CREATE TABLE Student (
     phone varchar2(25) NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE Student (
     CONSTRAINT pk_student PRIMARY KEY (id),
     CONSTRAINT fk_student FOREIGN KEY (id) REFERENCES Patron (id),
     CONSTRAINT fk_student_program FOREIGN KEY (program) REFERENCES Degree_Program (program)
-);
+);---
 
 CREATE TABLE Faculty (
     category varchar2(25) NOT NULL,
@@ -52,7 +52,7 @@ CREATE TABLE Faculty (
     CONSTRAINT pk_faculty PRIMARY KEY (id),
     CONSTRAINT fk_faculty FOREIGN KEY (id) REFERENCES Patron (id),
     CONSTRAINT fk_faculty_category FOREIGN KEY (category) REFERENCES Faculty_Category (category)
-);
+);---
 
 CREATE TABLE Reminders (
     id number(10),
@@ -62,25 +62,23 @@ CREATE TABLE Reminders (
 
     CONSTRAINT pk_reminders PRIMARY KEY (id),
     CONSTRAINT fk_reminders_patrons FOREIGN KEY (patron_id) REFERENCES Patron (id)
-);
-
-
+);---
 
 CREATE TABLE Departments (
     abbreviation varchar2(5),
     name varchar2(50),
 
     CONSTRAINT pk_departments PRIMARY KEY (abbreviation)
-);
+);---
 
 CREATE TABLE Courses (
     id number(10),
     name varchar2(100),
-    dep_abbreviation varchar2(3),
+    dep_abbreviation varchar2(5),
 
     CONSTRAINT pk_courses PRIMARY KEY (id, dep_abbreviation),
     CONSTRAINT fk_courses_departments FOREIGN KEY (dep_abbreviation) REFERENCES Departments (abbreviation)
-);
+);---
 
 CREATE TABLE Course_Taken (
     patron_id number(10),
@@ -91,16 +89,14 @@ CREATE TABLE Course_Taken (
 
     CONSTRAINT pk_courses_taken PRIMARY KEY (patron_id, dep_abbreviation, id),
     CONSTRAINT fk_courses_taken_1 FOREIGN KEY (id, dep_abbreviation) REFERENCES Courses (id, dep_abbreviation)
-);
-
+);---
 
 CREATE TABLE Authors(
     id varchar2(10),
     name varchar2(50) NOT NULL,
 
     CONSTRAINT pk_authors PRIMARY KEY (id)
-);
-
+);---
 
 CREATE TABLE Publications(
     title varchar2(50) NOT NULL,
@@ -109,8 +105,7 @@ CREATE TABLE Publications(
 
     CONSTRAINT pk_publications PRIMARY KEY (id)
 
-);
-
+);---
 
 CREATE TABLE Pub_ConferencePapers(
     conf_num varchar2(10),
@@ -119,8 +114,7 @@ CREATE TABLE Pub_ConferencePapers(
     CONSTRAINT pk_pub_conferencepapers PRIMARY KEY (conf_num),
     CONSTRAINT fk_pub_conferencepapers FOREIGN KEY (conf_num) REFERENCES Publications(id)
 
-);
-
+);---
 
 CREATE TABLE Pub_Book(
     edition varchar2(5) NOT NULL,
@@ -130,15 +124,14 @@ CREATE TABLE Pub_Book(
     CONSTRAINT pk_pub_book PRIMARY KEY (isbn),
     CONSTRAINT fk_pub_book FOREIGN KEY (isbn) REFERENCES Publications(id)
 
-);
-
+);---
 
 CREATE TABLE Pub_Journal(
     issn varchar2(10),
 
     CONSTRAINT pk_pub_journal PRIMARY KEY (issn),
     CONSTRAINT fk_pub_journal FOREIGN KEY (issn) REFERENCES Publications(id)
-);
+);---
 
 CREATE TABLE Written_by(
     pid varchar2(10),
@@ -147,14 +140,14 @@ CREATE TABLE Written_by(
     CONSTRAINT fk_written_by_authors FOREIGN KEY (aid) REFERENCES Authors(id),
     CONSTRAINT fk_written_by_publications FOREIGN KEY (pid) REFERENCES Publications(id),
     CONSTRAINT pk_written_by PRIMARY KEY (pid,aid)
-);
+);---
 
 CREATE TABLE Library(
     id number(10),
     name varchar2(50),
 
     CONSTRAINT pk_library PRIMARY KEY (id)
-);
+);---
 
 CREATE TABLE Copies(
     id number(10),
@@ -164,8 +157,7 @@ CREATE TABLE Copies(
     CONSTRAINT pk_copies PRIMARY KEY (id),
     CONSTRAINT fk_copies_library FOREIGN KEY (id) REFERENCES Library(id),
     CONSTRAINT chk_copy_type CHECK(copy_type IN ('ELECTRONIC','HARD'))
-);
-
+);---
 
 CREATE TABLE Reservation(
     course_id number(10),
@@ -179,7 +171,7 @@ CREATE TABLE Reservation(
     CONSTRAINT fk_reservation_copy FOREIGN KEY (copy_id) REFERENCES Copies(id)
 
 
-);
+);---
 
 CREATE TABLE Rooms(
     room_number number(10),
@@ -192,7 +184,7 @@ CREATE TABLE Rooms(
     CONSTRAINT fk_rooms_library FOREIGN KEY (library_id) REFERENCES Library(id),
     CONSTRAINT chk_room_type CHECK(room_type IN ('CONF','STUDY'))
 
-);
+);---
 
 CREATE TABLE Cameras(
     id number(10),
@@ -205,7 +197,7 @@ CREATE TABLE Cameras(
 
     CONSTRAINT pk_cameras PRIMARY KEY (id)
 
-);
+);---
 
 CREATE TABLE CHECKS_OUT(
     id number(10),
@@ -217,7 +209,7 @@ CREATE TABLE CHECKS_OUT(
     CONSTRAINT pk_checks_out PRIMARY KEY (id),
     CONSTRAINT fk_checks_out_patron FOREIGN KEY (patron_id) REFERENCES Patron(id),
     CONSTRAINT fk_checks_out_copies FOREIGN KEY (copy_id) REFERENCES Copies(id)
-);
+);---
 
 CREATE TABLE Fines (
     id number(10),
@@ -229,7 +221,7 @@ CREATE TABLE Fines (
     CONSTRAINT pk_fines PRIMARY KEY (id),
     CONSTRAINT fk_fines_checks_out FOREIGN KEY (checks_out_id) REFERENCES CHECKS_OUT(id),
     CONSTRAINT chk_fine_status CHECK(status IN ('PAID','UNPAID'))
-);
+);---
 
 CREATE TABLE Booked(
     patron_id number(10),
@@ -243,8 +235,7 @@ CREATE TABLE Booked(
     CONSTRAINT fk_booked_patron FOREIGN KEY (patron_id) REFERENCES Patron(id),
     CONSTRAINT fk_booked_rooms FOREIGN KEY (room_number) REFERENCES Rooms(room_number)
 
-);
-
+);---
 
 CREATE TABLE Booked_Cams(
     id number(10),
@@ -256,8 +247,7 @@ CREATE TABLE Booked_Cams(
     CONSTRAINT pk_booked_cams PRIMARY KEY (id),
     CONSTRAINT fk_booked_cams_patron FOREIGN KEY (patron_id) REFERENCES Patron(id),
     CONSTRAINT fk_booked_cams_cameras FOREIGN KEY (cam_id) REFERENCES Cameras(id)
-);
-
+);---
 
 CREATE TABLE Cam_Fines (
     id number(10),
@@ -269,5 +259,35 @@ CREATE TABLE Cam_Fines (
     CONSTRAINT pk_cam_fines PRIMARY KEY (id),
     CONSTRAINT fk_fines_booked_cams FOREIGN KEY (booked_cam_id) REFERENCES Booked_Cams(id),
     CONSTRAINT chk_cam_fine_status CHECK(status IN ('PAID','UNPAID'))
-);
+);---
 
+CREATE or replace FUNCTION insert_student (fname in varchar2,lname in varchar2,id in number,
+  status in varchar2,country_name in varchar2,phone in varchar2,
+  alt_phone in varchar2, dob in date, sex in varchar2,street in varchar2,city in varchar2,
+  postcode in varchar2,program in varchar2,year in number) return integer
+  is
+  pragma autonomous_transaction;
+  begin
+
+  insert into patron values (fname,lname,id,status,country_name);
+  commit;
+  insert into student values (phone,alt_phone,dob,sex,street,city,postcode,id,program,year);
+  commit;
+
+  return 1;
+  end;---
+
+CREATE or replace FUNCTION insert_faculty (fname in varchar2,lname in varchar2,id in number,
+  status in varchar2,country_name in varchar2,category in varchar2) return integer
+  is
+
+  pragma autonomous_transaction;
+  begin
+
+  insert into patron values (fname,lname,id,status,country_name);
+  commit;
+  insert into faculty values (category,id);
+  commit;
+
+  return 1;
+  end;---

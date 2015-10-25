@@ -31,7 +31,7 @@ INSERT INTO Departments (abbreviation, name) VALUES('CLA','Foreign Language');
 INSERT INTO Departments (abbreviation, name) VALUES('CNR','College of Natural Resources');
 INSERT INTO Departments (abbreviation, name) VALUES('COM','Communication');
 INSERT INTO Departments (abbreviation, name) VALUES('COP','Cooperative Education');
-INSERT INTO Departments (abbreviation, name) VALUES('CRD','Communication Rhetoric & Digital Media');
+INSERT INTO Departments (abbreviation, name) VALUES('CRD','Communication Rhetoric and Digital Media');
 INSERT INTO Departments (abbreviation, name) VALUES('CS','Crop Science');
 INSERT INTO Departments (abbreviation, name) VALUES('CSC','Computer Science');
 INSERT INTO Departments (abbreviation, name) VALUES('D','Design');
@@ -40,7 +40,7 @@ INSERT INTO Departments (abbreviation, name) VALUES('DDN','Design courses for Gr
 INSERT INTO Departments (abbreviation, name) VALUES('DS','Design Studies');
 INSERT INTO Departments (abbreviation, name) VALUES('E','Engineering');
 INSERT INTO Departments (abbreviation, name) VALUES('EA','Environmental Assessment');
-INSERT INTO Departments (abbreviation, name) VALUES('EAC','Adult & Higher Education');
+INSERT INTO Departments (abbreviation, name) VALUES('EAC','Adult and Higher Education');
 INSERT INTO Departments (abbreviation, name) VALUES('EC','Economics');
 INSERT INTO Departments (abbreviation, name) VALUES('ECD','Counselor Education');
 INSERT INTO Departments (abbreviation, name) VALUES('ECE','Electrical and Computer Engineering');
@@ -52,9 +52,9 @@ INSERT INTO Departments (abbreviation, name) VALUES('EDP','Educational Psycholog
 INSERT INTO Departments (abbreviation, name) VALUES('EGR','EGR');
 INSERT INTO Departments (abbreviation, name) VALUES('EI','Entrepreneurship Initiative');
 INSERT INTO Departments (abbreviation, name) VALUES('ELM','Elementary Education');
-INSERT INTO Departments (abbreviation, name) VALUES('ELP','Educ Leadership & Program Eval');
+INSERT INTO Departments (abbreviation, name) VALUES('ELP','Educ Leadership and Program Eval');
 INSERT INTO Departments (abbreviation, name) VALUES('EMA','Entrepreneurship in Music and the Arts');
-INSERT INTO Departments (abbreviation, name) VALUES('EMS','Math & Science Education');
+INSERT INTO Departments (abbreviation, name) VALUES('EMS','Math and Science Education');
 INSERT INTO Departments (abbreviation, name) VALUES('ENG','English');
 INSERT INTO Departments (abbreviation, name) VALUES('ENT','Entomology');
 INSERT INTO Departments (abbreviation, name) VALUES('ES','Environmental Science');
@@ -80,7 +80,7 @@ INSERT INTO Departments (abbreviation, name) VALUES('FS','Food Science');
 INSERT INTO Departments (abbreviation, name) VALUES('FSA','Food Science');
 INSERT INTO Departments (abbreviation, name) VALUES('FTD','Fashion and Textile Design');
 INSERT INTO Departments (abbreviation, name) VALUES('FTM','Fashion and Textile Management');
-INSERT INTO Departments (abbreviation, name) VALUES('FW','Fisheries & Wildlife Sciences');
+INSERT INTO Departments (abbreviation, name) VALUES('FW','Fisheries and Wildlife Sciences');
 INSERT INTO Departments (abbreviation, name) VALUES('GC','Graphic Communications');
 INSERT INTO Departments (abbreviation, name) VALUES('GD','Graphic Design');
 INSERT INTO Departments (abbreviation, name) VALUES('GES','Genetic Engineering and Society');
@@ -119,7 +119,7 @@ INSERT INTO Departments (abbreviation, name) VALUES('LSC','Life Sciences First Y
 INSERT INTO Departments (abbreviation, name) VALUES('M','Management');
 INSERT INTO Departments (abbreviation, name) VALUES('MA','Mathematics');
 INSERT INTO Departments (abbreviation, name) VALUES('MAA','Math in Agriculture and Related Sciences');
-INSERT INTO Departments (abbreviation, name) VALUES('MAE','Mechanical & Aerospace Engr');
+INSERT INTO Departments (abbreviation, name) VALUES('MAE','Mechanical and Aerospace Engr');
 INSERT INTO Departments (abbreviation, name) VALUES('MB','Microbiology');
 INSERT INTO Departments (abbreviation, name) VALUES('MBA','Business Administration');
 INSERT INTO Departments (abbreviation, name) VALUES('MDS','Multidisciplinary Studies');
@@ -391,12 +391,17 @@ INSERT INTO Faculty_Category (category) VALUES('Associate Professor');
 INSERT INTO Faculty_Category (category) VALUES('Professor');
 INSERT INTO Faculty_Category (category) VALUES('Lecturer');
 
-INSERT INTO Patron (fname,lname,id,status,country_name) VALUES('Dixon','Crews',12345,'GOOD','USA (United States of America)');
-INSERT INTO Patron (fname,lname,id,status,country_name) VALUES('Kemafor','Ogan',00001,'GOOD','USA (United States of America)');
+SELECT INSERT_FACULTY('Rob','St Amant',0001,'GOOD','USA (United States of America)','Professor') FROM DUAL;
+SELECT INSERT_FACULTY('Robert','Baratheon',0002,'GOOD','India','Professor') FROM DUAL;
+SELECT INSERT_FACULTY('Ash','Katchem',0003,'GOOD','USA (United States of America)','Professor') FROM DUAL;
+SELECT INSERT_FACULTY('Matteo','Darmian',0004,'GOOD','Italy','Assistant Professor') FROM DUAL;
+SELECT INSERT_FACULTY('Cristiano','Naldo',0005,'GOOD','Portugal','Lecturer') FROM DUAL;
 
-INSERT INTO Student (phone,alt_phone,dob,sex,street,city,postcode,id,program,year) VALUES('336-314-7020','123-456-7890',TO_DATE('1994/03/19 12:00:00', 'yyyy/mm/dd hh24:mi:ss'),'M','1910 Entrepreneur Drive','Raleigh','27606',12345,'B.S.',1);
-
-INSERT INTO Faculty (category,id) VALUES ('Professor',00001);
+SELECT INSERT_STUDENT('Maria','Shara',10,'GOOD','Russia','929786773','8900020020','12-Jun-1993','Female','23-Wilson Road','Raleigh',27606,'M.S.',1) FROM DUAL;
+SELECT INSERT_STUDENT('Roger','Fedex',12,'GOOD','Serbia','929996773','8909020022','12-May-1993','Male','15-Basel ROad','Basel',22606,'M.A.',2) FROM DUAL;
+SELECT INSERT_STUDENT('Sania','Mir',13,'GOOD','India','9999333','8900020','12-OCT-1992','Female','19-Yawn Road','Raleigh',27606,'M.S.',2) FROM DUAL;
+SELECT INSERT_STUDENT('Ton','Hewitt',14,'GOOD','Australia','929786773','8901020020','12-Jun-1993','Male','45-Snorlax Road','Raleigh',27606,'B.S.',1) FROM DUAL;
+SELECT INSERT_STUDENT('Rafa','Nadal',15,'GOOD','Spain','829746773','9944020020','12-Jan-1988','Male','25-Estona Road','Madrid',25606,'M.S.',1) FROM DUAL;
 
 INSERT INTO Courses (id,name,dep_abbreviation) VALUES(111,'Intro to Computing: Python','CSC');
 INSERT INTO Courses (id,name,dep_abbreviation) VALUES(112,'Introduction to Computing','CSC');
@@ -539,4 +544,3 @@ INSERT INTO Courses (id,name,dep_abbreviation) VALUES(896,'Summer Dissertation R
 INSERT INTO Courses (id,name,dep_abbreviation) VALUES(899,'Doctoral Dissertation Preparation','CSC');
 
 INSERT INTO Course_Taken (patron_id,dep_abbreviation,id,year,semester) VALUES (12345,'CSC',540,15,2);
-
