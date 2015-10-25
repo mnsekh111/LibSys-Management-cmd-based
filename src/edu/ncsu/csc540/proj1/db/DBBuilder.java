@@ -53,7 +53,7 @@ public class DBBuilder {
         System.out.println("Building database...");
         long startTime = System.currentTimeMillis();
         System.out.println("Dropping tables...");
-        dropTables();
+        //dropTables();
         System.out.println("Creating tables...");
         createTables();
         System.out.println("Inserting test data...");
@@ -71,7 +71,7 @@ public class DBBuilder {
         try {
             Connection connect = DriverManager.getConnection(jdbcURL, user, password);
             for(String sql : queryList) {
-                //System.out.println(sql);
+                System.out.println(sql);
                 java.sql.Statement stmt = connect.createStatement();
                 stmt.execute(sql);
                 stmt.close();
@@ -91,7 +91,7 @@ public class DBBuilder {
         try {
             Connection connect = DriverManager.getConnection(jdbcURL, user, password);
             for(String sql : queryList) {
-                //System.out.println(sql);
+                System.out.println(sql);
                 java.sql.Statement stmt = connect.createStatement();
                 stmt.execute(sql);
                 stmt.close();
@@ -111,7 +111,7 @@ public class DBBuilder {
         try {
             Connection connect = DriverManager.getConnection(jdbcURL, user, password);
             for(String sql : queryList) {
-                //System.out.println(sql);
+                System.out.println(sql);
                 java.sql.Statement stmt = connect.createStatement();
                 stmt.execute(sql);
                 stmt.close();

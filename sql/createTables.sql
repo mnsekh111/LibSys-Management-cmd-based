@@ -16,6 +16,13 @@ CREATE TABLE Faculty_Category (
     CONSTRAINT pk_faculty_category PRIMARY KEY (category)
 );---
 
+CREATE TABLE Departments (
+    abbreviation varchar2(5),
+    name varchar2(50),
+
+    CONSTRAINT pk_departments PRIMARY KEY (abbreviation)
+);---
+
 CREATE TABLE Patron(
     fname varchar2(25) NOT NULL,
     lname varchar2(25) NOT NULL,
@@ -48,10 +55,12 @@ CREATE TABLE Student (
 CREATE TABLE Faculty (
     category varchar2(25) NOT NULL,
     id number(10) NOT NULL,
+    dept varchar2(5) NOT NULL,
 
     CONSTRAINT pk_faculty PRIMARY KEY (id),
     CONSTRAINT fk_faculty FOREIGN KEY (id) REFERENCES Patron (id),
-    CONSTRAINT fk_faculty_category FOREIGN KEY (category) REFERENCES Faculty_Category (category)
+    CONSTRAINT fk_faculty_category FOREIGN KEY (category) REFERENCES Faculty_Category (category),
+    CONSTRAINT fk_faculty_dept FOREIGN KEY (dept) REFERENCES Departments (abbreviation)
 );---
 
 CREATE TABLE Reminders (
@@ -62,13 +71,6 @@ CREATE TABLE Reminders (
 
     CONSTRAINT pk_reminders PRIMARY KEY (id),
     CONSTRAINT fk_reminders_patrons FOREIGN KEY (patron_id) REFERENCES Patron (id)
-);---
-
-CREATE TABLE Departments (
-    abbreviation varchar2(5),
-    name varchar2(50),
-
-    CONSTRAINT pk_departments PRIMARY KEY (abbreviation)
 );---
 
 CREATE TABLE Courses (
@@ -278,7 +280,7 @@ CREATE or replace FUNCTION insert_student (fname in varchar2,lname in varchar2,i
   end;---
 
 CREATE or replace FUNCTION insert_faculty (fname in varchar2,lname in varchar2,id in number,
-  status in varchar2,country_name in varchar2,category in varchar2) return integer
+  status in varchar2,country_name in varchar2,category in varchar2,dept in varchar2) return integer
   is
 
   pragma autonomous_transaction;
@@ -286,7 +288,7 @@ CREATE or replace FUNCTION insert_faculty (fname in varchar2,lname in varchar2,i
 
   insert into patron values (fname,lname,id,status,country_name);
   commit;
-  insert into faculty values (category,id);
+  insert into faculty values (category,id,dept);
   commit;
 
   return 1;

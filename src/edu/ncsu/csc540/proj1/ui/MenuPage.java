@@ -2,11 +2,13 @@ package edu.ncsu.csc540.proj1.ui;
 
 import java.util.Scanner;
 
+import edu.ncsu.csc540.proj1.models.Faculty;
 import edu.ncsu.csc540.proj1.models.Student;
 
 public class MenuPage {
 
     Student student = new Student();
+    Faculty faculty = new Faculty();
 
     public int loginMenu(Scanner in) {
         int user_id = 0;
@@ -53,7 +55,18 @@ public class MenuPage {
             System.out.println("\t6. Balance Due");
             System.out.println("\t7. Logout\n");
             selectedOption = in.nextInt();
+
+            switch(selectedOption) {
+            case 1:
+                facultyProfileMenu(in, patronId);
+            }
         } while(selectedOption != 7);
+    }
+
+    public void facultyProfileMenu(Scanner in, int patronID) {
+        System.out.println("==========\nMy Profile:\n");
+        faculty.printFacultyProfile(patronID);
+        System.out.println("\n==========\n");
     }
 }
 

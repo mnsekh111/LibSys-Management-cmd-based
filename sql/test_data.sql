@@ -391,11 +391,11 @@ INSERT INTO Faculty_Category (category) VALUES('Associate Professor');
 INSERT INTO Faculty_Category (category) VALUES('Professor');
 INSERT INTO Faculty_Category (category) VALUES('Lecturer');
 
-SELECT INSERT_FACULTY('Rob','St Amant',0001,'GOOD','USA (United States of America)','Professor') FROM DUAL;
-SELECT INSERT_FACULTY('Robert','Baratheon',0002,'GOOD','India','Professor') FROM DUAL;
-SELECT INSERT_FACULTY('Ash','Katchem',0003,'GOOD','USA (United States of America)','Professor') FROM DUAL;
-SELECT INSERT_FACULTY('Matteo','Darmian',0004,'GOOD','Italy','Assistant Professor') FROM DUAL;
-SELECT INSERT_FACULTY('Cristiano','Naldo',0005,'GOOD','Portugal','Lecturer') FROM DUAL;
+SELECT INSERT_FACULTY('Rob','St Amant',0001,'GOOD','USA (United States of America)','Professor','CSC') FROM DUAL;
+SELECT INSERT_FACULTY('Robert','Baratheon',0002,'GOOD','India','Professor','ACC') FROM DUAL;
+SELECT INSERT_FACULTY('Ash','Katchem',0003,'GOOD','USA (United States of America)','Professor','MA') FROM DUAL;
+SELECT INSERT_FACULTY('Matteo','Darmian',0004,'GOOD','Italy','Assistant Professor','ENG') FROM DUAL;
+SELECT INSERT_FACULTY('Cristiano','Naldo',0005,'GOOD','Portugal','Lecturer','ECE') FROM DUAL;
 
 SELECT INSERT_STUDENT('Maria','Shara',10,'GOOD','Russia','929786773','8900020020','12-Jun-1993','Female','23-Wilson Road','Raleigh',27606,'M.S.',1) FROM DUAL;
 SELECT INSERT_STUDENT('Roger','Fedex',12,'GOOD','Serbia','929996773','8909020022','12-May-1993','Male','15-Basel ROad','Basel',22606,'M.A.',2) FROM DUAL;
