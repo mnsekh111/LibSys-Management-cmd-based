@@ -35,20 +35,30 @@ public class DBBuilder {
     private static DbConnector conn;
 
     /**
+     * Connection object
+     */
+    private static Connection connect;
+
+    /**
      * Main method to build database
      * @param args
      */
     public static void main(String[] args) {
+        conn = new DbConnector();
+        connect = conn.getConnection();
+
         System.out.println("Building database...");
         long startTime = System.currentTimeMillis();
         System.out.println("Dropping tables...");
-        //dropTables();
+        dropTables();
         System.out.println("Creating tables...");
         createTables();
         System.out.println("Inserting test data...");
         generateTestData();
         long endTime = System.currentTimeMillis();
         System.out.println("Operation completed in " + (endTime - startTime) + "ms.");
+
+        conn.closeConnection();
     }
 
     /**
@@ -58,15 +68,12 @@ public class DBBuilder {
         ArrayList<String> queryList = parseSQLFile(testDataPath);
 
         try {
-            conn = new DbConnector();
-            Connection connect = conn.getConnection();
             for(String sql : queryList) {
                 //System.out.println(sql);
                 java.sql.Statement stmt = connect.createStatement();
                 stmt.execute(sql);
                 stmt.close();
             }
-            conn.closeConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -79,15 +86,12 @@ public class DBBuilder {
         ArrayList<String> queryList = parseSQLFile(dropTablesPath);
 
         try {
-            conn = new DbConnector();
-            Connection connect = conn.getConnection();
             for(String sql : queryList) {
                 //System.out.println(sql);
                 java.sql.Statement stmt = connect.createStatement();
                 stmt.execute(sql);
                 stmt.close();
             }
-            conn.closeConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -100,15 +104,12 @@ public class DBBuilder {
         ArrayList<String> queryList = parseSQLFile(createTablesPath);
 
         try {
-            conn = new DbConnector();
-            Connection connect = conn.getConnection();
             for(String sql : queryList) {
                 //System.out.println(sql);
                 java.sql.Statement stmt = connect.createStatement();
                 stmt.execute(sql);
                 stmt.close();
             }
-            conn.closeConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
