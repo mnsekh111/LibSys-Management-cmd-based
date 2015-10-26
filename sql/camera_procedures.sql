@@ -1,4 +1,4 @@
-create or replace Procedure BOOK_CAMERA
+create or replace Procedure CAMERA_BOOK
    (
   patron_id IN NUMBER, 
   camera_id IN NUMBER,
@@ -33,3 +33,18 @@ EXCEPTION
 WHEN OTHERS THEN
    raise_application_error(-20001,'An error was encountered - '||SQLCODE||' -ERROR- '||SQLERRM);
 END;
+
+
+
+create or replace PROCEDURE CAMERA_AVAILABLE(
+  borrow_date IN DATE,
+  c_result OUT SYS_REFCURSOR
+)
+IS
+  return_time date;
+BEGIN
+  return_time := borrow_date-1;
+  return_time :=TRUNC(return_time)+18/24;
+  OPEN c_result FOR
+  SELECT * FROM CAMERAS WHERE STATUS = 0 OR ID IN (SELECT CAM_ID FROM BOOKED_CAMS WHERE END_TIME = return_time AND RETURNED_TIME IS NULL);
+END CAMERA_AVAILABLE;
