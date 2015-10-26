@@ -2,10 +2,8 @@ package edu.ncsu.csc540.proj1.models;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.util.Calendar;
 import java.sql.Date;
 
 import edu.ncsu.csc540.proj1.db.DbConnector;
@@ -36,10 +34,15 @@ public class Camera {
 			
 			csmt.execute();
 			System.out.println(csmt.getInt(counter));
+			if(csmt.getInt(counter) == 1){
+				return true;
+			}
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			db.closeConnection();
 		}
     	
     	
