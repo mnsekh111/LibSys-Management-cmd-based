@@ -98,7 +98,8 @@ INSERT INTO CHECKS_OUT (id,patron_id,copy_id,start_time,end_time) VALUES (1,1,3,
 UPDATE Copies SET status = 'OUT' WHERE id = 3;
 INSERT INTO CHECKS_OUT (id,patron_id,copy_id,start_time,end_time) VALUES (2,4,7,'01-Nov-2015','06-Nov-2015');
 UPDATE Copies SET status = 'OUT' WHERE id = 7;
-INSERT INTO CHECKS_OUT (id,patron_id,copy_id,start_time,end_time) VALUES (3,2,3,'01-Jul-2015','08-Aug-2015');
-UPDATE Copies SET status = 'OUT' WHERE id = 3;
+INSERT INTO CHECKS_OUT (id,patron_id,copy_id,start_time,end_time) VALUES (3,2,8,'01-Jul-2015','08-Aug-2015');
+UPDATE Copies SET status = 'OUT' WHERE id = 8;
 INSERT INTO CHECKS_OUT (id,patron_id,copy_id,start_time,end_time) VALUES (4,3,3,'01-Oct-2015','10-Oct-2015');
 UPDATE Copies SET status = 'OUT' WHERE id = 3;
+
