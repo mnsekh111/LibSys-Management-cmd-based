@@ -51,7 +51,7 @@ public class Student {
         try {
             ps = conn.prepareStatement("SELECT S.id, S.phone, S.alt_phone, "
                     + "S.dob, S.sex, S.street, S.city, S.postcode, S.program, "
-                    + "S.year, P.fname, P.lname, P.country_name FROM STUDENT S, "
+                    + "S.year, S.dept, P.fname, P.lname, P.country_name FROM STUDENT S, "
                     + "PATRON P WHERE S.id = P.id AND S.id = ?");
             ps.setInt(1, id);
             rs = ps.executeQuery();
@@ -70,11 +70,68 @@ public class Student {
                 System.out.println("Postcode: " + rs.getString("postcode"));
                 System.out.println("Program: " + rs.getString("program"));
                 System.out.println("Year: " + rs.getString("year"));
+                System.out.println("Dept: " + rs.getString("dept"));
             }
 
             ps.close();
             rs.close();
             db.closeConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateStudentProfile(int id, String data, int fieldNo) {
+        Connection conn = db.getConnection();
+        PreparedStatement ps = null;
+        try {
+            switch(fieldNo) {
+            case 1:
+                ps = conn.prepareStatement("UPDATE Patron SET fname = ? WHERE id = ?");
+                break;
+            case 2:
+                ps = conn.prepareStatement("UPDATE Patron SET lname = ? WHERE id = ?");
+                break;
+            case 3:
+                ps = conn.prepareStatement("UPDATE Student SET phone = ? WHERE id = ?");
+                break;
+            case 4:
+                ps = conn.prepareStatement("UPDATE Student SET alt_phone = ? WHERE id = ?");
+                break;
+            case 5:
+                ps = conn.prepareStatement("UPDATE Student SET sex = ? WHERE id = ?");
+                break;
+            case 6:
+                ps = conn.prepareStatement("UPDATE Student SET street = ? WHERE id = ?");
+                break;
+            case 7:
+                ps = conn.prepareStatement("UPDATE Student SET city = ? WHERE id = ?");
+                break;
+            case 8:
+                ps = conn.prepareStatement("UPDATE Student SET postcode = ? WHERE id = ?");
+                break;
+            case 9:
+                ps = conn.prepareStatement("UPDATE Student SET program = ? WHERE id = ?");
+                break;
+            case 10:
+                ps = conn.prepareStatement("UPDATE Student SET year = ? WHERE id = ?");
+                break;
+            case 11:
+                ps = conn.prepareStatement("UPDATE Student SET dept = ? WHERE id = ?");
+                break;
+            }
+
+            if(fieldNo == 10) {
+                ps.setInt(1, Integer.parseInt(data));
+            } else {
+                ps.setString(1, data);
+            }
+
+            ps.setInt(2, id);
+
+            ps.executeUpdate();
+
+            ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
