@@ -123,7 +123,7 @@ public class MenuPage {
                 student.updateStudentProfile(patronID, enteredData, 10);
                 break;
             case 11:
-                System.out.print("Enter new department (valid NCSU abbreviation): ");
+                System.out.print("Enter new department (CSC or CH): ");
                 enteredData = in.nextLine();
                 student.updateStudentProfile(patronID, enteredData, 11);
                 break;
@@ -193,9 +193,48 @@ public class MenuPage {
     }
 
     public void facultyProfileMenu(Scanner in, int patronID) {
-        System.out.println("==========\nMy Profile:\n");
-        faculty.printFacultyProfile(patronID);
-        System.out.println("\n==========\n");
+        int selectedOption = 0;
+        do {
+            System.out.println("==========\nMy Profile:\n");
+            faculty.printFacultyProfile(patronID);
+            System.out.println("\n==========\n");
+            System.out.println("Please select an option:");
+            System.out.println("\t1. Edit First Name");
+            System.out.println("\t2. Edit Last Name");
+            System.out.println("\t3. Edit Category");
+            System.out.println("\t4. Edit Department & Course");
+            System.out.println("\t5. Go back");
+            selectedOption = in.nextInt();
+
+            in.nextLine(); //eat the newline
+
+            String enteredData = null;
+            switch(selectedOption) {
+            case 1:
+                System.out.print("Enter new first name (<= 25 chars): ");
+                enteredData = in.nextLine();
+                faculty.updateFacultyProfile(patronID, enteredData, 1);
+                break;
+            case 2:
+                System.out.print("Enter new last name (<= 25 chars): ");
+                enteredData = in.nextLine();
+                faculty.updateFacultyProfile(patronID, enteredData, 2);
+                break;
+            case 3:
+                System.out.print("Enter new category (Assistant Professor, Associate Professor, Lecturer, Professor): ");
+                enteredData = in.nextLine();
+                faculty.updateFacultyProfile(patronID, enteredData, 3);
+                break;
+            case 4:
+                System.out.print("Enter new department (CSC or CH): ");
+                enteredData = in.nextLine();
+                enteredData += "-";
+                System.out.print("Enter new course (valid number): ");
+                enteredData += in.nextLine();
+                faculty.updateFacultyProfile(patronID, enteredData, 4);
+                break;
+            }
+        } while(selectedOption != 5);
     }
 
     public void facultyResourcesMenu(Scanner in, int patronID) {

@@ -72,4 +72,44 @@ public class Faculty {
             e.printStackTrace();
         }
     }
+
+    public void updateFacultyProfile(int patronID, String enteredData, int fieldNo) {
+        Connection conn = db.getConnection();
+        PreparedStatement ps = null;
+        try {
+            switch(fieldNo) {
+            case 1:
+                ps = conn.prepareStatement("UPDATE Patron SET fname = ? WHERE id = ?");
+                break;
+            case 2:
+                ps = conn.prepareStatement("UPDATE Patron SET lname = ? WHERE id = ?");
+                break;
+            case 3:
+                ps = conn.prepareStatement("UPDATE Faculty SET category = ? WHERE id = ?");
+                break;
+            case 4:
+                String data[] = enteredData.split("-");
+                data[0] = data[0].trim();
+                data[1] = data[1].trim();
+                ps = conn.prepareStatement("UPDATE Faculty SET dept = ?, course_id = ? WHERE id = ?");
+                ps.setString(1, data[0]);
+                ps.setInt(2, Integer.parseInt(data[1]));
+                ps.setInt(3, patronID);
+                break;
+            }
+
+            if(fieldNo != 4) {
+                ps.setString(1, enteredData);
+                ps.setInt(2, patronID);
+            }
+
+            ps.executeUpdate();
+
+            ps.close();
+
+            db.closeConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

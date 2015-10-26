@@ -132,6 +132,8 @@ public class Student {
             ps.executeUpdate();
 
             ps.close();
+
+            db.closeConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
