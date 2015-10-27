@@ -107,7 +107,7 @@ CREATE TABLE Authors(
 CREATE TABLE Publications(
     title varchar2(300) NOT NULL,
     id varchar2(10),
-    year_of_pub date NOT NULL,
+    year_of_pub number(4) NOT NULL,
 
     CONSTRAINT pk_publications PRIMARY KEY (id)
 
@@ -157,6 +157,7 @@ CREATE TABLE Library(
 
 CREATE TABLE Copies(
     id number(10),
+    pid varchar2(10),
     copy_type varchar2(25),
     lib_id number(10),
     status varchar2(5),
@@ -164,7 +165,8 @@ CREATE TABLE Copies(
     CONSTRAINT pk_copies PRIMARY KEY (id),
     CONSTRAINT fk_copies_library FOREIGN KEY (lib_id) REFERENCES Library(id),
     CONSTRAINT chk_copy_type CHECK(copy_type IN ('ELECTRONIC','HARD')),
-    CONSTRAINT chk_copy_status CHECK(status IN('IN','OUT'))
+    CONSTRAINT chk_copy_status CHECK(status IN('IN','OUT')),
+    CONSTRAINT fk_copy_pub FOREIGN KEY (pid) REFERENCES Publications(id)
 );---
 
 CREATE TABLE Reservation(
