@@ -456,3 +456,13 @@ SELECT INSERT_STUDENT('Roger','Fedex',12,'GOOD','Serbia','929996773','8909020022
 SELECT INSERT_STUDENT('Sania','Mir',13,'GOOD','India','9999333','8900020','12-OCT-1992','Female','19-Yawn Road','Raleigh',27606,'M.S.',2,'CSC') FROM DUAL;
 SELECT INSERT_STUDENT('Ton','Hewitt',14,'GOOD','Australia','929786773','8901020020','12-Jun-1993','Male','45-Snorlax Road','Raleigh',27606,'B.S.',1,'CSC') FROM DUAL;
 SELECT INSERT_STUDENT('Rafa','Nadal',15,'GOOD','Spain','829746773','9944020020','12-Jan-1988','Male','25-Estona Road','Madrid',25606,'M.S.',1,'CSC') FROM DUAL;
+
+INSERT INTO Rooms(room_number,capacity,library_id,floor_no,room_type) VALUES (1,5,0,2,'CONF');
+INSERT INTO Rooms(room_number,capacity,library_id,floor_no,room_type) VALUES (2,6,0,2,'CONF');
+INSERT INTO Rooms(room_number,capacity,library_id,floor_no,room_type) VALUES (3,2,0,2,'CONF');
+INSERT INTO Rooms(room_number,capacity,library_id,floor_no,room_type) VALUES (4,10,0,2,'STUDY');
+INSERT INTO Rooms(room_number,capacity,library_id,floor_no,room_type) VALUES (5,7,0,2,'STUDY');
+INSERT INTO Rooms(room_number,capacity,library_id,floor_no,room_type) VALUES (6,4,0,2,'STUDY');
+INSERT INTO Rooms(room_number,capacity,library_id,floor_no,room_type) VALUES (7,5,1,2,'STUDY');
+INSERT INTO Rooms(room_number,capacity,library_id,floor_no,room_type) VALUES (8,4,1,2,'STUDY');
+INSERT INTO Rooms(room_number,capacity,library_id,floor_no,room_type) VALUES (9,2,1,2,'STUDY');
