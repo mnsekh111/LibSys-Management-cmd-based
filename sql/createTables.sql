@@ -113,6 +113,9 @@ CREATE TABLE Publications(
 
 );---
 
+ALTER TABLE Publications
+MODIFY (year_of_pub number(4));---
+
 CREATE TABLE Pub_ConferencePapers(
     conf_num varchar2(10),
     confName varchar2(50),
@@ -157,14 +160,16 @@ CREATE TABLE Library(
 
 CREATE TABLE Copies(
     id number(10),
+    pid varchar2(10),
     copy_type varchar2(25),
     lib_id number(10),
     status varchar2(5),
 
     CONSTRAINT pk_copies PRIMARY KEY (id),
-    CONSTRAINT fk_copies_library FOREIGN KEY (id) REFERENCES Library(id),
+    CONSTRAINT fk_copies_library FOREIGN KEY (lib_id) REFERENCES Library(id),
     CONSTRAINT chk_copy_type CHECK(copy_type IN ('ELECTRONIC','HARD')),
-    CONSTRAINT chk_copy_status CHECK(status IN('IN','OUT'))
+    CONSTRAINT chk_copy_status CHECK(status IN('IN','OUT')),
+    CONSTRAINT fk_copy_pub FOREIGN KEY (pid) REFERENCES Publications(id)
 );---
 
 CREATE TABLE Reservation(
