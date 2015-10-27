@@ -162,7 +162,7 @@ CREATE TABLE Copies(
     status varchar2(5),
 
     CONSTRAINT pk_copies PRIMARY KEY (id),
-    CONSTRAINT fk_copies_library FOREIGN KEY (id) REFERENCES Library(id),
+    CONSTRAINT fk_copies_library FOREIGN KEY (lib_id) REFERENCES Library(id),
     CONSTRAINT chk_copy_type CHECK(copy_type IN ('ELECTRONIC','HARD')),
     CONSTRAINT chk_copy_status CHECK(status IN('IN','OUT'))
 );---
@@ -198,7 +198,7 @@ CREATE TABLE Cameras(
     id number(10),
     make varchar2(20),
     model VARCHAR2(20) NOT NULL,
-    config VARCHAR2(20),
+    config VARCHAR2(50),
     lid number(1),
     memory VARCHAR2(20),
     status number(1),

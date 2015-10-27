@@ -30,6 +30,11 @@ public class DBBuilder {
     private static String testDataPath = "sql/test_data.sql";
 
     /**
+     * Path to the sample_data.sql file
+     */
+    private static String sampleDataPath = "sql/sample_data.sql";
+
+    /**
      * DbConnector object to get a database connection
      */
     private static DbConnector conn;
@@ -50,62 +55,25 @@ public class DBBuilder {
         System.out.println("Building database...");
         long startTime = System.currentTimeMillis();
         System.out.println("Dropping tables...");
-        dropTables();
+        executeSQL(dropTablesPath);
         System.out.println("Creating tables...");
-        createTables();
+        executeSQL(createTablesPath);
         System.out.println("Inserting test data...");
-        generateTestData();
+        executeSQL(testDataPath);
+        //System.out.println("Inserting sample data...");
+        //executeSQL(sampleDataPath);
         long endTime = System.currentTimeMillis();
         System.out.println("Operation completed in " + (endTime - startTime) + "ms.");
 
         conn.closeConnection();
     }
 
-    /**
-     * Inserts all of the test data in test_data.sql
-     */
-    public static void generateTestData() {
-        ArrayList<String> queryList = parseSQLFile(testDataPath);
+    public static void executeSQL(String path) {
+        ArrayList<String> queryList = parseSQLFile(path);
 
         try {
             for(String sql : queryList) {
-                //System.out.println(sql);
-                java.sql.Statement stmt = connect.createStatement();
-                stmt.execute(sql);
-                stmt.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Drops the tables defined in dropTables file.
-     */
-    public static void dropTables() {
-        ArrayList<String> queryList = parseSQLFile(dropTablesPath);
-
-        try {
-            for(String sql : queryList) {
-                //System.out.println(sql);
-                java.sql.Statement stmt = connect.createStatement();
-                stmt.execute(sql);
-                stmt.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Creates the tables defined in createTables file.
-     */
-    public static void createTables() {
-        ArrayList<String> queryList = parseSQLFile(createTablesPath);
-
-        try {
-            for(String sql : queryList) {
-                //System.out.println(sql);
+                System.out.println(sql);
                 java.sql.Statement stmt = connect.createStatement();
                 stmt.execute(sql);
                 stmt.close();
