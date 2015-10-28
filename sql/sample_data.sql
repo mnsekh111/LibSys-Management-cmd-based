@@ -44,56 +44,58 @@ INSERT INTO Course_Taken (patron_id,dep_abbreviation,id,year,semester) VALUES (2
 INSERT INTO Course_Taken (patron_id,dep_abbreviation,id,year,semester) VALUES (4,'CH',104,15,2);
 
 INSERT INTO Authors (id,name) VALUES ('A1','SK Goyal');
-INSERT INTO Publications (title,id,year_of_pub) VALUES ('Introduction to Chemistry','B1',TO_DATE('2005','YYYY'));
+INSERT INTO Publications (title,id,year_of_pub) VALUES ('Introduction to Chemistry','B1',2005);
 INSERT INTO Pub_Book (edition,isbn,publisher) VALUES (1,'B1','Pub1');
 INSERT INTO Written_by (pid,aid) VALUES ('B1','A1');
-INSERT INTO Copies(id,copy_type,lib_id,status) VALUES (1,'ELECTRONIC',0,'IN');
-INSERT INTO Copies(id,copy_type,lib_id,status) VALUES (2,'HARD',0,'IN');
+INSERT INTO Copies(id,pid,copy_type,lib_id,status) VALUES (1,'B1','ELECTRONIC',0,'IN');
+INSERT INTO Copies(id,pid,copy_type,lib_id,status) VALUES (2,'B1','HARD',0,'IN');
+INSERT INTO Copies(id,pid,copy_type,lib_id,status) VALUES (3,'B1','HARD',0,'IN');
 
 INSERT INTO Authors (id,name) VALUES ('A2','HC Verma');
-INSERT INTO Publications (title,id,year_of_pub) VALUES ('Introduction to Organic Chemistry','B2',TO_DATE('2006','YYYY'));
+INSERT INTO Publications (title,id,year_of_pub) VALUES ('Introduction to Organic Chemistry','B2',2006);
 INSERT INTO Pub_Book (edition,isbn,publisher) VALUES (2,'B2','Pub2');
 INSERT INTO Written_by (pid,aid) VALUES ('B2','A2');
-INSERT INTO Copies(id,copy_type,lib_id,status) VALUES (3,'ELECTRONIC',0,'IN');
-INSERT INTO Copies(id,copy_type,lib_id,status) VALUES (4,'HARD',0,'IN');
+INSERT INTO Copies(id,pid,copy_type,lib_id,status) VALUES (4,'B2','ELECTRONIC',0,'IN');
+INSERT INTO Copies(id,pid,copy_type,lib_id,status) VALUES (5,'B2','HARD',0,'IN');
+INSERT INTO Copies(id,pid,copy_type,lib_id,status) VALUES (6,'B2','HARD',0,'IN');
 
 INSERT INTO Authors (id,name) VALUES ('A3','Resnick Halliday Walker');
-INSERT INTO Publications (title,id,year_of_pub) VALUES ('Introduction to Physical Chemistry','B3',TO_DATE('2000','YYYY'));
+INSERT INTO Publications (title,id,year_of_pub) VALUES ('Introduction to Physical Chemistry','B3',2000);
 INSERT INTO Pub_Book (edition,isbn,publisher) VALUES (3,'B3','Pub3');
 INSERT INTO Written_by (pid,aid) VALUES ('B3','A3');
-INSERT INTO Copies(id,copy_type,lib_id,status) VALUES (5,'HARD',0,'IN');
-INSERT INTO Copies(id,copy_type,lib_id,status) VALUES (6,'HARD',0,'IN');
+INSERT INTO Copies(id,pid,copy_type,lib_id,status) VALUES (7,'B3','HARD',0,'IN');
+INSERT INTO Copies(id,pid,copy_type,lib_id,status) VALUES (8,'B3','HARD',0,'IN');
 
 INSERT INTO Authors (id,name) VALUES ('A4','RC Mukherjee');
-INSERT INTO Publications (title,id,year_of_pub) VALUES ('Introduction to Inorganic Chemistry','B4',TO_DATE('2005','YYYY'));
+INSERT INTO Publications (title,id,year_of_pub) VALUES ('Introduction to Inorganic Chemistry','B4',2005);
 INSERT INTO Pub_Book (edition,isbn,publisher) VALUES (4,'B4','Pub4');
 INSERT INTO Written_by (pid,aid) VALUES ('B4','A4');
-INSERT INTO Copies(id,copy_type,lib_id,status) VALUES (7,'HARD',0,'IN');
-INSERT INTO Copies(id,copy_type,lib_id,status) VALUES (8,'HARD',0,'IN');
+INSERT INTO Copies(id,pid,copy_type,lib_id,status) VALUES (9,'B3','HARD',0,'IN');
+INSERT INTO Copies(id,pid,copy_type,lib_id,status) VALUES (10,'B3','HARD',0,'IN');
 
 INSERT INTO Authors (id,name) VALUES ('A5','Roberto Navigli');
-INSERT INTO Publications (title,id,year_of_pub) VALUES ('Journal of Web Semantic','J1',TO_DATE('2010','YYYY'));
+INSERT INTO Publications (title,id,year_of_pub) VALUES ('Journal of Web Semantic','J1',2010);
 INSERT INTO Pub_Journal (issn) VALUES ('J1');
 INSERT INTO Written_by (pid,aid) VALUES ('J1','A5');
-INSERT INTO Copies(id,copy_type,lib_id,status) VALUES (9,'HARD',0,'IN');
+INSERT INTO Copies(id,pid,copy_type,lib_id,status) VALUES (11,'J1','HARD',0,'IN');
 
 INSERT INTO Authors (id,name) VALUES ('A6','Tim Berners Lee');
-INSERT INTO Publications (title,id,year_of_pub) VALUES ('International Journal on Semantic Web and Information','J2',TO_DATE('2011','YYYY'));
+INSERT INTO Publications (title,id,year_of_pub) VALUES ('International Journal on Semantic Web and Information','J2',2011);
 INSERT INTO Pub_Journal (issn) VALUES ('J2');
 INSERT INTO Written_by (pid,aid) VALUES ('J2','A6');
-INSERT INTO Copies(id,copy_type,lib_id,status) VALUES (10,'HARD',0,'IN');
+INSERT INTO Copies(id,pid,copy_type,lib_id,status) VALUES (12,'J2','HARD',0,'IN');
 
 INSERT INTO Authors (id,name) VALUES ('A7','HyeongSik Kim');
-INSERT INTO Publications (title,id,year_of_pub) VALUES ('Optimization Techniques for Large Scale Graph Analytics on Map Reduce','C1',TO_DATE('2013','YYYY'));
+INSERT INTO Publications (title,id,year_of_pub) VALUES ('Optimization Techniques for Large Scale Graph Analytics on Map Reduce','C1',2013);
 INSERT INTO Pub_ConferencePapers (conf_num,confName) VALUES ('C1','WWW');
 INSERT INTO Written_by (pid,aid) VALUES ('C1','A7');
-INSERT INTO Copies(id,copy_type,lib_id,status) VALUES (11,'HARD',0,'IN');
+INSERT INTO Copies(id,pid,copy_type,lib_id,status) VALUES (13,'C1','HARD',0,'IN');
 
 INSERT INTO Authors (id,name) VALUES ('A8','Sidan Gao');
-INSERT INTO Publications (title,id,year_of_pub) VALUES ('An agglomerative query model for discovery in linked data: semantics and approach','C2',TO_DATE('2014','YYYY'));
+INSERT INTO Publications (title,id,year_of_pub) VALUES ('An agglomerative query model for discovery in linked data: semantics and approach','C2',2014);
 INSERT INTO Pub_ConferencePapers (conf_num,confName) VALUES ('C2','SIGMOD');
 INSERT INTO Written_by (pid,aid) VALUES ('C2','A8');
-INSERT INTO Copies(id,copy_type,lib_id,status) VALUES (12,'HARD',0,'IN');
+INSERT INTO Copies(id,pid,copy_type,lib_id,status) VALUES (14,'C2','HARD',0,'IN');
 
 INSERT INTO Rooms(room_number,capacity,library_id,floor_no,room_type) VALUES (1,2,0,3,'CONF');
 INSERT INTO Rooms(room_number,capacity,library_id,floor_no,room_type) VALUES (2,3,0,3,'STUDY');
@@ -107,15 +109,12 @@ INSERT INTO Cameras (id,make,model,config,lid,memory,status) VALUES (1,'Olympus'
 INSERT INTO Cameras (id,make,model,config,lid,memory,status) VALUES (2,'Canon','EOS Rebel T4i','18-­135mm EF­S IS STM Lens',0,'32GB',1);
 INSERT INTO Cameras (id,make,model,config,lid,memory,status) VALUES (3,'Canon','EOS Rebel T4i','18­-135mm EF­S IS STM Lens',0,'32GB',1);
 
--- Waiting for response from Avi on this part...
---INSERT INTO CHECKS_OUT (id,patron_id,copy_id,start_time,end_time) VALUES (1,1,3,'08-Nov-2015','13-Nov-2015');
---UPDATE Copies SET status = 'OUT' WHERE id = 3;
---INSERT INTO CHECKS_OUT (id,patron_id,copy_id,start_time,end_time) VALUES (2,4,7,'07-Nov-2015','11-Nov-2015');
---UPDATE Copies SET status = 'OUT' WHERE id = 7;
---INSERT INTO CHECKS_OUT (id,patron_id,copy_id,start_time,end_time) VALUES (3,2,8,'01-Jul-2015','08-Aug-2015');
---UPDATE Copies SET status = 'OUT' WHERE id = 8;
---INSERT INTO CHECKS_OUT (id,patron_id,copy_id,start_time,end_time) VALUES (4,3,3,'01-Oct-2015','10-Oct-2015');
---UPDATE Copies SET status = 'OUT' WHERE id = 3;
+INSERT INTO CHECKS_OUT (id,patron_id,copy_id,start_time,end_time) VALUES (1,1,3,'08-Nov-2015','13-Nov-2015');
+INSERT INTO CHECKS_OUT (id,patron_id,copy_id,start_time,end_time) VALUES (2,4,7,'07-Nov-2015','11-Nov-2015');
+INSERT INTO CHECKS_OUT (id,patron_id,copy_id,start_time,end_time) VALUES (3,2,8,'01-Aug-2015','08-Aug-2015');
+UPDATE Copies SET status = 'OUT' WHERE id = 9;
+INSERT INTO CHECKS_OUT (id,patron_id,copy_id,start_time,end_time) VALUES (4,3,3,'01-Oct-2015','10-Oct-2015');
+UPDATE Copies SET status = 'OUT' WHERE id = 5;
 
 INSERT INTO Booked (patron_id,room_number,start_time,end_time,checked_out,checked_in) VALUES (5,3,TO_DATE('2015/11/01 09:00', 'YYYY/MM/DD HH24:MI'),TO_DATE('2015/11/01 11:30', 'YYYY/MM/DD HH24:MI'),NULL,NULL);
 INSERT INTO Booked (patron_id,room_number,start_time,end_time,checked_out,checked_in) VALUES (1,5,TO_DATE('2015/10/12 15:00', 'YYYY/MM/DD HH24:MI'),TO_DATE('2015/10/12 17:00', 'YYYY/MM/DD HH24:MI'),TO_DATE('2015/10/12 15:00', 'YYYY/MM/DD HH24:MI'),TO_DATE('2015/10/12 17:00', 'YYYY/MM/DD HH24:MI'));
