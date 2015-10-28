@@ -157,13 +157,16 @@ public class MenuPage {
 
 	private void studentPublicationMenu(Scanner in, int patronID) {
 		int selectedOption = 0;
+		String publicationId;
 		Publication publication = new Publication();
-		
-		System.out.println("\t1. Books");
-		System.out.println("\t2. Conference Papers");
-		System.out.println("\t3. Journal");
-		System.out.println("\t4. Back");
+
 		do {
+			System.out.println("\t1. Books");
+			System.out.println("\t2. Conference Papers");
+			System.out.println("\t3. Journal");
+			System.out.println("\t4. All");
+			System.out.println("\t5. Back");
+
 			selectedOption = in.nextInt();
 			switch (selectedOption) {
 			case 1:
@@ -175,11 +178,23 @@ public class MenuPage {
 			case 3:
 				publication.getAllJournals();
 				break;
+			case 4:
+				publication.getAll();
 			default:
 				break;
 			}
-		} while (selectedOption != 4);
-		
+
+			if (selectedOption >= 1 && selectedOption <= 4) {
+				System.out.println("Enter Publication ID (-1 to go back)");
+				publicationId = in.nextLine();
+				while (!publicationId.contentEquals("-1")) {
+					publication.getCopies(publicationId);
+					publicationId = in.nextLine();
+				}
+			}
+
+		} while (selectedOption != 5);
+
 		publication.cleanUp();
 	}
 

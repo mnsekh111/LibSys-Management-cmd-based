@@ -1,11 +1,14 @@
 package edu.ncsu.csc540.proj1.models;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 import edu.ncsu.csc540.proj1.db.DbConnector;
+import oracle.jdbc.OracleCallableStatement;
+import oracle.jdbc.OracleTypes;
 
 public class Publication {
 
@@ -90,7 +93,38 @@ public class Publication {
 			System.err.println(ex.getLocalizedMessage());
 		}
 	}
-
+	
+	public void getAll(){
+		getAllBooks();
+		getAllConferencePapers();
+		getAllJournals();
+	}
+	
+	public void getCopies(String pubId){
+    	Connection conn = db.getConnection();
+    	CallableStatement csmt = null;
+    	int counter = 1;
+    	try {
+			csmt =  conn.prepareCall("{call COPIES_AVAILABLE(?,?)}");
+			csmt.setString(counter++, pubId);
+			csmt.registerOutParameter(counter, OracleTypes.CURSOR);
+			csmt.execute();
+			ResultSet rs = ((OracleCallableStatement)csmt).getCursor(counter);
+			while(rs.next()){
+				System.out.print(rs.getInt("id"));
+				System.out.print(" | "+rs.getString("pid"));
+				System.out.print(" | "+rs.getString("title"));
+				System.out.print(" | "+rs.getString("copy_type"));
+				System.out.print(" | "+rs.getString("status"));
+				System.out.println();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			db.closeConnection();
+		}
+    }
 	public void cleanUp() {
 		try {
 			this.conn.close();
