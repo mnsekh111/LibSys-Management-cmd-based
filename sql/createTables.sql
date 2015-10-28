@@ -242,9 +242,10 @@ CREATE TABLE Booked(
     checked_out date,
     checked_in date,
 
-    CONSTRAINT pk_booked PRIMARY KEY (patron_id, room_number, start_time, end_time),
+    CONSTRAINT pk_booked PRIMARY KEY (room_number, start_time, end_time),
     CONSTRAINT fk_booked_patron FOREIGN KEY (patron_id) REFERENCES Patron(id),
-    CONSTRAINT fk_booked_rooms FOREIGN KEY (room_number) REFERENCES Rooms(room_number)
+    CONSTRAINT fk_booked_rooms FOREIGN KEY (room_number) REFERENCES Rooms(room_number),
+    CONSTRAINT chk_start_end CHECK(end_time > start_time)
 
 );---
 
