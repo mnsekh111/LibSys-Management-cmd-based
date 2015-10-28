@@ -458,11 +458,17 @@ SELECT INSERT_STUDENT('Ton','Hewitt',14,'GOOD','Australia','929786773','89010200
 SELECT INSERT_STUDENT('Rafa','Nadal',15,'GOOD','Spain','829746773','9944020020','12-Jan-1988','Male','25-Estona Road','Madrid',25606,'M.S.',1,'CSC') FROM DUAL;
 
 INSERT INTO Rooms(room_number,capacity,library_id,floor_no,room_type) VALUES (1,5,0,2,'CONF');
-INSERT INTO Rooms(room_number,capacity,library_id,floor_no,room_type) VALUES (2,6,0,2,'CONF');
+INSERT INTO Rooms(room_number,capacity,library_id,floor_no,room_type) VALUES (2,5,0,2,'CONF');
 INSERT INTO Rooms(room_number,capacity,library_id,floor_no,room_type) VALUES (3,2,0,2,'CONF');
 INSERT INTO Rooms(room_number,capacity,library_id,floor_no,room_type) VALUES (4,10,0,2,'STUDY');
 INSERT INTO Rooms(room_number,capacity,library_id,floor_no,room_type) VALUES (5,7,0,2,'STUDY');
 INSERT INTO Rooms(room_number,capacity,library_id,floor_no,room_type) VALUES (6,4,0,2,'STUDY');
 INSERT INTO Rooms(room_number,capacity,library_id,floor_no,room_type) VALUES (7,5,1,2,'STUDY');
-INSERT INTO Rooms(room_number,capacity,library_id,floor_no,room_type) VALUES (8,4,1,2,'STUDY');
+INSERT INTO Rooms(room_number,capacity,library_id,floor_no,room_type) VALUES (8,5,1,2,'STUDY');
 INSERT INTO Rooms(room_number,capacity,library_id,floor_no,room_type) VALUES (9,2,1,2,'STUDY');
+
+INSERT INTO Booked(patron_id,room_number,start_time,end_time,checked_out,checked_in) VALUES (10,7,TO_DATE('2015/11/01 09:00', 'YYYY/MM/DD HH24:MI'),TO_DATE('2015/11/01 12:00', 'YYYY/MM/DD HH24:MI'),NULL,NULL);
+INSERT INTO Booked(patron_id,room_number,start_time,end_time,checked_out,checked_in) VALUES (10,8,TO_DATE('2015/11/01 13:00', 'YYYY/MM/DD HH24:MI'),TO_DATE('2015/11/01 16:00', 'YYYY/MM/DD HH24:MI'),NULL,NULL);
+INSERT INTO Booked(patron_id,room_number,start_time,end_time,checked_out,checked_in) VALUES (10,9,TO_DATE('2015/11/02 13:00', 'YYYY/MM/DD HH24:MI'),TO_DATE('2015/11/02 16:00', 'YYYY/MM/DD HH24:MI'),NULL,NULL);
+
+

@@ -172,10 +172,12 @@ public class MenuPage {
         System.out.println("Library (0 for Hunt, 1 for Hill)? ");
         library = in.nextInt();
 
-        System.out.println("\n" + date);
-        System.out.println(early_hour + " to " + late_hour);
-        System.out.println(num_occupants);
-        System.out.println(library);
+        student.printAvailableRooms(in, patronID, date, early_hour, late_hour, num_occupants, library);
+
+        //System.out.println("\n" + date);
+        //System.out.println(early_hour + " to " + late_hour);
+        //System.out.println(num_occupants);
+        //System.out.println(library);
     }
 
     public void facultyMenu(Scanner in, int patronId) {

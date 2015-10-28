@@ -73,7 +73,7 @@ public class DBBuilder {
 
         try {
             for(String sql : queryList) {
-                System.out.println(sql);
+                //System.out.println(sql);
                 java.sql.Statement stmt = connect.createStatement();
                 stmt.execute(sql);
                 stmt.close();
