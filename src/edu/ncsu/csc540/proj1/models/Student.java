@@ -5,7 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 import edu.ncsu.csc540.proj1.db.DbConnector;
@@ -150,27 +153,36 @@ public class Student {
 
         //Check inputs
         if(late_hour <= early_hour) {
-            System.out.println("Hour range must be non-zero.");
+            System.out.println("\nHour range must be non-zero.\n");
             return;
         }
 
         if(late_hour - early_hour > 3) {
-            System.out.println("Hour range must be no more than three hours.");
+            System.out.println("\nHour range must be no more than three hours.\n");
             return;
         }
 
         if(lib < 0 || lib > 1) {
-            System.out.println("Invalid library ID (0 for Hunt, 1 for Hill).");
+            System.out.println("\nInvalid library ID (0 for Hunt, 1 for Hill).\n");
+            return;
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
+        Date today = new Date();
+        try {
+            Date input = sdf.parse(date);
+            if(today.compareTo(input) > 0) {
+                System.out.println("\nEnter a past date.\n");
+                return;
+            }
+        } catch (ParseException e1) {
+            System.out.println("\nThere was an error with your date input.\n");
             return;
         }
 
         //Deal with date
         String date_split[] = date.split("-"); //01-Nov-2015 0 1 2
-        date_split[1] = this.convertMonthtoNumber(date_split[1]);
-        if(date_split[1].equals("0")) {
-            System.out.println("Invalid month.");
-            return;
-        }
+        date_split[1] = convertMonthtoNumber(date_split[1]);
 
         //Continue
         try {
@@ -185,6 +197,11 @@ public class Student {
             ArrayList<Integer> avail_room_nums = new ArrayList<Integer>();
             while(rs2.next()) {
                 avail_room_nums.add(rs2.getInt("ROOM_NUMBER"));
+            }
+
+            if(avail_room_nums.size() == 0) {
+                System.out.println("\nThere are no rooms matching your criteria.\n");
+                return;
             }
 
             //Now get the reservations for those rooms on this day
@@ -207,32 +224,65 @@ public class Student {
 
             System.out.println();
 
-            //Print out available/reserved status of rooms
-            if(reservations.size() == 0) {
+            boolean valid_times = false;
+            int rm, from, to;
+            do {
+                //Print out available/reserved status of rooms
+                boolean flag;
                 for(int room : avail_room_nums) {
-                    System.out.println("Room " + room + " is AVAILABLE from " + early_hour + " to " + late_hour + ".");
-                }
-            } else {
-                for(int room : avail_room_nums) {
+                    flag = false;
                     for(Reservation r : reservations) {
                         if(r.rm_no == room) {
+                            flag = true;
                             System.out.println("Room " + room + " is RESERVED from " + r.start_time + " to " + r.end_time + ".");
                         }
                     }
+                    if(!flag) {
+                        System.out.println("Room " + room + " is AVAILABLE from " + early_hour + " to " + late_hour + ".");
+                    }
                 }
-            }
 
-            //Accept user input
-            System.out.print("\nWhat room number would you like to reserve? ");
-            int rm = Integer.parseInt(in.next());
-            System.out.print("From (24 hour clock, hour number)? ");
-            int from = Integer.parseInt(in.next());
-            System.out.print("To (24 hour clock, hour number)? ");
-            int to = Integer.parseInt(in.next());
+                //Accept user input
+                System.out.print("\nWhat room number would you like to reserve? ");
+                rm = Integer.parseInt(in.next());
+                System.out.print("From (24 hour clock, hour number)? ");
+                from = Integer.parseInt(in.next());
+                System.out.print("To (24 hour clock, hour number)? ");
+                to = Integer.parseInt(in.next());
+
+                if(reservations.size() == 0) {
+                    valid_times = true;
+                }
+
+                //error checking
+                //Go through list of reservations for that room and see if it violates any of them
+                for(Reservation r : reservations) {
+                    if(r.rm_no == rm) {
+                        if(from >= r.end_time || to <= r.start_time) {
+                            //starts after reservation OR ends before reservation
+                            valid_times = true;
+                        } else if((from <= r.start_time && to >= r.start_time) ||
+                                (from >= r.start_time && to <= r.end_time) ||
+                                (from >= r.start_time && from <= r.end_time)) {
+                            valid_times = false;
+                            break;
+                        } else {
+                            valid_times = true;
+                        }
+                    }
+                }
+
+                if(!valid_times) {
+                    System.out.println("Invalid selection. Please try again.\n");
+                }
+            } while (!valid_times);
+
 
             //Insert booking
-            Timestamp fromTS = Timestamp.valueOf(date_split[2] + "-" + date_split[1] + "-" + date_split[0] + " " + from + ":00:00");
-            Timestamp toTS = Timestamp.valueOf(date_split[2] + "-" + date_split[1] + "-" + date_split[0] + " " + to + ":00:00");
+            Timestamp fromTS = Timestamp.valueOf(date_split[2] + "-" +
+                    date_split[1] + "-" + date_split[0] + " " + from + ":00:00");
+            Timestamp toTS = Timestamp.valueOf(date_split[2] + "-" +
+                    date_split[1] + "-" + date_split[0] + " " + to + ":00:00");
             ps3 = conn.prepareStatement("INSERT INTO BOOKED "
                     + "(PATRON_ID,ROOM_NUMBER,START_TIME,END_TIME,"
                     + "CHECKED_OUT,CHECKED_IN) VALUES (?,?,?,?,"
@@ -245,95 +295,9 @@ public class Student {
             ps3.setNull(6, java.sql.Types.NULL);
 
             ps3.executeUpdate();
-            System.out.println("Reserved!");
-
-            /*
-            //Now we need to figure out when each room can be reserved
-            int valid_start_time = early_hour, valid_end_time = late_hour;
-            for(int room : avail_room_nums) {
-                //If there are no reservations, offer to reserve this room for
-                //whole time.
-                if(reservations.size() == 0) {
-                    System.out.print("Room " + room + " can be reserved from " + valid_start_time + " to " + valid_end_time + ". Reserve now? (y/n) ");
-                    String resp = in.next();
-                    if(resp.equalsIgnoreCase("y")) {
-                        //insert
-                        Timestamp from = Timestamp.valueOf(date_split[2] + "-" + date_split[1] + "-" + date_split[0] + " " + valid_start_time + ":00:00");
-                        Timestamp to = Timestamp.valueOf(date_split[2] + "-" + date_split[1] + "-" + date_split[0] + " " + valid_end_time + ":00:00");
-                        ps3 = conn.prepareStatement("INSERT INTO BOOKED "
-                                + "(PATRON_ID,ROOM_NUMBER,START_TIME,END_TIME,"
-                                + "CHECKED_OUT,CHECKED_IN) VALUES (?,?,?,?,"
-                                + "?,?)");
-                        ps3.setInt(1, patronID);
-                        ps3.setInt(2, room);
-                        ps3.setTimestamp(3, from);
-                        ps3.setTimestamp(4, to);
-                        ps3.setNull(5, java.sql.Types.NULL);
-                        ps3.setNull(6, java.sql.Types.NULL);
-
-                        ps3.executeUpdate();
-                        System.out.println("Reserved!");
-                        return;
-                    }
-                } else {
-                    //If there are reservations, check what times will work
-                    //then offer to reserve it for that time.
-                    Reservation r;
-                    ArrayList<ArrayList<Integer>> twoDArrayList = new ArrayList<ArrayList<Integer>>();
-                    for(int i = 0; i < reservations.size(); i++) {
-                        r = reservations.get(i);
-                        if(r.rm_no == room) {
-                            System.out.println("Room " + room + " is reserved from " + r.start_time + " to " + r.end_time + ".");
-                            /*
-                            if((early_hour <= r.start_time && late_hour <= r.start_time) || (early_hour >= r.end_time && late_hour >= r.end_time)) {
-                                valid_start_time = early_hour;
-                                valid_end_time = late_hour;
-                            } else if(early_hour <= r.start_time && late_hour >= r.start_time) {
-                                valid_start_time = early_hour;
-                                valid_end_time = r.start_time;
-                            } else if(early_hour >= r.start_time && late_hour > r.start_time) {
-                                valid_start_time = r.end_time;
-                                valid_end_time = late_hour;
-                            }
-                            if(valid_start_time != valid_end_time) {
-                                ArrayList<Integer> list = new ArrayList<Integer>();
-                                list.add(room);
-                                list.add(valid_start_time);
-                                list.add(valid_end_time);
-                                twoDArrayList.add(list);
-
-                                System.out.print("Room " + room + " can be reserved from " + valid_start_time + " to " + valid_end_time + ". Reserve now? (y/n) ");
-                                String resp = in.next();
-                                if(resp.equalsIgnoreCase("y")) {
-                                    //insert
-                                    Timestamp from = Timestamp.valueOf(date_split[2] + "-" + date_split[1] + "-" + date_split[0] + " " + valid_start_time + ":00:00");
-                                    Timestamp to = Timestamp.valueOf(date_split[2] + "-" + date_split[1] + "-" + date_split[0] + " " + valid_end_time + ":00:00");
-                                    ps3 = conn.prepareStatement("INSERT INTO BOOKED "
-                                            + "(PATRON_ID,ROOM_NUMBER,START_TIME,END_TIME,"
-                                            + "CHECKED_OUT,CHECKED_IN) VALUES (?,?,?,?,"
-                                            + "?,?)");
-                                    ps3.setInt(1, patronID);
-                                    ps3.setInt(2, room);
-                                    ps3.setTimestamp(3, from);
-                                    ps3.setTimestamp(4, to);
-                                    ps3.setNull(5, java.sql.Types.NULL);
-                                    ps3.setNull(6, java.sql.Types.NULL);
-
-                                    ps3.executeUpdate();
-                                    System.out.println("Reserved!");
-                                    return;
-                                }
-
-                            }
-                        }
-                    }
-                    //System.out.println(twoDArrayList.toString());
-                }
-            }
-             */
-
+            System.out.println("Reserved!\n");
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("\nThere was an error processing your room reservation. Please check your selection and try again.\n");
         }
     }
 
@@ -363,9 +327,8 @@ public class Student {
             return "11";
         case "Dec":
             return "12";
-        default:
-            return "0";
         }
+        return "0";
     }
 
     private class Reservation {
