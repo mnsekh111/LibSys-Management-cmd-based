@@ -155,7 +155,7 @@ CREATE TABLE Copies(
     lib_id number(10),
 
     CONSTRAINT pk_copies PRIMARY KEY (id),
-    CONSTRAINT fk_copies_library FOREIGN KEY (id) REFERENCES Library(id),
+    CONSTRAINT fk_copies_library FOREIGN KEY (lib_id) REFERENCES Library(id),
     CONSTRAINT chk_copy_type CHECK(copy_type IN ('ELECTRONIC','HARD'))
 );---
 
