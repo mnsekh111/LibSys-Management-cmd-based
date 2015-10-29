@@ -154,25 +154,41 @@ public class MenuPage {
     }
 
     public void studentConfStudyMenu(Scanner in, int patronID) {
-        String date = "";
-        int early_hour = 0, late_hour = 0;
-        int num_occupants = 0;
-        int library = 0; //0 = Hunt, 1 = DH Hill
+        in.nextLine();
 
-        in.nextLine(); //eat newline
+        //Find out if they want to reserve a new room or check in
+        System.out.println("Please select an option:");
+        System.out.println("\t1. Check in (take hold of room)");
+        System.out.println("\t2. Check out (release room)");
+        System.out.println("\t3. Reserve a new room");
 
-        System.out.println("Day to search for? (Enter in format dd-mmm-yyyy like 01-Nov-2015) ");
-        date += in.nextLine();
-        System.out.println("Earliest hour? (24 hour clock) ");
-        early_hour = in.nextInt();
-        System.out.println("Latest hour? (24 hour clock, no more than 3 hours after earliest hour) ");
-        late_hour = in.nextInt();
-        System.out.println("Number of occupants? ");
-        num_occupants = in.nextInt();
-        System.out.println("Library (0 for Hunt, 1 for Hill)? ");
-        library = in.nextInt();
+        int selection = in.nextInt();
+        if(selection == 1) {
+            //check in
+        } else if(selection == 2) {
+            //check out
+        } else if(selection == 3) {
+            //reserve
+            String date = "";
+            int early_hour = 0, late_hour = 0;
+            int num_occupants = 0;
+            int library = 0; //0 = Hunt, 1 = DH Hill
 
-        student.printAvailableRooms(in, patronID, date, early_hour, late_hour, num_occupants, library);
+            in.nextLine(); //eat newline
+
+            System.out.println("Day to search for? (Enter in format dd-mmm-yyyy like 01-Nov-2015) ");
+            date += in.nextLine();
+            System.out.println("Earliest hour? (24 hour clock) ");
+            early_hour = in.nextInt();
+            System.out.println("Latest hour? (24 hour clock, no more than 3 hours after earliest hour) ");
+            late_hour = in.nextInt();
+            System.out.println("Number of occupants? ");
+            num_occupants = in.nextInt();
+            System.out.println("Library (0 for Hunt, 1 for Hill)? ");
+            library = in.nextInt();
+
+            student.printAvailableRooms(in, patronID, date, early_hour, late_hour, num_occupants, library);
+        }
     }
 
     public void facultyMenu(Scanner in, int patronId) {

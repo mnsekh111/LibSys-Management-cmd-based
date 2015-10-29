@@ -145,6 +145,17 @@ public class Student {
         }
     }
 
+    public void checkInToRoom(Scanner in, int patronID) {
+        //select reserved rooms for this patron on today's date, allow check in
+        //if STATUS == 'VALID'
+        //Update table with start_time
+    }
+
+    public void checkOutRoom(Scanner in, int patronID) {
+        //select reserved rooms for this patron on today's date that have been checked out (NOT NULL)
+        //update table with end_time
+    }
+
     @SuppressWarnings("deprecation")
     public void printAvailableRooms(Scanner in, int patronID, String date, int early_hour, int late_hour, int occupants, int lib) {
         Connection conn = db.getConnection();
