@@ -467,8 +467,8 @@ INSERT INTO Rooms(room_number,capacity,library_id,floor_no,room_type) VALUES (7,
 INSERT INTO Rooms(room_number,capacity,library_id,floor_no,room_type) VALUES (8,5,1,2,'STUDY');
 INSERT INTO Rooms(room_number,capacity,library_id,floor_no,room_type) VALUES (9,2,1,2,'STUDY');
 
-INSERT INTO Booked(patron_id,room_number,start_time,end_time,checked_out,checked_in) VALUES (10,7,TO_DATE('2015/11/01 09:00', 'YYYY/MM/DD HH24:MI'),TO_DATE('2015/11/01 12:00', 'YYYY/MM/DD HH24:MI'),NULL,NULL);
-INSERT INTO Booked(patron_id,room_number,start_time,end_time,checked_out,checked_in) VALUES (10,8,TO_DATE('2015/11/01 13:00', 'YYYY/MM/DD HH24:MI'),TO_DATE('2015/11/01 16:00', 'YYYY/MM/DD HH24:MI'),NULL,NULL);
-INSERT INTO Booked(patron_id,room_number,start_time,end_time,checked_out,checked_in) VALUES (10,9,TO_DATE('2015/11/02 13:00', 'YYYY/MM/DD HH24:MI'),TO_DATE('2015/11/02 16:00', 'YYYY/MM/DD HH24:MI'),NULL,NULL);
+INSERT INTO Booked(patron_id,room_number,start_time,end_time,checked_out,checked_in,status) VALUES (10,7,TO_DATE('2015/11/01 09:00', 'YYYY/MM/DD HH24:MI'),TO_DATE('2015/11/01 12:00', 'YYYY/MM/DD HH24:MI'),NULL,NULL,'VALID');
+INSERT INTO Booked(patron_id,room_number,start_time,end_time,checked_out,checked_in,status) VALUES (10,8,TO_DATE('2015/11/01 13:00', 'YYYY/MM/DD HH24:MI'),TO_DATE('2015/11/01 16:00', 'YYYY/MM/DD HH24:MI'),NULL,NULL,'VALID');
+INSERT INTO Booked(patron_id,room_number,start_time,end_time,checked_out,checked_in,status) VALUES (10,9,TO_DATE('2015/11/02 13:00', 'YYYY/MM/DD HH24:MI'),TO_DATE('2015/11/02 16:00', 'YYYY/MM/DD HH24:MI'),NULL,NULL,'VALID');
 
 

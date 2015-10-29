@@ -241,11 +241,13 @@ CREATE TABLE Booked(
     end_time date,
     checked_out date,
     checked_in date,
+    status varchar2(7),
 
     CONSTRAINT pk_booked PRIMARY KEY (room_number, start_time, end_time),
     CONSTRAINT fk_booked_patron FOREIGN KEY (patron_id) REFERENCES Patron(id),
     CONSTRAINT fk_booked_rooms FOREIGN KEY (room_number) REFERENCES Rooms(room_number),
-    CONSTRAINT chk_start_end CHECK(end_time > start_time)
+    CONSTRAINT chk_start_end CHECK(end_time > start_time),
+    CONSTRAINT chk_booking_status CHECK(status IN('VALID','INVALID'))
 
 );---
 
