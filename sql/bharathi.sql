@@ -29,3 +29,7 @@ SELECT CO.patron_id, FI.amount FROM CHECKS_OUT CO, FINES FI WHERE CO.id = FI.che
 GROUP BY patron_id;
 
 ALTER TABLE BOOKED ADD (STATUS NUMBER); -- 0 - new request, 1- checked-out, 2- checked-in,3 - invalidated
+
+ALTER TABLE BOOKED DROP COLUMN STATUS;
+
+ALTER TABLE BOOKED ADD (STATUS VARCHAR(7));
