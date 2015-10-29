@@ -16,6 +16,14 @@ CREATE TABLE cam_queue (
 
 create sequence cam_queue_seq;
 
-CREATE VIEW CAM_QUEUE_TOPPER AS (select min(id) AS ID,cam_id, patron_id, request_date from cam_queue where status=0 group by cam_id, patron_id, REQUEST_DATE);
+CREATE OR REPLACE VIEW CAM_QUEUE_TOPPER AS (select min(id) AS ID,cam_id, patron_id, request_date from cam_queue where status=0 group by cam_id, patron_id, REQUEST_DATE);
 CREATE SEQUENCE REMINDERS_SEQ;
 CREATE SEQUENCE CAM_FINES_SEQ;
+
+CREATE OR REPLACE VIEW OUTSTANDING_AMOUNT AS 
+SELECT patron_id AS PATRON_ID, SUM(amount) AS AMOUNT 
+FROM 
+(SELECT BC.patron_id, CM.amount FROM BOOKED_CAMS BC, CAM_FINES CM WHERE CM.booked_cam_id=BC.id AND STATUS='UNPAID' 
+UNION
+SELECT CO.patron_id, FI.amount FROM CHECKS_OUT CO, FINES FI WHERE CO.id = FI.checks_out_id AND STATUS='UNPAID') 
+GROUP BY patron_id;

@@ -1,0 +1,23 @@
+CREATE OR REPLACE PROCEDURE FINES_MONTHLY_OUTSTANDING 
+IS 
+c_result SYS_REFCURSOR;
+my_record OUTSTANDING_AMOUNT%ROWTYPE;
+reminder_id NUMBER;
+message VARCHAR2(100);
+BEGIN
+
+OPEN c_result FOR
+  SELECT * FROM OUTSTANDING_AMOUNT;
+  
+  LOOP
+    FETCH c_result INTO my_record;
+    EXIT WHEN c_result%NOTFOUND;
+    SELECT REMINDERS_SEQ.NEXTVAL INTO reminder_id FROM DUAL;
+    message := CONCAT('Your outstanding amount is $',my_record.amount);
+    INSERT INTO REMINDERS VALUES (reminder_id, message, SYSDATE, my_record.patron_id);
+  END LOOP;
+CLOSE c_result;
+EXCEPTION 
+WHEN OTHERS THEN
+NULL;
+END FINES_MONTHLY_OUTSTANDING;

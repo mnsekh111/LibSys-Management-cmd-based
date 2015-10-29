@@ -54,3 +54,31 @@ BEGIN
     DBMS_SCHEDULER.enable(
              name => '"CSUBBIA"."CAM_FINES_JOB"');
 END;
+
+
+
+BEGIN
+    DBMS_SCHEDULER.CREATE_JOB (
+            job_name => '"CSUBBIA"."MONTHLY_OUTSTANDING_REMINDER"',
+            job_type => 'STORED_PROCEDURE',
+            job_action => 'CSUBBIA.FINES_MONTHLY_OUTSTANDING',
+            number_of_arguments => 0,
+            start_date => TO_TIMESTAMP_TZ('2015-10-29 12:28:14.000000000 AMERICA/NEW_YORK','YYYY-MM-DD HH24:MI:SS.FF TZR'),
+            repeat_interval => 'FREQ=MONTHLY;BYMONTHDAY=1;BYHOUR=12;BYMINUTE=0;BYSECOND=1',
+            end_date => NULL,
+            enabled => FALSE,
+            auto_drop => FALSE,
+            comments => 'This will send monthly outstanding reminders to the patrons');
+
+         
+     
+ 
+    DBMS_SCHEDULER.SET_ATTRIBUTE( 
+             name => '"CSUBBIA"."MONTHLY_OUTSTANDING_REMINDER"', 
+             attribute => 'logging_level', value => DBMS_SCHEDULER.LOGGING_OFF);
+      
+  
+    
+    DBMS_SCHEDULER.enable(
+             name => '"CSUBBIA"."MONTHLY_OUTSTANDING_REMINDER"');
+END;
