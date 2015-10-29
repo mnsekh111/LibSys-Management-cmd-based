@@ -51,23 +51,23 @@ public class Camera {
 		}
     }
     
-    public boolean book_camera(int patron_id, int camera_id){
+    public boolean book_camera(int patron_id, int queue_id){
     	
     	Connection conn = db.getConnection();
     	CallableStatement csmt = null;
     	int counter = 1;
     	try {
-			csmt =  conn.prepareCall("{call CAMERA_BOOK(?,?,?,?)}");
+			csmt =  conn.prepareCall("{call CAMERA_BOOK(?,?,?)}");
 			csmt.setInt(counter++, patron_id);
-			csmt.setInt(counter++, camera_id);
-			csmt.setDate(counter++, new Date(System.currentTimeMillis()));
-			//csmt.setDate(counter++, new Date(System.currentTimeMillis()+604800000));
+			csmt.setInt(counter++, queue_id);
 			csmt.registerOutParameter(counter, Types.INTEGER);
 			
 			csmt.execute();
 			System.out.println(csmt.getInt(counter));
 			if(csmt.getInt(counter) == 1){
-				return true;
+				System.out.println("------ The camera has been checked out successfully ------");
+			}else{
+				System.out.println("------ Check out failed ------");
 			}
 			
 		} catch (SQLException e) {
@@ -151,5 +151,38 @@ public class Camera {
 		}
 	
     }
-        
+    
+    public void getQueuedList(int patronId){
+    	Connection conn = db.getConnection();
+    	CallableStatement csmt = null;
+    	int counter = 1;
+    	int rowCount = 0 ;
+    	try {
+			csmt =  conn.prepareCall("{call CAMERA_4_CHKOUT(?,?)}");
+			csmt.setInt(counter++, patronId);
+			csmt.registerOutParameter(counter, OracleTypes.CURSOR);
+			csmt.execute();
+			ResultSet rs = ((OracleCallableStatement)csmt).getCursor(counter);
+			while(rs.next()){
+				System.out.print(rs.getInt("id"));
+				System.out.print(" | "+rs.getString("make"));
+				System.out.print(" | "+rs.getString("model"));
+				System.out.print(" | "+rs.getString("config"));
+				System.out.print(" | "+rs.getString("lid"));
+				System.out.println(" | "+rs.getString("memory"));
+				rowCount = 1;
+			}
+			if(rowCount == 0){
+				System.out.println("----------- You don't have any active request to be checked out. --------");
+			}else{
+				System.out.println("\tX. Select Id to checkout.");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			db.closeConnection();
+		}
+    }
+     
 }

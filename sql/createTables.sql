@@ -254,7 +254,7 @@ CREATE TABLE Cam_Fines (
     booked_cam_id number(10),
     amount number(10) NOT NULL,
     status varchar2(25),
-    fine_date date,
+    --fine_date date,
 
     CONSTRAINT pk_cam_fines PRIMARY KEY (id),
     CONSTRAINT fk_fines_booked_cams FOREIGN KEY (booked_cam_id) REFERENCES Booked_Cams(id),

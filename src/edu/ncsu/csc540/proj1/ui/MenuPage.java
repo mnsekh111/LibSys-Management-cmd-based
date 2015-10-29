@@ -1,11 +1,17 @@
 package edu.ncsu.csc540.proj1.ui;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Scanner;
 
 import edu.ncsu.csc540.proj1.models.Camera;
 
 public class MenuPage {
+	
+	private int cameraCheckoutDay = 6;
+	private int cameraCheckoutStartTime = 9;
+	private int cameraCheckoutEndTime = 12;
+	
 
     public MenuPage() {
 
@@ -75,6 +81,7 @@ public class MenuPage {
     	do{
     		System.out.println("\t1. Request Cameras");
     		System.out.println("\t2. Checked Out Cameras");
+    		System.out.println("\t3. Check Out New Request");
     		System.out.println("\t0. Back");
     		selectedOption = in.nextInt();
     		if(selectedOption == 1){
@@ -105,6 +112,24 @@ public class MenuPage {
     					cam.returnCamera(idToReturn);
     				}
     			}while(innerOption!=0);
+    		}else if(selectedOption ==3){
+    			Date dt = new Date();
+    			Calendar cal = Calendar.getInstance();
+    			
+    			if(true){//dt.getHours()> cameraCheckoutStartTime && dt.getHours() < cameraCheckoutEndTime &&  cal.get(Calendar.DAY_OF_WEEK) == cameraCheckoutDay){
+    				int innerOption = 0;
+    				do{
+    				cam.getQueuedList(patronId);       			
+        			System.out.println("\t0. Back.");
+        			
+        			innerOption = in.nextInt();
+        			cam.book_camera(innerOption, patronId);
+        			
+    				}while(innerOption != 0 );
+    			}else{
+    				System.out.println(" -------------- You cannot checkout camera at this time. --------------");
+    			}
+    			
     		}
     	}while(selectedOption != 0);
     }

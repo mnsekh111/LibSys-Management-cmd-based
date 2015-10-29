@@ -18,3 +18,4 @@ create sequence cam_queue_seq;
 
 CREATE VIEW CAM_QUEUE_TOPPER AS (select min(id) AS ID,cam_id, patron_id, request_date from cam_queue where status=0 group by cam_id, patron_id, REQUEST_DATE);
 CREATE SEQUENCE REMINDERS_SEQ;
+CREATE SEQUENCE CAM_FINES_SEQ;
