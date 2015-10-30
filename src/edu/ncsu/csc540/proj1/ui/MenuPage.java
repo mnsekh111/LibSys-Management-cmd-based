@@ -79,9 +79,9 @@ public class MenuPage {
     	Camera cam = new Camera();
     	int selectedOption = 0;
     	do{
-    		System.out.println("\t1. Request Cameras");
+    		System.out.println("\t1. Show available cameras");
     		System.out.println("\t2. Checked Out Cameras");
-    		System.out.println("\t3. Check Out New Request");
+    		System.out.println("\t3. New Checkout Request");
     		System.out.println("\t0. Back");
     		selectedOption = in.nextInt();
     		if(selectedOption == 1){
