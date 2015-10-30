@@ -153,12 +153,14 @@ public class MenuPage {
     		System.out.println("\tX. Enter 'All' to pay all the fines");
     		System.out.println("\t0. Back");
     		innerOption = in.next();
-    		if(innerOption.equalsIgnoreCase("All"))
+    		if(innerOption.equalsIgnoreCase("All")){
     			due.payAllFines(patronId);
-    		else if(innerOption != "0")
+    		}
+    		else if(!innerOption.equalsIgnoreCase("0")){
     			due.payFine(innerOption, patronId);
+    		}
     	}
-    	}while(innerOption != "0");
+    	}while(!innerOption.equalsIgnoreCase("0"));
     }
 }
 
