@@ -158,15 +158,17 @@ public class MenuPage {
 
         //Find out if they want to reserve a new room or check in
         System.out.println("Please select an option:");
-        System.out.println("\t1. Check in (take hold of room)");
-        System.out.println("\t2. Check out (release room)");
+        System.out.println("\t1. Check out (take hold of room)");
+        System.out.println("\t2. Check in (release room)");
         System.out.println("\t3. Reserve a new room");
 
         int selection = in.nextInt();
         if(selection == 1) {
-            //check in
-        } else if(selection == 2) {
             //check out
+            student.checkOutRoom(in, patronID);
+        } else if(selection == 2) {
+            //check in
+            student.checkInRoom(in, patronID);
         } else if(selection == 3) {
             //reserve
             String date = "";
