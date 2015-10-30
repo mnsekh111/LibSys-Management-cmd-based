@@ -222,16 +222,6 @@ public class Student {
     public void checkInRoom(Scanner in, int patronID) {
         //select reserved rooms for this patron on today's date that have been checked out (NOT NULL)
         //update table with end_time
-        /*
-        SELECT *
-        FROM BOOKED
-        WHERE PATRON_ID = 10
-        AND STATUS = 'VALID'
-        AND CHECKED_IN IS NOT NULL
-        AND CHECKED_OUT IS NULL
-        AND START_TIME LIKE TO_DATE('2015/11/02', 'YYYY/MM/DD')
-        ORDER BY ROOM_NUMBER
-        */
         Connection conn = db.getConnection();
         PreparedStatement ps1 = null, ps2 = null;
         ResultSet rs1 = null;
@@ -256,8 +246,6 @@ public class Student {
                     avail_rooms.add(Integer.parseInt(rs1.getString("ROOM_NUMBER")));
                 }
             }
-
-            System.out.println(avail_rooms.toString());
 
             if(avail_rooms.size() == 0) {
                 System.out.println("No reservations to check in.\n");
@@ -446,8 +434,6 @@ public class Student {
                     date_split[1] + "-" + date_split[0] + " " + from + ":00:00");
             Timestamp toTS = Timestamp.valueOf(date_split[2] + "-" +
                     date_split[1] + "-" + date_split[0] + " " + to + ":00:00");
-            System.out.println(fromTS.toString());
-            System.out.println(toTS.toString());
             ps3 = conn.prepareStatement("INSERT INTO BOOKED "
                     + "(PATRON_ID,ROOM_NUMBER,START_TIME,END_TIME,"
                     + "CHECKED_OUT,CHECKED_IN,STATUS) VALUES (?,?,?,?,"

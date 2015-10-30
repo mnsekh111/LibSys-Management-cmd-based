@@ -41,7 +41,6 @@ public class MenuPage {
                 studentResourcesMenu(in, patronId);
                 break;
             case 3:
-                studentConfStudyMenu(in, patronId);
                 break;
             }
         } while(selectedOption != 7);
@@ -136,7 +135,7 @@ public class MenuPage {
         do {
              System.out.println("Please select an option:");
              System.out.println("\t1. Publications");
-             System.out.println("\t2. Conference/Study Rooms");
+             System.out.println("\t2. Study Rooms");
              System.out.println("\t3. Cameras");
              System.out.println("\t4. Back\n");
              selectedOption = in.nextInt();
@@ -180,9 +179,9 @@ public class MenuPage {
 
             System.out.println("Day to search for? (Enter in format dd-mmm-yyyy like 01-Nov-2015) ");
             date += in.nextLine();
-            System.out.println("Earliest hour? (24 hour clock) ");
+            System.out.println("Earliest hour to search? (24 hour clock, hour only) ");
             early_hour = in.nextInt();
-            System.out.println("Latest hour? (24 hour clock, no more than 3 hours after earliest hour) ");
+            System.out.println("Latest hour to search? (24 hour clock, hour only, <= 3 hours after earliest hour) ");
             late_hour = in.nextInt();
             System.out.println("Number of occupants? ");
             num_occupants = in.nextInt();
@@ -214,7 +213,6 @@ public class MenuPage {
                 facultyResourcesMenu(in, patronId);
                 break;
             case 3:
-                facultyConfStudyMenu(in, patronId);
                 break;
             }
         } while(selectedOption != 7);
@@ -288,25 +286,46 @@ public class MenuPage {
     }
 
     public void facultyConfStudyMenu(Scanner in, int patronID) {
-        String date = null;
-        int early_hour = 0, late_hour = 0;
-        int num_occupants = 0;
-        int library = 0; //0 = Hunt, 1 = DH Hill
-        System.out.print("Day to search for? (Enter in format dd-mmm-yyyy like 01-Nov-2015) ");
-        date = in.nextLine();
-        System.out.println("Earliest hour? (24 hour clock) ");
-        early_hour = in.nextInt();
-        System.out.println("Latest hour? (24 hour clock, no more than 3 hours after earliest hour) ");
-        late_hour = in.nextInt();
-        System.out.print("Number of occupants? ");
-        num_occupants = in.nextInt();
-        System.out.print("Library (0 for Hunt, 1 for Hill)? ");
-        library = in.nextInt();
+        in.nextLine();
 
-        System.out.println(date);
-        System.out.println(early_hour + " to " + late_hour);
-        System.out.println(num_occupants);
-        System.out.println(library);
+        //Find out if they want to reserve a new room or check in
+        System.out.println("Please select an option:");
+        System.out.println("\t1. Check out (take hold of room)");
+        System.out.println("\t2. Check in (release room)");
+        System.out.println("\t3. Reserve a new room");
+
+        int selection = in.nextInt();
+        if(selection == 1) {
+            //check out
+            faculty.checkOutRoom(in, patronID);
+        } else if(selection == 2) {
+            //check in
+            faculty.checkInRoom(in, patronID);
+        } else if(selection == 3) {
+            //reserve
+            String date = "";
+            int early_hour = 0, late_hour = 0;
+            int num_occupants = 0;
+            int library = 0; //0 = Hunt, 1 = DH Hill
+            int type = 0; //0 = conf, 1 = study
+
+            in.nextLine(); //eat newline
+
+            System.out.println("Day to search for? (Enter in format dd-mmm-yyyy like 01-Nov-2015) ");
+            date += in.nextLine();
+            System.out.println("Earliest hour to search? (24 hour clock, hour only) ");
+            early_hour = in.nextInt();
+            System.out.println("Latest hour to search? (24 hour clock, hour only, <= 3 hours after earliest hour) ");
+            late_hour = in.nextInt();
+            System.out.println("Number of occupants? ");
+            num_occupants = in.nextInt();
+            System.out.println("Library (0 for Hunt, 1 for Hill)? ");
+            library = in.nextInt();
+            System.out.println("Type of room (0 for Conference, 1 for Study)? ");
+            type = in.nextInt();
+
+            faculty.printAvailableRooms(in, patronID, date, early_hour, late_hour, num_occupants, library, type);
+        }
     }
 }
 
