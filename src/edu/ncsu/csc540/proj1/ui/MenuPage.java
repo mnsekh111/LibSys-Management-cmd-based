@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Scanner;
 
 import edu.ncsu.csc540.proj1.models.Camera;
+import edu.ncsu.csc540.proj1.models.Due;
 
 public class MenuPage {
 	
@@ -38,6 +39,8 @@ public class MenuPage {
     		selectedOption = in.nextInt();
     		if(selectedOption == 4){
     			resourceRequest(in, patronId);
+    		}else if(selectedOption == 6){
+    			handleBalanceDue(in, patronId);
     		}
     	}while(selectedOption != 7);
     }
@@ -56,6 +59,8 @@ public class MenuPage {
     		selectedOption = in.nextInt();
     		if(selectedOption == 4){
     			resourceRequest(in, patronId);
+    		}else if(selectedOption == 6){
+    			handleBalanceDue(in, patronId);
     		}
     	}while(selectedOption != 7);
     }
@@ -116,7 +121,7 @@ public class MenuPage {
     			Date dt = new Date();
     			Calendar cal = Calendar.getInstance();
     			
-    			if(true){//dt.getHours()> cameraCheckoutStartTime && dt.getHours() < cameraCheckoutEndTime &&  cal.get(Calendar.DAY_OF_WEEK) == cameraCheckoutDay){
+    			if(dt.getHours()> cameraCheckoutStartTime && dt.getHours() < cameraCheckoutEndTime &&  cal.get(Calendar.DAY_OF_WEEK) == cameraCheckoutDay){
     				int innerOption = 0;
     				do{
     				cam.getQueuedList(patronId);       			
@@ -132,6 +137,28 @@ public class MenuPage {
     			
     		}
     	}while(selectedOption != 0);
+    }
+    
+    public void handleBalanceDue(Scanner in, int patronId){
+    	Due due = new Due();
+    	String innerOption = "0";
+    	do{
+    	int total = due.getFines(patronId);
+    	if(total == 0){
+    		System.out.println("---------- No outstanding due. ----------");
+    		break;
+    	}else{
+    		System.out.println("Total Outstading Amount : "+ total);
+    		System.out.println("\tX. Enter an ID to pay the fine");
+    		System.out.println("\tX. Enter 'All' to pay all the fines");
+    		System.out.println("\t0. Back");
+    		innerOption = in.next();
+    		if(innerOption.equalsIgnoreCase("All"))
+    			due.payAllFines(patronId);
+    		else if(innerOption != "0")
+    			due.payFine(innerOption, patronId);
+    	}
+    	}while(innerOption != "0");
     }
 }
 
