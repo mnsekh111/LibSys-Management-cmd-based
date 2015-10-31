@@ -113,6 +113,9 @@ CREATE TABLE Publications(
 
 );---
 
+ALTER TABLE Publications
+MODIFY (year_of_pub number(4));---
+
 CREATE TABLE Pub_ConferencePapers(
     conf_num varchar2(10),
     confName varchar2(50),
@@ -221,6 +224,9 @@ CREATE TABLE CHECKS_OUT(
     CONSTRAINT fk_checks_out_patron FOREIGN KEY (patron_id) REFERENCES Patron(id),
     CONSTRAINT fk_checks_out_copies FOREIGN KEY (copy_id) REFERENCES Copies(id)
 );---
+
+alter table checks_out
+add ( ACT_RETURN_TIME date);---
 
 CREATE TABLE Fines (
     id number(10),
