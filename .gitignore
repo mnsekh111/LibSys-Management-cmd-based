@@ -1,1 +1,3 @@
 /bin/
+*.properties
+.metadata/.plugins/org.eclipse.rse.ui/.log

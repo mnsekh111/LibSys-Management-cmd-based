@@ -225,6 +225,9 @@ CREATE TABLE CHECKS_OUT(
     CONSTRAINT fk_checks_out_copies FOREIGN KEY (copy_id) REFERENCES Copies(id)
 );---
 
+alter table checks_out
+add ( ACT_RETURN_TIME date);---
+
 CREATE TABLE Fines (
     id number(10),
     checks_out_id number(10),
