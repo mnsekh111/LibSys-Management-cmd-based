@@ -45,6 +45,7 @@ public class Main {
             } else {
                 System.out.println("\n **** User Not Found **** \n");
             }
+            patron_id = 0;
         } while(true);
     }
 }
