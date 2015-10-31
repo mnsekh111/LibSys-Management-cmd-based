@@ -15,8 +15,7 @@ public class Main {
      * Main method that builds a database and reads from it
      * @param args
      * @throws Exception
-     */
-	public static int patron_id = 0;
+     */ 
     public static void main(String[] args) {
         OracleAccess dao = new OracleAccess();
 
@@ -28,7 +27,7 @@ public class Main {
 
             //Display login option
             Scanner in = new Scanner(System.in);
-            
+            int patron_id = 0;
             while(patron_id == 0) {
                 patron_id = menu.loginMenu(in);
             }
@@ -45,7 +44,6 @@ public class Main {
             } else {
                 System.out.println("\n **** User Not Found **** \n");
             }
-            patron_id = 0;
         } while(true);
     }
 }

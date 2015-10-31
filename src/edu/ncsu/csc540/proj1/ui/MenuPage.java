@@ -186,7 +186,7 @@ public class MenuPage {
 			}
 
 			if (selectedOption >= 1 && selectedOption <= 4) {
-				choosePublication(in, publication);
+				choosePublication(in, publication,patronID);
 			}
 
 		} while (selectedOption != 5);
@@ -194,7 +194,7 @@ public class MenuPage {
 		publication.cleanUp();
 	}
 
-	public void choosePublication(Scanner in, Publication publication){
+	public void choosePublication(Scanner in, Publication publication,int patronID){
 		String publicationId;
 		int copyId;
 		do{
@@ -206,7 +206,7 @@ public class MenuPage {
 				System.out.println("Enter Copy ID (-1 to cancel)");
 				copyId = in.nextInt();
 				if(copyId!=-1)
-					publication.checkOutCopy(Main.patron_id, copyId);
+					publication.checkOutCopy(patronID, copyId);
 			}
 		}while(!publicationId.contentEquals("-1"));
 	}
