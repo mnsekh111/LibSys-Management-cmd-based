@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Builds the database for the project
@@ -17,7 +18,21 @@ public class DBBuilder {
     /**
      * Path to the createTables.sql file
      */
-    private static String createTablesPath = "sql/createTables.sql";
+    private static String[] createTablesPath = {"sql/createTables.sql",
+    		"sql/bharathi.sql",
+    		"sql/bharathi_procedures/Camera/CAMERA_4_CHKOUT.sql",
+    		"sql/bharathi_procedures/Camera/CAMERA_AVAILABLE.sql",
+    		"sql/bharathi_procedures/Camera/CAMERA_BOOK.sql",
+    		"sql/bharathi_procedures/Camera/CAMERA_CHECKED_OUT.sql",
+    		"sql/bharathi_procedures/Camera/CAMERA_FINES.sql",
+    		"sql/bharathi_procedures/Camera/CAMERA_REQ.sql",
+    		"sql/bharathi_procedures/Camera/CAMERA_RETURN.sql",
+    		"sql/bharathi_procedures/Camera/CAMERA_SEND_ALERT_1.sql",
+    		"sql/bharathi_procedures/Camera/CAMERA_SEND_ALERT_2.sql",
+    		"sql/bharathi_procedures/Fines/PAY_ALL_FINES.sql",
+    		"sql/bharathi_procedures/Fines/PAY_FINE.sql",
+    		"sql/bharathi_procedures/monthly_outstanding/FINES_MONTHLY_OUTSTANDING.sql",
+    		"sql/bharathi_procedures/Rooms/ROOMS_INVALIDATE.sql"};
 
     /**
      * Path to the dropTables.sql file
@@ -57,11 +72,15 @@ public class DBBuilder {
         System.out.println("Dropping tables...");
         executeSQL(dropTablesPath);
         System.out.println("Creating tables...");
-        executeSQL(createTablesPath);
-        System.out.println("Inserting test data...");
-        executeSQL(testDataPath);
-        //System.out.println("Inserting sample data...");
-        //executeSQL(sampleDataPath);
+//        executeSQL(createTablesPath);
+        for(int i=0;i<createTablesPath.length;i++){
+        	executeSQL(createTablesPath[i]);
+        }
+//        System.out.println("Inserting test data...");
+        //executeSQL(testDataPath);
+        
+        System.out.println("Inserting sample data...");
+        executeSQL(sampleDataPath);
         long endTime = System.currentTimeMillis();
         System.out.println("Operation completed in " + (endTime - startTime) + "ms.");
 
@@ -71,16 +90,18 @@ public class DBBuilder {
     public static void executeSQL(String path) {
         ArrayList<String> queryList = parseSQLFile(path);
 
-        try {
-            for(String sql : queryList) {
-                //System.out.println(sql);
-                java.sql.Statement stmt = connect.createStatement();
-                stmt.execute(sql);
-                stmt.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        
+        for(String sql : queryList) {
+        	System.out.println(sql);
+        	try {
+        		java.sql.Statement stmt = connect.createStatement();
+        		stmt.execute(sql);
+        		stmt.close();
+        	} catch (SQLException e) {
+        		e.printStackTrace();
+        	}
         }
+        
     }
 
     /**
@@ -93,7 +114,7 @@ public class DBBuilder {
         ArrayList<String> queryList = new ArrayList<String>();
 
         //Using the delimeter of --- in createTables.sql
-        boolean useDashDelimeter = path.equals(createTablesPath);
+        boolean useDashDelimeter = Arrays.asList(createTablesPath).contains(path);
 
         try {
             BufferedReader reader = new BufferedReader(new FileReader(new File(path)));
@@ -102,15 +123,15 @@ public class DBBuilder {
             while((line = reader.readLine()) != null) {
                 if(useDashDelimeter) {
                     if(line.endsWith("end;---")) {
-                        currentQuery += line.substring(0, line.length() - 3);
+                        currentQuery +="\n"+ line.substring(0, line.length() - 3);
                         queryList.add(currentQuery);
                         currentQuery = "";
                     } else if(line.endsWith("---")) {
-                        currentQuery += line.substring(0, line.length() - 4);
+                        currentQuery +="\n"+ line.substring(0, line.length() - 4);
                         queryList.add(currentQuery);
                         currentQuery = "";
                     } else {
-                        currentQuery += line;
+                        currentQuery +="\n"+ line;
                     }
                 } else {
                     for(int i = 0; i < line.length(); i++) {

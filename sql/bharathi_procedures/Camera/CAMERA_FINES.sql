@@ -25,4 +25,4 @@ BEGIN
     END;
   END LOOP;
   CLOSE c_result;
-END CAMERA_FINES;
+END CAMERA_FINES; ---

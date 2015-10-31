@@ -17,4 +17,4 @@ BEGIN
   SELECT cam_queue_seq.NEXTVAL INTO queue_id FROM DUAL;
   INSERT INTO CAM_QUEUE VALUES(queue_id, cam_id, patron_id, borrow_date, 0);
   SELECT COUNT(*) INTO queue_number FROM CAM_QUEUE WHERE CAM_ID = cam_id AND PATRON_ID = patron_id AND REQUEST_DATE = borrow_date;
-END CAMERA_REQ;
+END CAMERA_REQ; ---

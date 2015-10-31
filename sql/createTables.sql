@@ -113,8 +113,7 @@ CREATE TABLE Publications(
 
 );---
 
-ALTER TABLE Publications
-MODIFY (year_of_pub number(4));---
+ALTER TABLE Publications MODIFY (year_of_pub number(4));---
 
 CREATE TABLE Pub_ConferencePapers(
     conf_num varchar2(10),
@@ -225,8 +224,7 @@ CREATE TABLE CHECKS_OUT(
     CONSTRAINT fk_checks_out_copies FOREIGN KEY (copy_id) REFERENCES Copies(id)
 );---
 
-alter table checks_out
-add ( ACT_RETURN_TIME date);---
+alter table checks_out add ( ACT_RETURN_TIME date);---
 
 CREATE TABLE Fines (
     id number(10),
@@ -274,7 +272,6 @@ CREATE TABLE Cam_Fines (
     booked_cam_id number(10),
     amount number(10) NOT NULL,
     status varchar2(25),
-    --fine_date date,
 
     CONSTRAINT pk_cam_fines PRIMARY KEY (id),
     CONSTRAINT fk_fines_booked_cams FOREIGN KEY (booked_cam_id) REFERENCES Booked_Cams(id),
