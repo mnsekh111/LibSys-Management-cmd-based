@@ -2,6 +2,7 @@ package edu.ncsu.csc540.proj1.ui;
 
 import java.util.Scanner;
 
+import edu.ncsu.csc540.proj1.main.Main;
 import edu.ncsu.csc540.proj1.models.Faculty;
 import edu.ncsu.csc540.proj1.models.Publication;
 import edu.ncsu.csc540.proj1.models.Student;
@@ -157,7 +158,7 @@ public class MenuPage {
 
 	private void studentPublicationMenu(Scanner in, int patronID) {
 		int selectedOption = 0;
-		String publicationId;
+		int copyId;
 		Publication publication = new Publication();
 
 		do {
@@ -185,12 +186,7 @@ public class MenuPage {
 			}
 
 			if (selectedOption >= 1 && selectedOption <= 4) {
-				System.out.println("Enter Publication ID (-1 to go back)");
-				publicationId = in.nextLine();
-				while (!publicationId.contentEquals("-1")) {
-					publication.getCopies(publicationId);
-					publicationId = in.nextLine();
-				}
+				choosePublication(in, publication);
 			}
 
 		} while (selectedOption != 5);
@@ -198,6 +194,23 @@ public class MenuPage {
 		publication.cleanUp();
 	}
 
+	public void choosePublication(Scanner in, Publication publication){
+		String publicationId;
+		int copyId;
+		do{
+			System.out.println("Enter Publication ID (-1 to go back)");
+			publicationId = in.next();
+			if(!publicationId.contentEquals("-1"))
+			{
+				publication.getCopies(publicationId);
+				System.out.println("Enter Copy ID (-1 to cancel)");
+				copyId = in.nextInt();
+				if(copyId!=-1)
+					publication.checkOutCopy(Main.patron_id, copyId);
+			}
+		}while(!publicationId.contentEquals("-1"));
+	}
+	
 	public void studentConfStudyMenu(Scanner in, int patronID) {
 		int num_occupants = 0;
 		int library = 0; // 0 = Hunt, 1 = DH Hill

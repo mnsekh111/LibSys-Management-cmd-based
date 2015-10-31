@@ -16,6 +16,7 @@ public class Main {
      * @param args
      * @throws Exception
      */
+	public static int patron_id = 0;
     public static void main(String[] args) {
         OracleAccess dao = new OracleAccess();
 
@@ -27,7 +28,7 @@ public class Main {
 
             //Display login option
             Scanner in = new Scanner(System.in);
-            int patron_id = 0;
+            
             while(patron_id == 0) {
                 patron_id = menu.loginMenu(in);
             }

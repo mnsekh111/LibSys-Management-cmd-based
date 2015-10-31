@@ -101,7 +101,6 @@ public class Publication {
 	}
 	
 	public void getCopies(String pubId){
-    	Connection conn = db.getConnection();
     	CallableStatement csmt = null;
     	int counter = 1;
     	try {
@@ -118,13 +117,34 @@ public class Publication {
 				System.out.print(" | "+rs.getString("status"));
 				System.out.println();
 			}
+			
+			csmt.close();
+			rs.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally{
-			db.closeConnection();
 		}
     }
+	
+	public void checkOutCopy(int patronId, int copyId){
+    	CallableStatement csmt = null;
+    	int counter = 1;
+    	try {
+			csmt =  conn.prepareCall("{call PUB_CHECK_OUT(?,?,?)}");
+			csmt.setInt(counter++, patronId);
+			csmt.setInt(counter++, copyId);
+			csmt.registerOutParameter(counter, OracleTypes.VARCHAR);
+			csmt.execute();
+			String output = ((OracleCallableStatement)csmt).getString(counter);
+			System.out.println(output + "\n");
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+	
+	
 	public void cleanUp() {
 		try {
 			this.conn.close();
