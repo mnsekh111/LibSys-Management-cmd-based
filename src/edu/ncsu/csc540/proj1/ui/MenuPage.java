@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Scanner;
 
 import edu.ncsu.csc540.proj1.models.Faculty;
+import edu.ncsu.csc540.proj1.models.Publication;
 import edu.ncsu.csc540.proj1.models.Student;
 import edu.ncsu.csc540.proj1.models.Camera;
 import edu.ncsu.csc540.proj1.models.Due;
@@ -155,6 +156,7 @@ public class MenuPage {
 
              switch(selectedOption) {
              case 1:
+            	 studentPublicationMenu(in, patronID);
                  break;
              case 2:
                  studentConfStudyMenu(in, patronID);
@@ -429,5 +431,63 @@ public class MenuPage {
     	}
     	}while(!innerOption.equalsIgnoreCase("0"));
     }
+    
+
+	private void studentPublicationMenu(Scanner in, int patronID) {
+		int selectedOption = 0;
+		int copyId;
+		Publication publication = new Publication();
+
+		do {
+			System.out.println("\t1. Books");
+			System.out.println("\t2. Conference Papers");
+			System.out.println("\t3. Journal");
+			System.out.println("\t4. All");
+			System.out.println("\t5. Back");
+
+			selectedOption = in.nextInt();
+			switch (selectedOption) {
+			case 1:
+				publication.getAllBooks();
+				break;
+			case 2:
+				publication.getAllConferencePapers();
+				break;
+			case 3:
+				publication.getAllJournals();
+				break;
+			case 4:
+				publication.getAll();
+			default:
+				break;
+			}
+
+			if (selectedOption >= 1 && selectedOption <= 4) {
+				choosePublication(in, publication,patronID);
+			}
+
+		} while (selectedOption != 5);
+
+		publication.cleanUp();
+	}
+
+
+	public void choosePublication(Scanner in, Publication publication,int patronID){
+		String publicationId;
+		int copyId;
+		do{
+			System.out.println("Enter Publication ID (-1 to go back)");
+			publicationId = in.next();
+			if(!publicationId.contentEquals("-1"))
+			{
+				publication.getCopies(publicationId);
+				System.out.println("Enter Copy ID (-1 to cancel)");
+				copyId = in.nextInt();
+				if(copyId!=-1)
+					publication.checkOutCopy(patronID, copyId);
+			}
+		}while(!publicationId.contentEquals("-1"));
+	}
+	
 }
 
