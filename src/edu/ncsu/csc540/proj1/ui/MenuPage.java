@@ -53,6 +53,8 @@ public class MenuPage {
             case 3:
             	
                 break;
+            case 4:
+            	checkedOutResources(in, patronId);
             case 6:
             	handleBalanceDue(in, patronId);
             	break;
@@ -489,5 +491,32 @@ public class MenuPage {
 		}while(!publicationId.contentEquals("-1"));
 	}
 	
+public void	checkedOutResources(Scanner in, int patronId)
+{    	Camera cam = new Camera();
+        int selectedOption = 0;
+    do {
+    System.out.println("Please select an option:");
+    System.out.println("\t1. Publications");
+    System.out.println("\t2. Cameras");
+    System.out.println("\t3. Back\n");
+    selectedOption = in.nextInt();
+    if  (selectedOption == 1)
+    {;}
+    else if (selectedOption == 2){
+		int innerOption = 0;
+		do{
+			cam.getCheckedOut(patronId);
+			System.out.println("\t1. Return");
+			System.out.println("\t0. Back");
+			innerOption = in.nextInt();
+			if(innerOption != 0){
+				System.out.println("Enter ID");
+				int idToReturn = in.nextInt();
+				cam.returnCamera(idToReturn);
+			}
+		}while(innerOption!=0);
+	}
+    
+} while(selectedOption != 3);}
 }
 
