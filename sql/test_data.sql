@@ -472,3 +472,8 @@ INSERT INTO Booked(patron_id,room_number,start_time,end_time,checked_out,checked
 INSERT INTO Booked(patron_id,room_number,start_time,end_time,checked_out,checked_in,status) VALUES (10,9,TO_DATE('2015/11/02 13:00', 'YYYY/MM/DD HH24:MI'),TO_DATE('2015/11/02 16:00', 'YYYY/MM/DD HH24:MI'),NULL,NULL,'VALID');
 
 
+
+INSERT INTO COURSE_TAKEN VALUES(10,'CSC',777,12,1);
+INSERT INTO COURSE_TAKEN VALUES(12,'CSC',540,12,1);
+INSERT INTO COURSE_TAKEN VALUES(13,'CSC',116,12,1);
+INSERT INTO COURSE_TAKEN VALUES(14,'CSC',326,12,1);

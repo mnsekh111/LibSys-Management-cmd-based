@@ -14,7 +14,17 @@ begin
       ADD_TO_PUB_QUEUE(patronid,cid,output_message);
     else
       output_message := 'Copy is available';
-      if(copy_record.copy_type = 'HARD') then
+      if(is_copy_reserved(cid)=1) then
+        if(HAS_STUDENT_TAKEN_COURSE(patronid,cid) = 1) then
+          insert into CHECKS_OUT values(checks_out_id.NEXTVAL,patronid,cid,SYSDATE,sysdate + numtodsinterval(4,'hour'),null);
+          update copies
+            set status = 'OUT' where id = cid;
+          commit;
+          output_message :=  output_message || '..Checked out the reserved copy for 4 hours';
+        else
+          output_message :=  output_message || '..This copy is reserved. You cannot take this';
+        end if;
+      elsif(copy_record.copy_type = 'HARD') then
         update copies
           set status = 'OUT' where id = cid;
           commit;
