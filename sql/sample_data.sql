@@ -114,10 +114,10 @@ UPDATE Copies SET status = 'OUT' WHERE id = 9;
 INSERT INTO CHECKS_OUT (id,patron_id,copy_id,start_time,end_time) VALUES (4,3,3,'01-Oct-2015','10-Oct-2015');
 UPDATE Copies SET status = 'OUT' WHERE id = 5;
 
-INSERT INTO Booked (patron_id,room_number,start_time,end_time,checked_out,checked_in) VALUES (5,3,TO_DATE('2015/11/01 09:00', 'YYYY/MM/DD HH24:MI'),TO_DATE('2015/11/01 11:30', 'YYYY/MM/DD HH24:MI'),NULL,NULL);
-INSERT INTO Booked (patron_id,room_number,start_time,end_time,checked_out,checked_in) VALUES (1,5,TO_DATE('2015/10/12 15:00', 'YYYY/MM/DD HH24:MI'),TO_DATE('2015/10/12 17:00', 'YYYY/MM/DD HH24:MI'),TO_DATE('2015/10/12 15:00', 'YYYY/MM/DD HH24:MI'),TO_DATE('2015/10/12 17:00', 'YYYY/MM/DD HH24:MI'));
-INSERT INTO Booked (patron_id,room_number,start_time,end_time,checked_out,checked_in) VALUES (8,6,TO_DATE('2015/11/02 11:00', 'YYYY/MM/DD HH24:MI'),TO_DATE('2015/11/02 13:30', 'YYYY/MM/DD HH24:MI'),NULL,NULL);
-INSERT INTO Booked (patron_id,room_number,start_time,end_time,checked_out,checked_in) VALUES (6,1,TO_DATE('2015/10/20 09:00', 'YYYY/MM/DD HH24:MI'),TO_DATE('2015/10/20 10:30', 'YYYY/MM/DD HH24:MI'),TO_DATE('2015/10/20 09:00', 'YYYY/MM/DD HH24:MI'),TO_DATE('2015/10/20 10:30', 'YYYY/MM/DD HH24:MI'));
+INSERT INTO Booked (patron_id,room_number,start_time,end_time,checked_out,checked_in,status) VALUES (5,3,TO_DATE('2015/11/01 09:00', 'YYYY/MM/DD HH24:MI'),TO_DATE('2015/11/01 11:30', 'YYYY/MM/DD HH24:MI'),NULL,NULL,'VALID');
+INSERT INTO Booked (patron_id,room_number,start_time,end_time,checked_out,checked_in,status) VALUES (1,5,TO_DATE('2015/10/12 15:00', 'YYYY/MM/DD HH24:MI'),TO_DATE('2015/10/12 17:00', 'YYYY/MM/DD HH24:MI'),TO_DATE('2015/10/12 15:00', 'YYYY/MM/DD HH24:MI'),TO_DATE('2015/10/12 17:00', 'YYYY/MM/DD HH24:MI'),'VALID');
+INSERT INTO Booked (patron_id,room_number,start_time,end_time,checked_out,checked_in,status) VALUES (8,6,TO_DATE('2015/11/02 11:00', 'YYYY/MM/DD HH24:MI'),TO_DATE('2015/11/02 13:30', 'YYYY/MM/DD HH24:MI'),NULL,NULL,'VALID');
+INSERT INTO Booked (patron_id,room_number,start_time,end_time,checked_out,checked_in,status) VALUES (6,1,TO_DATE('2015/10/20 09:00', 'YYYY/MM/DD HH24:MI'),TO_DATE('2015/10/20 10:30', 'YYYY/MM/DD HH24:MI'),TO_DATE('2015/10/20 09:00', 'YYYY/MM/DD HH24:MI'),TO_DATE('2015/10/20 10:30', 'YYYY/MM/DD HH24:MI'),'VALID');
 
 INSERT INTO Booked_Cams (id,cam_id,patron_id,start_time,end_time) VALUES (1,2,3,'13-Nov-2015','19-Nov-2015');
 INSERT INTO Booked_Cams (id,cam_id,patron_id,start_time,end_time) VALUES (2,1,1,'30-Oct-2015','05-Nov-2015');
