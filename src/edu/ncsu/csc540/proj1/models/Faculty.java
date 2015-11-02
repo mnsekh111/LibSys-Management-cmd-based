@@ -114,7 +114,7 @@ public class Faculty {
 
             db.closeConnection();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("\nThere was an error with your input. Please try again.\n");
         }
     }
 
@@ -183,7 +183,7 @@ public class Faculty {
             rs1.close();
             db.closeConnection();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("\nThere was an error with your request. Please try again.\n");
         }
     }
 
@@ -252,7 +252,7 @@ public class Faculty {
             rs1.close();
             db.closeConnection();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("\nThere was an error with your request. Please try again.\n");
         }
     }
 
