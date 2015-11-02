@@ -28,6 +28,7 @@ begin
   exception
   when no_data_found 
   then 
-  output_message := 'That copy is not reserved'; 
+  output_message := 'That copy is not checked out'; 
 
 end;
+
