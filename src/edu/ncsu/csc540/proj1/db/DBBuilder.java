@@ -19,20 +19,20 @@ public class DBBuilder {
      * Path to the createTables.sql file
      */
     private static String[] createTablesPath = {"sql/createTables.sql",
-    		"sql/bharathi.sql",
-    		"sql/bharathi_procedures/Camera/CAMERA_4_CHKOUT.sql",
-    		"sql/bharathi_procedures/Camera/CAMERA_AVAILABLE.sql",
-    		"sql/bharathi_procedures/Camera/CAMERA_BOOK.sql",
-    		"sql/bharathi_procedures/Camera/CAMERA_CHECKED_OUT.sql",
-    		"sql/bharathi_procedures/Camera/CAMERA_FINES.sql",
-    		"sql/bharathi_procedures/Camera/CAMERA_REQ.sql",
-    		"sql/bharathi_procedures/Camera/CAMERA_RETURN.sql",
-    		"sql/bharathi_procedures/Camera/CAMERA_SEND_ALERT_1.sql",
-    		"sql/bharathi_procedures/Camera/CAMERA_SEND_ALERT_2.sql",
-    		"sql/bharathi_procedures/Fines/PAY_ALL_FINES.sql",
-    		"sql/bharathi_procedures/Fines/PAY_FINE.sql",
-    		"sql/bharathi_procedures/monthly_outstanding/FINES_MONTHLY_OUTSTANDING.sql",
-    		"sql/bharathi_procedures/Rooms/ROOMS_INVALIDATE.sql"};
+            "sql/bharathi.sql",
+            "sql/bharathi_procedures/Camera/CAMERA_4_CHKOUT.sql",
+            "sql/bharathi_procedures/Camera/CAMERA_AVAILABLE.sql",
+            "sql/bharathi_procedures/Camera/CAMERA_BOOK.sql",
+            "sql/bharathi_procedures/Camera/CAMERA_CHECKED_OUT.sql",
+            "sql/bharathi_procedures/Camera/CAMERA_FINES.sql",
+            "sql/bharathi_procedures/Camera/CAMERA_REQ.sql",
+            "sql/bharathi_procedures/Camera/CAMERA_RETURN.sql",
+            "sql/bharathi_procedures/Camera/CAMERA_SEND_ALERT_1.sql",
+            "sql/bharathi_procedures/Camera/CAMERA_SEND_ALERT_2.sql",
+            "sql/bharathi_procedures/Fines/PAY_ALL_FINES.sql",
+            "sql/bharathi_procedures/Fines/PAY_FINE.sql",
+            "sql/bharathi_procedures/monthly_outstanding/FINES_MONTHLY_OUTSTANDING.sql",
+            "sql/bharathi_procedures/Rooms/ROOMS_INVALIDATE.sql"};
 
     /**
      * Path to the dropTables.sql file
@@ -69,18 +69,21 @@ public class DBBuilder {
 
         System.out.println("Building database...");
         long startTime = System.currentTimeMillis();
+
         System.out.println("Dropping tables...");
         executeSQL(dropTablesPath);
+
         System.out.println("Creating tables...");
-//        executeSQL(createTablesPath);
-        for(int i=0;i<createTablesPath.length;i++){
-        	executeSQL(createTablesPath[i]);
+        for(int i = 0; i < createTablesPath.length; i++) {
+            executeSQL(createTablesPath[i]);
         }
-//        System.out.println("Inserting test data...");
+
+        //System.out.println("Inserting test data...");
         //executeSQL(testDataPath);
-        
+
         System.out.println("Inserting sample data...");
         executeSQL(sampleDataPath);
+
         long endTime = System.currentTimeMillis();
         System.out.println("Operation completed in " + (endTime - startTime) + "ms.");
 
@@ -90,18 +93,18 @@ public class DBBuilder {
     public static void executeSQL(String path) {
         ArrayList<String> queryList = parseSQLFile(path);
 
-        
+
         for(String sql : queryList) {
-        	System.out.println(sql);
-        	try {
-        		java.sql.Statement stmt = connect.createStatement();
-        		stmt.execute(sql);
-        		stmt.close();
-        	} catch (SQLException e) {
-        		e.printStackTrace();
-        	}
+            //System.out.println(sql);
+            try {
+                java.sql.Statement stmt = connect.createStatement();
+                stmt.execute(sql);
+                stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-        
+
     }
 
     /**

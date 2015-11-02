@@ -67,7 +67,7 @@ INSERT INTO Copies(id,pid,copy_type,lib_id,status) VALUES (6,'B3','HARD',0,'IN')
 INSERT INTO Authors (id,name) VALUES ('A4','RC Mukherjee');
 INSERT INTO Publications (title,id,year_of_pub) VALUES ('Introduction to Inorganic Chemistry','B4',2005);
 INSERT INTO Pub_Book (edition,isbn,publisher) VALUES (4,'B4','Pub4');
-INSERT INTO Written_by (pid,aid) VALUES ('B3','A3');
+INSERT INTO Written_by (pid,aid) VALUES ('B3','A4');
 INSERT INTO Copies(id,pid,copy_type,lib_id,status) VALUES (7,'B4','HARD',0,'IN');
 INSERT INTO Copies(id,pid,copy_type,lib_id,status) VALUES (8,'B4','HARD',0,'IN');
 
