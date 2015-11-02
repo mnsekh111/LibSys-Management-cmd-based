@@ -15,6 +15,7 @@ public class Publication {
 	private DbConnector db = null;
 	private Statement stmt = null;
 	private Connection conn = null;
+	private CallableStatement csmt = null;
 
 	public Publication() {
 		this.db = new DbConnector();
@@ -26,7 +27,9 @@ public class Publication {
 			e.printStackTrace();
 		}
 	}
-
+	/**
+	 * Function to get All publications which are books
+	 */
 	public void getAllBooks() {
 		ResultSet rs = null;
 
@@ -49,7 +52,10 @@ public class Publication {
 			System.err.println(ex.getLocalizedMessage());
 		}
 	}
-
+	
+	/**
+	 * Function to get All publications which are conference papers
+	 */
 	public void getAllConferencePapers() {
 		ResultSet rs = null;
 
@@ -73,6 +79,9 @@ public class Publication {
 		}
 	}
 	
+	/**
+	 * Function to get All publications which are Journals
+	 */
 	public void getAllJournals() {
 		ResultSet rs = null;
 
@@ -94,14 +103,21 @@ public class Publication {
 		}
 	}
 	
+	/**
+	 * Function to get All publications
+	 */
 	public void getAll(){
 		getAllBooks();
 		getAllConferencePapers();
 		getAllJournals();
 	}
 	
+	/**
+	 * Function to get copies of pubId
+	 * @param pubId Publication Id
+	 */
 	public void getCopies(String pubId){
-    	CallableStatement csmt = null;
+    	
     	int counter = 1;
     	try {
 			csmt =  conn.prepareCall("{call COPIES_AVAILABLE(?,?)}");
@@ -126,8 +142,12 @@ public class Publication {
 		}
     }
 	
+	/**
+	 * This function tries to checkout copyId fo patronId
+	 * @param patronId Patron Id
+	 * @param copyId  Copy Id
+	 */
 	public void checkOutCopy(int patronId, int copyId){
-    	CallableStatement csmt = null;
     	int counter = 1;
     	try {
 			csmt =  conn.prepareCall("{call PUB_CHECK_OUT(?,?,?)}");
@@ -136,15 +156,62 @@ public class Publication {
 			csmt.registerOutParameter(counter, OracleTypes.VARCHAR);
 			csmt.execute();
 			String output = ((OracleCallableStatement)csmt).getString(counter);
-			System.out.println(output + "\n");
+			System.out.println("\n"+output + "\n");
 			
+			csmt.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
 	
+	/**
+	 * This function tries to return copy with id copyId
+	 * @param copyId Copy Id
+	 */
+	public void returnCopy(int copyId){
+    	int counter = 1;
+    	try {
+			csmt =  conn.prepareCall("{call PUB_RETURN(?,?)}");
+			csmt.setInt(counter++, copyId);
+			csmt.registerOutParameter(counter, OracleTypes.VARCHAR);
+			csmt.execute();
+			String output = ((OracleCallableStatement)csmt).getString(counter);
+			System.out.println("\n"+output + "\n");
+			
+			csmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
+	/**
+	 * This function tries to reserve a copy for faculty
+	 * @param copyId Copy Id	
+	 * @param facultyId  Faculty Id
+	 */
+	public void reserveCopy(int copyId,int facultyId){
+    	int counter = 1;
+    	try {
+			csmt =  conn.prepareCall("{?=call reserve_copy(?,?)}");
+			csmt.registerOutParameter(counter++, OracleTypes.VARCHAR);
+			csmt.setInt(counter++, copyId);
+			csmt.setInt(counter,facultyId);
+			csmt.execute();
+			String output = ((OracleCallableStatement)csmt).getString(1);
+			System.out.println("\n"+output + "\n");
+			
+			csmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Closes connections
+	 */
 	public void cleanUp() {
 		try {
 			this.conn.close();

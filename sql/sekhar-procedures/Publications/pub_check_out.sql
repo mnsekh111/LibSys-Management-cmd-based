@@ -1,4 +1,3 @@
-
 create or replace PROCEDURE PUB_CHECK_OUT (patronid in Patron.id%TYPE,cid in Copies.id %TYPE, output_message in out varchar2)
 is
   copy_record COPIES%ROWTYPE;
@@ -18,6 +17,9 @@ begin
       if(is_copy_reserved(cid)=1) then
         if(HAS_STUDENT_TAKEN_COURSE(patronid,cid) = 1) then
           insert into CHECKS_OUT values(checks_out_id.NEXTVAL,patronid,cid,SYSDATE,sysdate + numtodsinterval(4,'hour'),null);
+          update copies
+            set status = 'OUT' where id = cid;
+          commit;
           output_message :=  output_message || '..Checked out the reserved copy for 4 hours';
         else
           output_message :=  output_message || '..This copy is reserved. You cannot take this';
