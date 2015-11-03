@@ -280,3 +280,4 @@ public class Publication {
         }
         this.db.closeConnection();
     }
+}
