@@ -281,14 +281,14 @@ CREATE TABLE Cam_Fines (
 CREATE or replace FUNCTION insert_student (fname in varchar2,lname in varchar2,id in number,
   status in varchar2,country_name in varchar2,phone in varchar2,
   alt_phone in varchar2, dob in date, sex in varchar2,street in varchar2,city in varchar2,
-  postcode in varchar2,program in varchar2,year in number,dept in varchar2) return integer
+  postcode in varchar2,program in varchar2,year in number,dept in varchar2, class in varchar2) return integer
   is
   pragma autonomous_transaction;
   begin
 
   insert into patron values (fname,lname,id,status,country_name);
   commit;
-  insert into student values (phone,alt_phone,dob,sex,street,city,postcode,id,program,year,dept);
+  insert into student values (phone,alt_phone,dob,sex,street,city,postcode,id,program,year,dept,class);
   commit;
 
   return 1;

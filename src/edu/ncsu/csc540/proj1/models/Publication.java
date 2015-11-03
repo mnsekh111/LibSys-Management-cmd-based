@@ -148,6 +148,7 @@ public class Publication {
 	 */
 	public void checkOutCopy(int patronId, int copyId){
     	int counter = 1;
+    	CallableStatement csmt;
     	try {
 			csmt =  conn.prepareCall("{call PUB_CHECK_OUT(?,?,?)}");
 			csmt.setInt(counter++, patronId);
@@ -208,6 +209,30 @@ public class Publication {
 		}
 	}
 	
+	public void getPubRequests(int patronId){
+		int counter = 1;
+    	try {
+			csmt =  conn.prepareCall("{? = call pub_get_res_requests(?)}");
+			csmt.registerOutParameter(counter++, OracleTypes.CURSOR);
+			csmt.setInt(counter, patronId);
+			csmt.execute();
+			ResultSet rs = ((OracleCallableStatement)csmt).getCursor(1);
+			counter = 1;
+			while(rs.next()){
+				System.out.print(rs.getInt("cid"));
+				System.out.print(" | "+rs.getString("title"));
+				System.out.print(" | "+rs.getString("copy_type"));
+				System.out.println();
+			}
+			
+			csmt.close();
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * Get list of checked out items
 	 * @param patronId
@@ -220,14 +245,14 @@ public class Publication {
 			csmt.setInt(counter, patronId);
 			csmt.execute();
 			ResultSet rs = ((OracleCallableStatement)csmt).getCursor(1);
-			System.out.println("Number of Columns " + rs.getMetaData().getColumnCount());
+			counter = 1;
 			while(rs.next()){
-				System.out.print(rs.getInt(1));
-				System.out.print(" | "+rs.getString(2));
-				System.out.print(" | "+rs.getString(3));
-				System.out.print(" | "+rs.getString(4));
-				System.out.print(" | "+rs.getString(5));
-				System.out.println(" | "+rs.getString(6));
+				System.out.print(rs.getInt(counter++));
+				System.out.print(" | "+rs.getString(counter++));
+				System.out.print(" | "+rs.getString(counter++));
+				System.out.print(" | "+rs.getString(counter++));
+				System.out.print(" | "+rs.getString(counter++));
+				System.out.println(" | "+rs.getString(counter++));
 			}
 			
 			csmt.close();

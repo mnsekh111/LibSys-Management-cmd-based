@@ -20,8 +20,14 @@ begin
     case 
       when (time_diff = 3 or time_diff=1) then
         insert into reminders values(Reminders_seq.nextval,pub_title || '('||checks_out_rec.copy_id||')'||' is due on '||checks_out_rec.end_time,SYSDATE,checks_out_rec.patron_id);
-      when (time_diff = -30 or time_diff=-90) then
+      when (time_diff = -30) then
         insert into reminders values(Reminders_seq.nextval,pub_title || '('||checks_out_rec.copy_id||')'||' was due on '||checks_out_rec.end_time,SYSDATE,checks_out_rec.patron_id);
+      when (time_diff = -90) then
+        insert into reminders values(Reminders_seq.nextval,pub_title || '('||checks_out_rec.copy_id||')'||' was due on '||checks_out_rec.end_time,SYSDATE,checks_out_rec.patron_id);
+        update Patron
+          set STATUS = 'BAD'
+            where id = checks_out_rec.patron_id;
+        commit;
     end case;
   end loop;
 end;
