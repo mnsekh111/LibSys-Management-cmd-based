@@ -7,4 +7,4 @@ BEGIN
   OPEN copies_result FOR
   SELECT c.id,c.pid,p.title,c.copy_type,c.status from Copies c, Publications p where c.pid = p.id
   and c.pid = iden;
-END;
+END;---
