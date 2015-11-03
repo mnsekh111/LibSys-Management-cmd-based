@@ -1,5 +1,3 @@
-CREATE OR REPLACE VIEW PUB_CHECK_OUT_SCREEN_VIEW
-AS
-  SELECT cpsv.id,cpsv.pid,cpsv.TITLE,cpsv.COPY_TYPE,co.START_TIME,co.END_TIME
-  FROM CHECKS_OUT co,COPIES_PUB_SCREEN_VIEW cpsv
-  WHERE co.copy_id = cpsv.Id AND co.ACT_RETURN_TIME IS NULL;
+create or replace view PUB_CHECK_OUT_SCREEN_VIEW as
+  select cpsv.id,cpsv.pid,cpsv.TITLE,cpsv.COPY_TYPE,co.START_TIME,co.END_TIME,co.PATRON_ID from CHECKS_OUT co,COPIES_PUB_SCREEN_VIEW cpsv
+  where co.copy_id = cpsv.Id and co.ACT_RETURN_TIME is null;
