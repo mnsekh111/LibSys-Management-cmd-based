@@ -1,9 +1,66 @@
 -- One more scheduler that I have not included.
 
+BEGIN
+DBMS_SCHEDULER.DROP_JOB (
+job_name => 'CAM_FINES_JOB');
+END; ---
+
+BEGIN
+DBMS_SCHEDULER.DROP_JOB (
+job_name => 'MONTHLY_OUTSTANDING_REMINDER');
+END; ---
+
+
+BEGIN
+DBMS_SCHEDULER.DROP_JOB (
+job_name => 'ROOMS_INVALIDATOR');
+END; ---
+
+
+BEGIN
+DBMS_SCHEDULER.DROP_JOB (
+job_name => 'SEND_CAM_REMINDER');
+END; ---
+
+
+BEGIN
+DBMS_SCHEDULER.DROP_JOB (
+job_name => 'SEND_CAM_REMINDER_2');
+END; ---
+
+
+
+
 
  BEGIN
     DBMS_SCHEDULER.CREATE_JOB (
-            job_name => '"CSUBBIA"."SEND_CAM_REMINDER_2"',
+            job_name => '"SEND_CAM_REMINDER"',
+            job_type => 'STORED_PROCEDURE',
+            job_action => 'CSUBBIA.CAMERA_SEND_ALERT_1',
+            number_of_arguments => 0,
+            start_date => TO_TIMESTAMP_TZ('2015-10-28 19:53:02.000000000 AMERICA/NEW_YORK','YYYY-MM-DD HH24:MI:SS.FF TZR'),
+            repeat_interval => 'FREQ=WEEKLY;BYDAY=FRI;BYHOUR=9;BYMINUTE=0;BYSECOND=0',
+            end_date => NULL,
+            enabled => FALSE,
+            auto_drop => FALSE,
+            comments => 'THIS WILL SEND REMINDERS TO PATRONS REG CAM CEHCKOUT');
+
+         
+     
+ 
+    DBMS_SCHEDULER.SET_ATTRIBUTE( 
+             name => '"SEND_CAM_REMINDER"', 
+             attribute => 'logging_level', value => DBMS_SCHEDULER.LOGGING_OFF);
+      
+  
+    
+    DBMS_SCHEDULER.enable(
+             name => '"SEND_CAM_REMINDER"');
+END; ---
+
+ BEGIN
+    DBMS_SCHEDULER.CREATE_JOB (
+            job_name => '"SEND_CAM_REMINDER_2"',
             job_type => 'STORED_PROCEDURE',
             job_action => 'CSUBBIA.CAMERA_SEND_ALERT_2',
             number_of_arguments => 0,
@@ -18,19 +75,19 @@
      
  
     DBMS_SCHEDULER.SET_ATTRIBUTE( 
-             name => '"CSUBBIA"."SEND_CAM_REMINDER_2"', 
+             name => '"SEND_CAM_REMINDER_2"', 
              attribute => 'logging_level', value => DBMS_SCHEDULER.LOGGING_OFF);
       
   
     
     DBMS_SCHEDULER.enable(
-             name => '"CSUBBIA"."SEND_CAM_REMINDER_2"');
+             name => '"SEND_CAM_REMINDER_2"');
 END; ---
 
 
 BEGIN
     DBMS_SCHEDULER.CREATE_JOB (
-            job_name => '"CSUBBIA"."CAM_FINES_JOB"',
+            job_name => '"CAM_FINES_JOB"',
             job_type => 'STORED_PROCEDURE',
             job_action => 'CSUBBIA.CAMERA_FINES',
             number_of_arguments => 0,
@@ -46,20 +103,20 @@ BEGIN
      
  
     DBMS_SCHEDULER.SET_ATTRIBUTE( 
-             name => '"CSUBBIA"."CAM_FINES_JOB"', 
+             name => '"CAM_FINES_JOB"', 
              attribute => 'logging_level', value => DBMS_SCHEDULER.LOGGING_OFF);
       
   
     
     DBMS_SCHEDULER.enable(
-             name => '"CSUBBIA"."CAM_FINES_JOB"');
+             name => '"CAM_FINES_JOB"');
 END; ---
 
 
 
 BEGIN
     DBMS_SCHEDULER.CREATE_JOB (
-            job_name => '"CSUBBIA"."MONTHLY_OUTSTANDING_REMINDER"',
+            job_name => '"MONTHLY_OUTSTANDING_REMINDER"',
             job_type => 'STORED_PROCEDURE',
             job_action => 'CSUBBIA.FINES_MONTHLY_OUTSTANDING',
             number_of_arguments => 0,
@@ -74,19 +131,19 @@ BEGIN
      
  
     DBMS_SCHEDULER.SET_ATTRIBUTE( 
-             name => '"CSUBBIA"."MONTHLY_OUTSTANDING_REMINDER"', 
+             name => '"MONTHLY_OUTSTANDING_REMINDER"', 
              attribute => 'logging_level', value => DBMS_SCHEDULER.LOGGING_OFF);
       
   
     
     DBMS_SCHEDULER.enable(
-             name => '"CSUBBIA"."MONTHLY_OUTSTANDING_REMINDER"');
+             name => '"MONTHLY_OUTSTANDING_REMINDER"');
 END; ---
 
 
 BEGIN
     DBMS_SCHEDULER.CREATE_JOB (
-            job_name => '"CSUBBIA"."ROOMS_INVALIDATOR"',
+            job_name => '"ROOMS_INVALIDATOR"',
             job_type => 'STORED_PROCEDURE',
             job_action => 'CSUBBIA.ROOMS_INVALIDATE',
             number_of_arguments => 0,
@@ -101,11 +158,11 @@ BEGIN
      
  
     DBMS_SCHEDULER.SET_ATTRIBUTE( 
-             name => '"CSUBBIA"."ROOMS_INVALIDATOR"', 
+             name => '"ROOMS_INVALIDATOR"', 
              attribute => 'logging_level', value => DBMS_SCHEDULER.LOGGING_OFF);
       
   
     
     DBMS_SCHEDULER.enable(
-             name => '"CSUBBIA"."ROOMS_INVALIDATOR"');
+             name => '"ROOMS_INVALIDATOR"');
 END; ---

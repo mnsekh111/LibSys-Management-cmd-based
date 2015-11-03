@@ -2,6 +2,7 @@ package edu.ncsu.csc540.proj1.db;
 
 import edu.ncsu.csc540.proj1.models.Faculty;
 import edu.ncsu.csc540.proj1.models.Student;
+import edu.ncsu.csc540.proj1.ui.MenuPage;
 
 /**
  * Simple class to connect to the Oracle database
@@ -19,6 +20,11 @@ public class OracleAccess {
         } else {
             return 3;
         }
+    }
+    
+    public void setPatronStatus(int patron_id, MenuPage menu){
+    	Faculty fa = new Faculty();
+    	menu.setPatronGood(fa.getPatronStatus(patron_id));
     }
 
 }

@@ -37,10 +37,12 @@ public class Main {
 
             if(userType == 1) {
                 System.out.println("\nStudent " + patron_id + " has successfully logged in.\n");
+                dao.setPatronStatus(patron_id, menu);
                 menu.setStudent(true);
                 menu.studentMenu(in, patron_id);
             } else if(userType == 2) {
                 System.out.println("\nFaculty " + patron_id + " has successfully logged in.\n");
+                dao.setPatronStatus(patron_id, menu);
                 menu.setStudent(false);
                 menu.facultyMenu(in, patron_id);
             } else {

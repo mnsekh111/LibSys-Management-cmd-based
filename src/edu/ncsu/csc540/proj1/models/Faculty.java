@@ -21,6 +21,33 @@ public class Faculty {
     public Faculty(){
         this.db = new DbConnector();
     }
+    
+    public boolean getPatronStatus(int patron_id){
+    	
+    	PreparedStatement ps = null;
+        ResultSet rs = null;
+        Connection conn = db.getConnection();
+        boolean isGood = false;
+        try {
+            ps = conn.prepareStatement("SELECT * FROM PATRON WHERE ID=?");
+            ps.setInt(1, patron_id);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+            	isGood = (rs.getString("STATUS").equals("GOOD"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                ps.close();
+                rs.close();
+                db.closeConnection();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return isGood;
+    }
 
     public boolean isFaculty(int id) {
         PreparedStatement ps = null;

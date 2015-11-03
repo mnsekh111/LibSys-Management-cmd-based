@@ -29,7 +29,8 @@ CREATE TABLE Courses (
     dep_abbreviation varchar2(5),
 
     CONSTRAINT pk_courses PRIMARY KEY (id, dep_abbreviation),
-    CONSTRAINT fk_courses_departments FOREIGN KEY (dep_abbreviation) REFERENCES Departments (abbreviation)
+    CONSTRAINT fk_courses_departments FOREIGN KEY (dep_abbreviation) REFERENCES Departments (abbreviation) 
+    ON DELETE CASCADE
 );---
 
 CREATE TABLE Patron(
@@ -58,7 +59,7 @@ CREATE TABLE Student (
     dept varchar2(5) NOT NULL,
 
     CONSTRAINT pk_student PRIMARY KEY (id),
-    CONSTRAINT fk_student FOREIGN KEY (id) REFERENCES Patron (id),
+    CONSTRAINT fk_student FOREIGN KEY (id) REFERENCES Patron (id) ON DELETE CASCADE,
     CONSTRAINT fk_student_program FOREIGN KEY (program) REFERENCES Degree_Program (program),
     CONSTRAINT fk_student_dept FOREIGN KEY (dept) REFERENCES Departments (abbreviation)
 );---
@@ -70,7 +71,7 @@ CREATE TABLE Faculty (
     course_id number(10) NOT NULL,
 
     CONSTRAINT pk_faculty PRIMARY KEY (id),
-    CONSTRAINT fk_faculty FOREIGN KEY (id) REFERENCES Patron (id),
+    CONSTRAINT fk_faculty FOREIGN KEY (id) REFERENCES Patron (id) ON DELETE CASCADE,
     CONSTRAINT fk_faculty_category FOREIGN KEY (category) REFERENCES Faculty_Category (category),
     CONSTRAINT fk_faculty_dept FOREIGN KEY (dept) REFERENCES Departments (abbreviation),
     CONSTRAINT fk_faculty_course_id FOREIGN KEY (course_id,dept) REFERENCES Courses (id, dep_abbreviation)
@@ -94,8 +95,10 @@ CREATE TABLE Course_Taken (
     semester number(2),
 
     CONSTRAINT pk_courses_taken PRIMARY KEY (patron_id, dep_abbreviation, id),
-    CONSTRAINT fk_courses_taken_1 FOREIGN KEY (id, dep_abbreviation) REFERENCES Courses (id, dep_abbreviation)
-);---
+    CONSTRAINT fk_courses_taken_1 FOREIGN KEY (id, dep_abbreviation) REFERENCES Courses (id, dep_abbreviation),
+    CONSTRAINT fk_Course_Taken_patrons FOREIGN KEY (patron_id) REFERENCES Patron(id)
+    ON DELETE CASCADE
+    );---
 
 CREATE TABLE Authors(
     id varchar2(10),
@@ -121,7 +124,7 @@ CREATE TABLE Pub_ConferencePapers(
 
     CONSTRAINT pk_pub_conferencepapers PRIMARY KEY (conf_num),
     CONSTRAINT fk_pub_conferencepapers FOREIGN KEY (conf_num) REFERENCES Publications(id)
-
+    ON DELETE CASCADE 
 );---
 
 CREATE TABLE Pub_Book(
@@ -131,7 +134,7 @@ CREATE TABLE Pub_Book(
 
     CONSTRAINT pk_pub_book PRIMARY KEY (isbn),
     CONSTRAINT fk_pub_book FOREIGN KEY (isbn) REFERENCES Publications(id)
-
+    ON DELETE CASCADE
 );---
 
 CREATE TABLE Pub_Journal(
@@ -139,7 +142,8 @@ CREATE TABLE Pub_Journal(
 
     CONSTRAINT pk_pub_journal PRIMARY KEY (issn),
     CONSTRAINT fk_pub_journal FOREIGN KEY (issn) REFERENCES Publications(id)
-);---
+    ON DELETE CASCADE
+    );---
 
 CREATE TABLE Written_by(
     pid varchar2(10),
@@ -168,7 +172,8 @@ CREATE TABLE Copies(
     CONSTRAINT fk_copies_library FOREIGN KEY (lib_id) REFERENCES Library(id),
     CONSTRAINT chk_copy_type CHECK(copy_type IN ('ELECTRONIC','HARD')),
     CONSTRAINT chk_copy_status CHECK(status IN('IN','OUT')),
-    CONSTRAINT fk_copy_pub FOREIGN KEY (pid) REFERENCES Publications(id)
+    CONSTRAINT fk_copy_pub FOREIGN KEY (pid) REFERENCES Publications(id) 
+    ON DELETE CASCADE
 );---
 
 CREATE TABLE Reservation(
@@ -224,7 +229,6 @@ CREATE TABLE CHECKS_OUT(
     CONSTRAINT fk_checks_out_copies FOREIGN KEY (copy_id) REFERENCES Copies(id)
 );---
 
-alter table checks_out add ( ACT_RETURN_TIME date);---
 
 CREATE TABLE Fines (
     id number(10),

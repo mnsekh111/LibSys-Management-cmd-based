@@ -18,6 +18,16 @@ public class MenuPage {
 	private int cameraCheckoutEndTime = 12;
 
 	private boolean isStudent;
+	
+	public boolean isPatronGood;
+	
+	public boolean isPatronGood() {
+		return isPatronGood;
+	}
+
+	public void setPatronGood(boolean isPatronGood) {
+		this.isPatronGood = isPatronGood;
+	}
 
 	public boolean isStudent() {
 		return isStudent;
