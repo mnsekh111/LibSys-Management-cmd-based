@@ -55,6 +55,10 @@ public class MenuPage {
                 break;
             case 4:
             	checkedOutResources(in, patronId);
+            	break;
+            case 5: 
+            	notifications(in);
+            	break;
             case 6:
             	handleBalanceDue(in, patronId);
             	break;
@@ -408,6 +412,14 @@ public class MenuPage {
     			
     		}
     	}while(selectedOption != 0);
+    }
+    
+    public void notifications(Scanner in){
+    	int backoption = 0;
+    	do{
+    		System.out.println("\t0.Back.");
+    		backoption = in.nextInt();
+    	}while(backoption != 0);    	
     }
     
     public void handleBalanceDue(Scanner in, int patronId){
