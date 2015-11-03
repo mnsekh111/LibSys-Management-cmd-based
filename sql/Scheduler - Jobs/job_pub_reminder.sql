@@ -1,4 +1,9 @@
 BEGIN
+DBMS_SCHEDULER.DROP_JOB (
+job_name => 'JOB_PUB_REMINDER');
+END; ---
+
+BEGIN
     DBMS_SCHEDULER.CREATE_JOB (
             job_name => 'JOB_PUB_REMINDER',
             job_type => 'STORED_PROCEDURE',
@@ -11,13 +16,13 @@ BEGIN
             auto_drop => FALSE,
             comments => 'Sends return reminders for publications');
 
-         
-     
- 
-    DBMS_SCHEDULER.SET_ATTRIBUTE( 
-             name => 'JOB_PUB_REMINDER', 
+
+
+
+    DBMS_SCHEDULER.SET_ATTRIBUTE(
+             name => 'JOB_PUB_REMINDER',
              attribute => 'logging_level', value => DBMS_SCHEDULER.LOGGING_OFF);
-      
-  
-    
+
+
+
 END; ---
