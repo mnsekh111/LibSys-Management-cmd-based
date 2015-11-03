@@ -16,7 +16,19 @@ CREATE TABLE cam_queue (
 
 create sequence cam_queue_seq;---
 
-CREATE OR REPLACE VIEW CAM_QUEUE_TOPPER AS (select min(id) AS ID,cam_id, patron_id, request_date from cam_queue where status=0 group by cam_id, patron_id, REQUEST_DATE);---
+
+  CREATE OR REPLACE VIEW "CAM_QUEUE_TOPPER_HIDDEN" ("ID", "CAM_ID", "REQUEST_DATE") AS 
+  (select min(id) AS ID,cam_id, request_date from cam_queue where status=0 group by cam_id, REQUEST_DATE);---
+ 
+
+
+  CREATE OR REPLACE VIEW "CAM_QUEUE_TOPPER" ("ID", "CAM_ID", "PATRON_ID", "REQUEST_DATE", "MAKE", "MODEL", "CONFIG", "LID", "MEMORY", "STATUS") AS 
+  (select CQ.id, CQ.cam_id, CQ.patron_id, CQ.request_date, CAM.make, CAM.model, 
+CAM.config, CAM.lid, CAM.memory, CAM.status 
+from cam_queue CQ, CAM_QUEUE_TOPPER_HIDDEN CQTH, CAMERAS CAM 
+where CQ.id = CQTH.id AND CQ.cam_id = CAM.id);---
+
+
 CREATE SEQUENCE REMINDERS_SEQ;---
 CREATE SEQUENCE CAM_FINES_SEQ;---
 
