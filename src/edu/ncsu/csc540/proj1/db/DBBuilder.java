@@ -64,6 +64,7 @@ public class DBBuilder {
             "sql/View/pub_check_out_screen_view.sql",
             "sql/View/pub_res_req_screen_view.sql",
             "sql/new_table_and_edits.sql",
+            "sql/bharathi_schedulers.sql"
             };
 
     /**
@@ -130,6 +131,7 @@ public class DBBuilder {
             //System.out.println(sql);
             try {
                 java.sql.Statement stmt = connect.createStatement();
+                //System.out.println(sql);
                 stmt.execute(sql);
                 stmt.close();
             } catch (SQLException e) {
