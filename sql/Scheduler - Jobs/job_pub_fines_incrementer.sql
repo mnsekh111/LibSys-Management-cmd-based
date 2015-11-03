@@ -22,4 +22,4 @@ BEGIN
     
     DBMS_SCHEDULER.enable(
              name => '"SMNATARA"."JOB_PUB_FINES_INCREMENTER"');
-END;
+END; ---
