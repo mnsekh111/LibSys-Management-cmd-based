@@ -269,7 +269,7 @@ CREATE TABLE Booked_Cams(
     CONSTRAINT pk_booked_cams PRIMARY KEY (id),
     CONSTRAINT fk_booked_cams_patron FOREIGN KEY (patron_id) REFERENCES Patron(id),
     CONSTRAINT fk_booked_cams_cameras FOREIGN KEY (cam_id) REFERENCES Cameras(id),
-    UNIQUE (cam_id, patron_id, start_time, end_time)
+    CONSTRAINT uk_booked_cams UNIQUE (cam_id, patron_id, start_time, end_time)
 );---
 
 CREATE TABLE Cam_Fines (
