@@ -17,7 +17,17 @@ public class MenuPage {
 	private int cameraCheckoutStartTime = 9;
 	private int cameraCheckoutEndTime = 12;
 
-    Student student = new Student();
+	private boolean isStudent;
+	
+    public boolean isStudent() {
+		return isStudent;
+	}
+
+	public void setStudent(boolean isStudent) {
+		this.isStudent = isStudent;
+	}
+
+	Student student = new Student();
     Faculty faculty = new Faculty();
 
     public int loginMenu(Scanner in) {

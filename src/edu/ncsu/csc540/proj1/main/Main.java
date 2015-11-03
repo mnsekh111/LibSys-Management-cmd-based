@@ -37,9 +37,11 @@ public class Main {
 
             if(userType == 1) {
                 System.out.println("\nStudent " + patron_id + " has successfully logged in.\n");
+                menu.setStudent(true);
                 menu.studentMenu(in, patron_id);
             } else if(userType == 2) {
                 System.out.println("\nFaculty " + patron_id + " has successfully logged in.\n");
+                menu.setStudent(false);
                 menu.facultyMenu(in, patron_id);
             } else {
                 System.out.println("\n **** User Not Found **** \n");
