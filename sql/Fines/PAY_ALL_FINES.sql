@@ -1,20 +1,31 @@
 create or replace PROCEDURE PAY_ALL_FINES(
-  patron_id IN NUMBER,
-  result OUT NUMBER
+ patron_id IN NUMBER,
+ 
+ result OUT NUMBER
 ) IS 
+ temp_patron_id NUMBER;
 BEGIN
-  UPDATE (SELECT CO.patron_id, FI.STATUS
-  FROM CHECKS_OUT CO, FINES FI WHERE CO.id = FI.checks_out_id AND FI.STATUS='UNPAID' AND PATRON_ID = patron_id
-  )t SET t.STATUS =  'PAID';
-  
-  UPDATE (
-  SELECT BC.patron_id, CMF.STATUS  
-  FROM BOOKED_CAMS BC, CAM_FINES CMF WHERE CMF.booked_cam_id=BC.id AND CMF.STATUS='UNPAID' AND BC.PATRON_ID = patron_id)T
-  SET T.STATUS = 'PAID';
-  
-  result := 1;
+ UPDATE (SELECT CO.patron_id, FI.STATUS
+ FROM CHECKS_OUT CO, FINES FI WHERE CO.id = FI.checks_out_id AND FI.STATUS='UNPAID' AND PATRON_ID = patron_id
+ )t SET t.STATUS =  'PAID';
+ 
+ UPDATE (
+ SELECT BC.patron_id, CMF.STATUS  
+ FROM BOOKED_CAMS BC, CAM_FINES CMF WHERE CMF.booked_cam_id=BC.id AND CMF.STATUS='UNPAID' AND BC.PATRON_ID = patron_id)T
+ SET T.STATUS = 'PAID';
+ 
+ BEGIN
+   SELECT ID INTO temp_patron_id FROM PATRON WHERE ID=patron_id AND STATUS = 'BAD';
+   UPDATE PATRON SET STATUS = 'GOOD' WHERE ID = temp_patron_id;
+ EXCEPTION
+ WHEN NO_DATA_FOUND THEN
+   NULL;
+ END;
+ 
+ result := 1;
 
 EXCEPTION
 WHEN OTHERS THEN
-  result := 0;
-END PAY_ALL_FINES; ---
+ result := 0;
+END PAY_ALL_FINES;---
+
