@@ -6,4 +6,4 @@ BEGIN
   OPEN requested_items FOR
   SELECT * from PUB_RES_REQ_SCREEN_VIEW where patronid= iden;
   return requested_items;
-END;
+END; ---

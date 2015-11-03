@@ -11,4 +11,4 @@ begin
     set POS_IN_QUEUE = POS_IN_QUEUE-1
     where cid = copy_id and PATRON_TYPE(next_patron) = PATRON_TYPE(patronid);
   commit;
-end;
+end; ---
