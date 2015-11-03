@@ -11,11 +11,10 @@ import edu.ncsu.csc540.proj1.models.Camera;
 import edu.ncsu.csc540.proj1.models.Due;
 
 public class MenuPage {
-	
+
 	private int cameraCheckoutDay = 6;
 	private int cameraCheckoutStartTime = 9;
 	private int cameraCheckoutEndTime = 12;
-	
 
     Student student = new Student();
     Faculty faculty = new Faculty();
@@ -51,10 +50,13 @@ public class MenuPage {
                 studentResourcesMenu(in, patronId);
                 break;
             case 3:
-            	
+            	checkedOutResources(in, patronId);
                 break;
             case 4:
-            	checkedOutResources(in, patronId);
+            	break;
+            case 5: 
+            	notifications(in);
+            	break;
             case 6:
             	handleBalanceDue(in, patronId);
             	break;
@@ -232,6 +234,9 @@ public class MenuPage {
                 break;
             case 3:
                 break;
+            case 5: 
+            	notifications(in);
+            	break;
             case 6:
             	handleBalanceDue(in, patronId);
             	break;
@@ -410,6 +415,14 @@ public class MenuPage {
     	}while(selectedOption != 0);
     }
     
+    public void notifications(Scanner in){
+    	int backoption = 0;
+    	do{
+    		System.out.println("\t0.Back.");
+    		backoption = in.nextInt();
+    	}while(backoption != 0);    	
+    }
+    
     public void handleBalanceDue(Scanner in, int patronId){
     	Due due = new Due();
     	String innerOption = "0";
@@ -433,7 +446,7 @@ public class MenuPage {
     	}
     	}while(!innerOption.equalsIgnoreCase("0"));
     }
-    
+
 
 	private void studentPublicationMenu(Scanner in, int patronID) {
 		int selectedOption = 0;
@@ -465,7 +478,7 @@ public class MenuPage {
 			}
 
 			if (selectedOption >= 1 && selectedOption <= 4) {
-				choosePublication(in, publication,patronID);
+				choosePublication(in, publication, patronID);
 			}
 
 		} while (selectedOption != 5);
@@ -473,50 +486,60 @@ public class MenuPage {
 		publication.cleanUp();
 	}
 
-
-	public void choosePublication(Scanner in, Publication publication,int patronID){
+	public void choosePublication(Scanner in, Publication publication, int patronID) {
 		String publicationId;
 		int copyId;
-		do{
+		do {
 			System.out.println("Enter Publication ID (-1 to go back)");
 			publicationId = in.next();
-			if(!publicationId.contentEquals("-1"))
-			{
+			if (!publicationId.contentEquals("-1")) {
 				publication.getCopies(publicationId);
 				System.out.println("Enter Copy ID (-1 to cancel)");
 				copyId = in.nextInt();
-				if(copyId!=-1)
+				if (copyId != -1)
 					publication.checkOutCopy(patronID, copyId);
 			}
-		}while(!publicationId.contentEquals("-1"));
+		} while (!publicationId.contentEquals("-1"));
 	}
-	
-public void	checkedOutResources(Scanner in, int patronId)
-{    	Camera cam = new Camera();
-        int selectedOption = 0;
-    do {
-    System.out.println("Please select an option:");
-    System.out.println("\t1. Publications");
-    System.out.println("\t2. Cameras");
-    System.out.println("\t3. Back\n");
-    selectedOption = in.nextInt();
-    if  (selectedOption == 1)
-    {;}
-    else if (selectedOption == 2){
-		int innerOption = 0;
-		do{
-			cam.getCheckedOut(patronId);
-			System.out.println("\t1. Return");
-			System.out.println("\t0. Back");
-			innerOption = in.nextInt();
-			if(innerOption != 0){
-				System.out.println("Enter ID");
-				int idToReturn = in.nextInt();
-				cam.returnCamera(idToReturn);
-			}
-		}while(innerOption!=0);
-	}
-    
-} while(selectedOption != 3);}
-}
 
+	public void checkedOutResources(Scanner in, int patronId) {
+		Camera cam = new Camera();
+		Publication pub = new Publication();
+		int selectedOption = 0;
+		do {
+			System.out.println("Please select an option:");
+			System.out.println("\t1. Publications");
+			System.out.println("\t2. Cameras");
+			System.out.println("\t3. Back\n");
+			selectedOption = in.nextInt();
+			if (selectedOption == 1) {
+				int innerOption = 0;
+				do {
+					pub.getCheckedout(patronId);
+					System.out.println("\t1. Return");
+					System.out.println("\t0. Back");
+					innerOption = in.nextInt();
+					if (innerOption != 0) {
+						System.out.println("Enter ID");
+						int idToReturn = in.nextInt();
+						pub.returnCopy(idToReturn);
+					}
+				} while (innerOption != 0);
+			} else if (selectedOption == 2) {
+				int innerOption = 0;
+				do {
+					cam.getCheckedOut(patronId);
+					System.out.println("\t1. Return");
+					System.out.println("\t0. Back");
+					innerOption = in.nextInt();
+					if (innerOption != 0) {
+						System.out.println("Enter ID");
+						int idToReturn = in.nextInt();
+						cam.returnCamera(idToReturn);
+					}
+				} while (innerOption != 0);
+			}
+
+		} while (selectedOption != 3);
+	}
+}
