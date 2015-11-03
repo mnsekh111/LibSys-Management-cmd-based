@@ -63,6 +63,7 @@ public class DBBuilder {
             "sql/View/pub_check_out_screen_view_hist.sql",
             "sql/View/pub_check_out_screen_view.sql",
             "sql/View/pub_res_req_screen_view.sql",
+            "sql/new_table_and_edits.sql",
             };
 
     /**
