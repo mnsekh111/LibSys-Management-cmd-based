@@ -115,8 +115,9 @@ public class Publication {
      * Function to get copies of pubId
      * @param pubId Publication Id
      */
-    public void getCopies(String pubId){
+    public boolean getCopies(String pubId){
 
+        boolean isPresent = false;
         int counter = 1;
         try {
             csmt =  conn.prepareCall("{call COPIES_AVAILABLE(?,?)}");
@@ -131,13 +132,17 @@ public class Publication {
                 System.out.print(" | "+rs.getString("copy_type"));
                 System.out.print(" | "+rs.getString("status"));
                 System.out.println();
+                if(!isPresent)
+                    isPresent = true;
             }
 
             csmt.close();
             rs.close();
+            return isPresent;
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+            return false;
         }
     }
 
@@ -275,5 +280,3 @@ public class Publication {
         }
         this.db.closeConnection();
     }
-
-}
