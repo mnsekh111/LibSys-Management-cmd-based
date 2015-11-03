@@ -20,19 +20,50 @@ public class DBBuilder {
      */
     private static String[] createTablesPath = {"sql/createTables.sql",
             "sql/bharathi.sql",
-            "sql/bharathi_procedures/Camera/CAMERA_4_CHKOUT.sql",
-            "sql/bharathi_procedures/Camera/CAMERA_AVAILABLE.sql",
-            "sql/bharathi_procedures/Camera/CAMERA_BOOK.sql",
-            "sql/bharathi_procedures/Camera/CAMERA_CHECKED_OUT.sql",
-            "sql/bharathi_procedures/Camera/CAMERA_FINES.sql",
-            "sql/bharathi_procedures/Camera/CAMERA_REQ.sql",
-            "sql/bharathi_procedures/Camera/CAMERA_RETURN.sql",
-            "sql/bharathi_procedures/Camera/CAMERA_SEND_ALERT_1.sql",
-            "sql/bharathi_procedures/Camera/CAMERA_SEND_ALERT_2.sql",
-            "sql/bharathi_procedures/Fines/PAY_ALL_FINES.sql",
-            "sql/bharathi_procedures/Fines/PAY_FINE.sql",
-            "sql/bharathi_procedures/monthly_outstanding/FINES_MONTHLY_OUTSTANDING.sql",
-            "sql/bharathi_procedures/Rooms/ROOMS_INVALIDATE.sql"};
+            "sql/Camera/CAMERA_4_CHKOUT.sql",
+            "sql/Camera/CAMERA_AVAILABLE.sql",
+            "sql/Camera/CAMERA_BOOK.sql",
+            "sql/Camera/CAMERA_CHECKED_OUT.sql",
+            "sql/Camera/CAMERA_FINES.sql",
+            "sql/Camera/CAMERA_REQ.sql",
+            "sql/Camera/CAMERA_RETURN.sql",
+            "sql/Camera/CAMERA_SEND_ALERT_1.sql",
+            "sql/Camera/CAMERA_SEND_ALERT_2.sql",
+            "sql/Fines/PAY_ALL_FINES.sql",
+            "sql/Fines/PAY_FINE.sql",
+            "sql/monthly_outstanding/FINES_MONTHLY_OUTSTANDING.sql",
+            "sql/Rooms/ROOMS_INVALIDATE.sql",
+            
+            "sql/Patron/has_student_taken_course.sql",
+            "sql/Patron/patron_type.sql",
+            
+            "sql/Publications/add_to_pub_queue.sql",
+            "sql/Publications/can_renew.sql",
+            "sql/Publications/check_out_next_in_queue.sql",
+            "sql/Publications/compute_fines.sql",
+            "sql/Publications/copies_available.sql",
+            "sql/Publications/is_copy_reserved.sql",
+            "sql/Publications/pub_check_out.sql",
+            "sql/Publications/pub_get_checked_out_history.sql",
+            "sql/Publications/pub_get_checked_out.sql",
+            "sql/Publications/pub_get_res_requests.sql",
+            "sql/Publications/pub_return.sql",
+            "sql/Publications/pub_send_reminders.sql",
+            "sql/Publications/publication_type.sql",
+            "sql/Publications/renew.sql",
+            "sql/Publications/reserve_copy.sql",
+            
+            "sql/Scheduler - Jobs/job_pub_fines_incrementer.sql",
+            "sql/Scheduler - Jobs/job_pub_reminder.sql",
+            
+            "sql/Sequences/checks_out_id.sql",
+            "sql/Sequences/fines_id.sql",
+            
+            "sql/View/copies_pub_screen_view.sql",
+            "sql/View/pub_check_out_screen_view_hist.sql",
+            "sql/View/pub_check_out_screen_view.sql",
+            "sql/View/pub_res_req_screen_view.sql",
+            };
 
     /**
      * Path to the dropTables.sql file
@@ -126,15 +157,15 @@ public class DBBuilder {
             while((line = reader.readLine()) != null) {
                 if(useDashDelimeter) {
                     if(line.endsWith("end;---")) {
-                        currentQuery +="\n"+ line.substring(0, line.length() - 3);
+                        currentQuery +="\r\n"+ line.substring(0, line.length() - 3);
                         queryList.add(currentQuery);
                         currentQuery = "";
                     } else if(line.endsWith("---")) {
-                        currentQuery +="\n"+ line.substring(0, line.length() - 4);
+                        currentQuery +="\r\n"+ line.substring(0, line.length() - 4);
                         queryList.add(currentQuery);
                         currentQuery = "";
                     } else {
-                        currentQuery +="\n"+ line;
+                        currentQuery +="\r\n"+ line;
                     }
                 } else {
                     for(int i = 0; i < line.length(); i++) {
