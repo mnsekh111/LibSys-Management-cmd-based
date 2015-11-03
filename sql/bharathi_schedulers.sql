@@ -1,5 +1,3 @@
--- One more scheduler that I have not included.
-
 BEGIN
 DBMS_SCHEDULER.DROP_JOB (
 job_name => 'CAM_FINES_JOB');

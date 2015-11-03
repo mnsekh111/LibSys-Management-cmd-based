@@ -18,7 +18,10 @@ public class DBBuilder {
     /**
      * Path to the createTables.sql file
      */
-    private static String[] createTablesPath = {"sql"+File.separator+"createTables.sql",
+    private static String[] createTablesPath = {
+            "sql"+File.separator+"Sequences"+File.separator+"checks_out_id.sql",
+            "sql"+File.separator+"Sequences"+File.separator+"fines_id.sql",
+            "sql"+File.separator+"createTables.sql",
             "sql"+File.separator+"bharathi.sql",
             "sql"+File.separator+"Camera"+File.separator+"CAMERA_4_CHKOUT.sql",
             "sql"+File.separator+"Camera"+File.separator+"CAMERA_AVAILABLE.sql",
@@ -55,9 +58,6 @@ public class DBBuilder {
 
             "sql"+File.separator+"Scheduler - Jobs"+File.separator+"job_pub_fines_incrementer.sql",
             "sql"+File.separator+"Scheduler - Jobs"+File.separator+"job_pub_reminder.sql",
-
-            "sql"+File.separator+"Sequences"+File.separator+"checks_out_id.sql",
-            "sql"+File.separator+"Sequences"+File.separator+"fines_id.sql",
 
             "sql"+File.separator+"View"+File.separator+"copies_pub_screen_view.sql",
             "sql"+File.separator+"View"+File.separator+"pub_check_out_screen_view_hist.sql",
