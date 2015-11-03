@@ -1,8 +1,8 @@
 BEGIN
     DBMS_SCHEDULER.CREATE_JOB (
-            job_name => '"SMNATARA"."JOB_PUB_FINES_INCREMENTER"',
+            job_name => 'JOB_PUB_FINES_INCREMENTER',
             job_type => 'STORED_PROCEDURE',
-            job_action => 'SMNATARA.COMPUTE_FINES',
+            job_action => 'COMPUTE_FINES',
             number_of_arguments => 0,
             start_date => NULL,
             repeat_interval => 'FREQ=MINUTELY',
@@ -15,11 +15,11 @@ BEGIN
      
  
     DBMS_SCHEDULER.SET_ATTRIBUTE( 
-             name => '"SMNATARA"."JOB_PUB_FINES_INCREMENTER"', 
+             name => 'JOB_PUB_FINES_INCREMENTER', 
              attribute => 'logging_level', value => DBMS_SCHEDULER.LOGGING_OFF);
       
   
     
     DBMS_SCHEDULER.enable(
-             name => '"SMNATARA"."JOB_PUB_FINES_INCREMENTER"');
+             name => 'JOB_PUB_FINES_INCREMENTER');
 END; ---
