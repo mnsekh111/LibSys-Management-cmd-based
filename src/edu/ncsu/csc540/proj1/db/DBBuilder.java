@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -81,6 +82,11 @@ public class DBBuilder {
      * Path to the sample_data.sql file
      */
     private static String sampleDataPath = "sql/sample_data.sql";
+    
+    /**
+     * Path to the startJobs.sql file
+     */
+    private static String startJobsPath = "sql/startJobs.sql";
 
     /**
      * DbConnector object to get a database connection
@@ -116,6 +122,9 @@ public class DBBuilder {
 
         System.out.println("Inserting sample data...");
         executeSQL(sampleDataPath);
+        
+        System.out.println("Run Procedures data...");
+        executeJobsOnce(startJobsPath);
 
         long endTime = System.currentTimeMillis();
         System.out.println("Operation completed in " + (endTime - startTime) + "ms.");
@@ -140,6 +149,23 @@ public class DBBuilder {
         }
 
     }
+    
+    public static void executeJobsOnce(String path){
+    	ArrayList<String> queryList = parseSQLFile(path);
+
+
+        for(String sql : queryList) {
+            System.out.println(sql);
+            try {
+            	CallableStatement csmt  = connect.prepareCall(sql);
+                //System.out.println(sql);
+            	csmt.execute();
+            	csmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     /**
      * Reads in an SQL file and parses it to split up queries. Returns the list
@@ -152,13 +178,14 @@ public class DBBuilder {
 
         //Using the delimeter of --- in createTables.sql
         boolean useDashDelimeter = Arrays.asList(createTablesPath).contains(path);
+        boolean useDashDelimeter1 = startJobsPath.equals(path);
 
         try {
             BufferedReader reader = new BufferedReader(new FileReader(new File(path)));
             String line = "";
             String currentQuery = "";
             while((line = reader.readLine()) != null) {
-                if(useDashDelimeter) {
+                if(useDashDelimeter || useDashDelimeter1) {
                     if(line.endsWith("end;---")) {
                         currentQuery +="\r\n"+ line.substring(0, line.length() - 3);
                         queryList.add(currentQuery);
