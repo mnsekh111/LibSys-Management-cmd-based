@@ -23,6 +23,7 @@ public class DBBuilder {
             "sql"+File.separator+"Sequences"+File.separator+"fines_id.sql",
             "sql"+File.separator+"createTables.sql",
             "sql"+File.separator+"bharathi.sql",
+            "sql"+File.separator+"new_table_and_edits.sql",
             "sql"+File.separator+"Camera"+File.separator+"CAMERA_4_CHKOUT.sql",
             "sql"+File.separator+"Camera"+File.separator+"CAMERA_AVAILABLE.sql",
             "sql"+File.separator+"Camera"+File.separator+"CAMERA_BOOK.sql",
@@ -63,7 +64,6 @@ public class DBBuilder {
             "sql"+File.separator+"View"+File.separator+"pub_check_out_screen_view_hist.sql",
             "sql"+File.separator+"View"+File.separator+"pub_check_out_screen_view.sql",
             "sql"+File.separator+"View"+File.separator+"pub_res_req_screen_view.sql",
-            "sql"+File.separator+"new_table_and_edits.sql",
             "sql"+File.separator+"bharathi_schedulers.sql"
             };
 
