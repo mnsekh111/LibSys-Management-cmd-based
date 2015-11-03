@@ -54,30 +54,37 @@ public class MenuPage {
 		int selectedOption = 0;
 		do {
 			System.out.println("Please select an option:");
-			System.out.println("\t1. Profile");
-			System.out.println("\t2. Resources");
-			System.out.println("\t3. Checked-Out Resources");
-			System.out.println("\t4. Resource Requests");
-			System.out.println("\t5. Notifications");
+			if(isPatronGood){
+				System.out.println("\t1. Profile");
+				System.out.println("\t2. Resources");
+				System.out.println("\t3. Checked-Out Resources");
+				System.out.println("\t4. Resource Requests");
+				System.out.println("\t5. Notifications");
+			}
 			System.out.println("\t6. Balance Due");
 			System.out.println("\t7. Logout\n");
 			selectedOption = in.nextInt();
 
 			switch (selectedOption) {
 			case 1:
-				studentProfileMenu(in, patronId);
+				if(isPatronGood)
+					studentProfileMenu(in, patronId);
 				break;
 			case 2:
-				studentResourcesMenu(in, patronId);
+				if(isPatronGood)
+					studentResourcesMenu(in, patronId);
 				break;
 			case 3:
-				checkedOutResources(in, patronId);
+				if(isPatronGood)
+					checkedOutResources(in, patronId);
 				break;
 			case 4:
-				showPendingRequests(patronId);
+				if(isPatronGood)
+					showPendingRequests(patronId);
 				break;
 			case 5:
-				notifications(in, patronId);
+				if(isPatronGood)
+					notifications(in, patronId);
 				break;
 			case 6:
 				handleBalanceDue(in, patronId);
@@ -245,26 +252,31 @@ public class MenuPage {
 		int selectedOption = 0;
 		do {
 			System.out.println("Please select an option:");
-			System.out.println("\t1. Profile");
-			System.out.println("\t2. Resources");
-			System.out.println("\t3. Checked-Out Resources");
-			System.out.println("\t4. Resource Requests");
-			System.out.println("\t5. Notifications");
+			if(isPatronGood){
+				System.out.println("\t1. Profile");
+				System.out.println("\t2. Resources");
+				System.out.println("\t3. Checked-Out Resources");
+				System.out.println("\t4. Resource Requests");
+				System.out.println("\t5. Notifications");
+			}
 			System.out.println("\t6. Balance Due");
 			System.out.println("\t7. Logout\n");
 			selectedOption = in.nextInt();
 
 			switch (selectedOption) {
 			case 1:
-				facultyProfileMenu(in, patronId);
+				if(isPatronGood)
+					facultyProfileMenu(in, patronId);
 				break;
 			case 2:
-				facultyResourcesMenu(in, patronId);
+				if(isPatronGood)
+					facultyResourcesMenu(in, patronId);
 				break;
 			case 3:
 				break;
 			case 5:
-				notifications(in, patronId);
+				if(isPatronGood)
+					notifications(in, patronId);
 				break;
 			case 6:
 				handleBalanceDue(in, patronId);
