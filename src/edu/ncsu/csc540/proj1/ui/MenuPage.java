@@ -560,14 +560,13 @@ public class MenuPage {
 				}
 				break;
 			case 2:
-				System.out.println("Enter Publication ID ");
 				if (!isStudent()) {
 					System.out.println("Enter Publication ID ");
 					publicationId = in.next();
 					if (publication.getCopies(publicationId)) {
 						System.out.println("Enter Copy ID ");
 						copyId = in.nextInt();
-						publication.checkOutCopy(patronID, copyId);
+						publication.reserveCopy(copyId,patronID);
 					}else{
 						System.out.println("No Publications found\n");
 					}
