@@ -2,7 +2,7 @@ create or replace Procedure CAMERA_BOOK
 (
  -- This will take care of checking out the cameras
   queue_id IN NUMBER,
-  patron_id IN NUMBER,
+  patron_id_in IN NUMBER,
   return_id OUT NUMBER
 )
    
@@ -30,7 +30,7 @@ BEGIN
     
       SELECT NEXT_DAY(SYSDATE, 'THURSDAY') INTO end_time from dual;
       end_time :=TRUNC(end_time)+18/24;
-      INSERT INTO BOOKED_CAMS (ID, CAM_ID, PATRON_ID, START_TIME, END_TIME) VALUES(booking_id, cam_id, patron_id, request_date, end_time);
+      INSERT INTO BOOKED_CAMS (ID, CAM_ID, PATRON_ID, START_TIME, END_TIME) VALUES(booking_id, cam_id, patron_id_in, request_date, end_time);
       UPDATE CAM_QUEUE SET STATUS = 1 WHERE ID = queue_id;
       return_id := 1;
    end if;
