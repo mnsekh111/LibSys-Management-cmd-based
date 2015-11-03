@@ -20,10 +20,10 @@ INSERT INTO Faculty_Category (category) VALUES('Associate Professor');
 INSERT INTO Faculty_Category (category) VALUES('Professor');
 INSERT INTO Faculty_Category (category) VALUES('Lecturer');
 
-SELECT INSERT_STUDENT('Jesse','Pinkman',1,'GOOD','USA (United States of America)','123456789','123456787','03-Oct-1988','Male','1511 Graduate Lane','Raleigh',27606,'B.S.',1,'CH') FROM DUAL;
-SELECT INSERT_STUDENT('Walt','Jr.',2,'GOOD','USA (United States of America)','123456780','123456781','03-Nov-1988','Male','1512 Graduate Lane','Raleigh',27606,'B.S.',2,'CH') FROM DUAL;
-SELECT INSERT_STUDENT('Gale','Boetticher',3,'GOOD','Chile','123456782','123456783','03-Dec-1988','Male','1513 Graduate Lane','Raleigh',27606,'B.S.',3,'CH') FROM DUAL;
-SELECT INSERT_STUDENT('Saul','Goodman',4,'GOOD','USA (United States of America)','123456784','123456785','03-Jan-1988','Male','1513 Graduate Lane','Raleigh',27606,'M.S.',2,'CH') FROM DUAL;
+SELECT INSERT_STUDENT('Jesse','Pinkman',1,'GOOD','USA (United States of America)','123456789','123456787','03-Oct-1988','Male','1511 Graduate Lane','Raleigh',27606,'B.S.',1,'CH','UNDERGRADUATE') FROM DUAL;
+SELECT INSERT_STUDENT('Walt','Jr.',2,'GOOD','USA (United States of America)','123456780','123456781','03-Nov-1988','Male','1512 Graduate Lane','Raleigh',27606,'B.S.',2,'CH','UNDERGRADUATE') FROM DUAL;
+SELECT INSERT_STUDENT('Gale','Boetticher',3,'GOOD','Chile','123456782','123456783','03-Dec-1988','Male','1513 Graduate Lane','Raleigh',27606,'B.S.',3,'CH','UNDERGRADUATE') FROM DUAL;
+SELECT INSERT_STUDENT('Saul','Goodman',4,'GOOD','USA (United States of America)','123456784','123456785','03-Jan-1988','Male','1513 Graduate Lane','Raleigh',27606,'M.S.',2,'CH','GRADUATE') FROM DUAL;
 
 SELECT INSERT_FACULTY('Walter','White',5,'GOOD','USA (United States of America)','Professor','CH',101) FROM DUAL;
 SELECT INSERT_FACULTY('Gustavo','Fring',6,'GOOD','USA (United States of America)','Assistant Professor','CH',102) FROM DUAL;

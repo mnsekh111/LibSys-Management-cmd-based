@@ -33,10 +33,10 @@ public class DBBuilder {
             "sql"+File.separator+"Fines"+File.separator+"PAY_FINE.sql",
             "sql"+File.separator+"monthly_outstanding"+File.separator+"FINES_MONTHLY_OUTSTANDING.sql",
             "sql"+File.separator+"Rooms"+File.separator+"ROOMS_INVALIDATE.sql",
-            
+
             "sql"+File.separator+"Patron"+File.separator+"has_student_taken_course.sql",
             "sql"+File.separator+"Patron"+File.separator+"patron_type.sql",
-            
+
             "sql"+File.separator+"Publications"+File.separator+"add_to_pub_queue.sql",
             "sql"+File.separator+"Publications"+File.separator+"can_renew.sql",
             "sql"+File.separator+"Publications"+File.separator+"check_out_next_in_queue.sql",
@@ -52,13 +52,13 @@ public class DBBuilder {
             "sql"+File.separator+"Publications"+File.separator+"publication_type.sql",
             "sql"+File.separator+"Publications"+File.separator+"renew.sql",
             "sql"+File.separator+"Publications"+File.separator+"reserve_copy.sql",
-            
+
             "sql"+File.separator+"Scheduler - Jobs"+File.separator+"job_pub_fines_incrementer.sql",
             "sql"+File.separator+"Scheduler - Jobs"+File.separator+"job_pub_reminder.sql",
-            
+
             "sql"+File.separator+"Sequences"+File.separator+"checks_out_id.sql",
             "sql"+File.separator+"Sequences"+File.separator+"fines_id.sql",
-            
+
             "sql"+File.separator+"View"+File.separator+"copies_pub_screen_view.sql",
             "sql"+File.separator+"View"+File.separator+"pub_check_out_screen_view_hist.sql",
             "sql"+File.separator+"View"+File.separator+"pub_check_out_screen_view.sql",
@@ -128,7 +128,7 @@ public class DBBuilder {
 
 
         for(String sql : queryList) {
-            //System.out.println(sql);
+            System.out.println(sql);
             try {
                 java.sql.Statement stmt = connect.createStatement();
                 //System.out.println(sql);
