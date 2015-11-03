@@ -96,7 +96,7 @@ CREATE TABLE Course_Taken (
 
     CONSTRAINT pk_courses_taken PRIMARY KEY (patron_id, dep_abbreviation, id),
     CONSTRAINT fk_courses_taken_1 FOREIGN KEY (id, dep_abbreviation) REFERENCES Courses (id, dep_abbreviation),
-    CONSTRAINT fk_patron_id FOREIGN KEY (id) REFERENCES Patron
+    CONSTRAINT fk_Course_Taken_patrons FOREIGN KEY (patron_id) REFERENCES Patron(id)
     ON DELETE CASCADE
     );---
 
