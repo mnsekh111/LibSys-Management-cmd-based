@@ -12,7 +12,7 @@ BEGIN
   booked_date := TRUNC(booked_date);
   --booked_date := next_day (booked_date,'FRIDAY'); -- To be commented after testing
   OPEN c_result FOR
-    select * from CAM_QUEUE_TOPPER;
+    select * from CAM_QUEUE_TOPPER WHERE REQUEST_DATE = booked_date;
     
     LOOP
        FETCH c_result INTO my_record;
