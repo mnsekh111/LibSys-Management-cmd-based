@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Scanner;
 
 import edu.ncsu.csc540.proj1.models.Faculty;
+import edu.ncsu.csc540.proj1.models.Notifications;
 import edu.ncsu.csc540.proj1.models.Publication;
 import edu.ncsu.csc540.proj1.models.Student;
 import edu.ncsu.csc540.proj1.models.Camera;
@@ -55,7 +56,7 @@ public class MenuPage {
             case 4:
             	break;
             case 5: 
-            	notifications(in);
+            	notifications(in,patronId);
             	break;
             case 6:
             	handleBalanceDue(in, patronId);
@@ -235,7 +236,7 @@ public class MenuPage {
             case 3:
                 break;
             case 5: 
-            	notifications(in);
+            	notifications(in,patronId);
             	break;
             case 6:
             	handleBalanceDue(in, patronId);
@@ -415,9 +416,11 @@ public class MenuPage {
     	}while(selectedOption != 0);
     }
     
-    public void notifications(Scanner in){
+    public void notifications(Scanner in, int patronID){
+    	Notifications notify = new Notifications();
     	int backoption = 0;
     	do{
+    		notify.getnotifications(patronID);
     		System.out.println("\t0.Back.");
     		backoption = in.nextInt();
     	}while(backoption != 0);    	
