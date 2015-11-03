@@ -6,4 +6,4 @@ BEGIN
   OPEN checked_out_items FOR
   SELECT * from PUB_CHECK_OUT_SCREEN_VIEW where PATRON_ID= iden;
   return checked_out_items;
-END;
+END; ---
