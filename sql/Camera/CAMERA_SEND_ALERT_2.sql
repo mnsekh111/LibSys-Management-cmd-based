@@ -8,7 +8,7 @@ IS
 BEGIN
   booked_date := SYSDATE; 
   booked_date := TRUNC(booked_date);
-  booked_date := next_day (booked_date,'FRIDAY'); -- To be commented after testing
+  --booked_date := next_day (booked_date,'FRIDAY'); -- To be commented after testing
   
   -- This is to send remainder about cancellation
   OPEN c_result FOR
