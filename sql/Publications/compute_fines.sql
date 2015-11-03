@@ -17,7 +17,7 @@ begin
         set AMOUNT = ceil(SYSDATE - temp.end_time)*2
         where STATUS = 'UNPAID';
     elsif (temp.id is not null) then
-      insert into Fines values(FINES_ID.nextval,temp.id,2,'UNPAID',null);
+      insert into Fines values(FINES_ID.nextval,temp.id,2,'UNPAID',temp.END_TIME);
     end if;
   END LOOP;
   commit;
