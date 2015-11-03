@@ -4,6 +4,6 @@ IS
   checked_out_items SYS_REFCURSOR;
 BEGIN
   OPEN checked_out_items FOR
-  SELECT * from PUB_CHECK_OUT_SCREEN_VIEW where pid= iden;
+  SELECT * from PUB_CHECK_OUT_SCREEN_VIEW_HIST where PATRON_ID= iden;
   return checked_out_items;
 END;

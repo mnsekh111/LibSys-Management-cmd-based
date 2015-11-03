@@ -209,6 +209,36 @@ public class Publication {
 	}
 	
 	/**
+	 * Get list of checked out items
+	 * @param patronId
+	 */
+	public void getCheckedout(int patronId){
+		int counter = 1;
+    	try {
+			csmt =  conn.prepareCall("{? = call pub_get_checked_out(?)}");
+			csmt.registerOutParameter(counter++, OracleTypes.CURSOR);
+			csmt.setInt(counter, patronId);
+			csmt.execute();
+			ResultSet rs = ((OracleCallableStatement)csmt).getCursor(1);
+			System.out.println("Number of Columns " + rs.getMetaData().getColumnCount());
+			while(rs.next()){
+				System.out.print(rs.getInt(1));
+				System.out.print(" | "+rs.getString(2));
+				System.out.print(" | "+rs.getString(3));
+				System.out.print(" | "+rs.getString(4));
+				System.out.print(" | "+rs.getString(5));
+				System.out.println(" | "+rs.getString(6));
+			}
+			
+			csmt.close();
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
 	 * Closes connections
 	 */
 	public void cleanUp() {
