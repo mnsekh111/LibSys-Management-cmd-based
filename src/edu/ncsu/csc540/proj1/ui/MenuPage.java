@@ -18,9 +18,9 @@ public class MenuPage {
 	private int cameraCheckoutEndTime = 12;
 
 	private boolean isStudent;
-	
+
 	public boolean isPatronGood;
-	
+
 	public boolean isPatronGood() {
 		return isPatronGood;
 	}
@@ -54,7 +54,7 @@ public class MenuPage {
 		int selectedOption = 0;
 		do {
 			System.out.println("Please select an option:");
-			if(isPatronGood){
+			if (isPatronGood) {
 				System.out.println("\t1. Profile");
 				System.out.println("\t2. Resources");
 				System.out.println("\t3. Checked-Out Resources");
@@ -67,23 +67,23 @@ public class MenuPage {
 
 			switch (selectedOption) {
 			case 1:
-				if(isPatronGood)
+				if (isPatronGood)
 					studentProfileMenu(in, patronId);
 				break;
 			case 2:
-				if(isPatronGood)
-					studentResourcesMenu(in, patronId);
+				if (isPatronGood)
+					resourcesMenu(in, patronId);
 				break;
 			case 3:
-				if(isPatronGood)
+				if (isPatronGood)
 					checkedOutResources(in, patronId);
 				break;
 			case 4:
-				if(isPatronGood)
+				if (isPatronGood)
 					showPendingRequests(patronId);
 				break;
 			case 5:
-				if(isPatronGood)
+				if (isPatronGood)
 					notifications(in, patronId);
 				break;
 			case 6:
@@ -93,13 +93,14 @@ public class MenuPage {
 		} while (selectedOption != 7);
 	}
 
-	public void showPendingRequests(int patronId){
+	public void showPendingRequests(int patronId) {
 		Publication pub = new Publication();
 		pub.getPubRequests(patronId);
 		pub.cleanUp();
 		Camera cam = new Camera();
 		cam.getCamInQueue(patronId);
 	}
+
 	public void studentProfileMenu(Scanner in, int patronID) {
 		int selectedOption = 0;
 		do {
@@ -184,7 +185,7 @@ public class MenuPage {
 		} while (selectedOption != 12);
 	}
 
-	public void studentResourcesMenu(Scanner in, int patronID) {
+	public void resourcesMenu(Scanner in, int patronID) {
 		int selectedOption = 0;
 		do {
 			System.out.println("Please select an option:");
@@ -252,7 +253,7 @@ public class MenuPage {
 		int selectedOption = 0;
 		do {
 			System.out.println("Please select an option:");
-			if(isPatronGood){
+			if (isPatronGood) {
 				System.out.println("\t1. Profile");
 				System.out.println("\t2. Resources");
 				System.out.println("\t3. Checked-Out Resources");
@@ -265,17 +266,19 @@ public class MenuPage {
 
 			switch (selectedOption) {
 			case 1:
-				if(isPatronGood)
+				if (isPatronGood)
 					facultyProfileMenu(in, patronId);
 				break;
 			case 2:
-				if(isPatronGood)
+				if (isPatronGood)
 					facultyResourcesMenu(in, patronId);
 				break;
 			case 3:
+				if (isPatronGood)
+					resourcesMenu(in, patronId);
 				break;
 			case 5:
-				if(isPatronGood)
+				if (isPatronGood)
 					notifications(in, patronId);
 				break;
 			case 6:
@@ -543,20 +546,26 @@ public class MenuPage {
 			case 1:
 				System.out.println("Enter Publication ID ");
 				publicationId = in.next();
-				publication.getCopies(publicationId);
-				System.out.println("Enter Copy ID ");
-				copyId = in.nextInt();
-				publication.checkOutCopy(patronID, copyId);;
+				if (publication.getCopies(publicationId)) {
+					System.out.println("Enter Copy ID ");
+					copyId = in.nextInt();
+					publication.checkOutCopy(patronID, copyId);
+				}else{
+					System.out.println("No Publications found\n");
+				}
 				break;
 			case 2:
 				System.out.println("Enter Publication ID ");
 				if (!isStudent()) {
 					System.out.println("Enter Publication ID ");
 					publicationId = in.next();
-					publication.getCopies(publicationId);
-					System.out.println("Enter Copy ID ");
-					copyId = in.nextInt();
-					publication.checkOutCopy(patronID, copyId);
+					if (publication.getCopies(publicationId)) {
+						System.out.println("Enter Copy ID ");
+						copyId = in.nextInt();
+						publication.checkOutCopy(patronID, copyId);
+					}else{
+						System.out.println("No Publications found\n");
+					}
 				}
 				break;
 			default:
