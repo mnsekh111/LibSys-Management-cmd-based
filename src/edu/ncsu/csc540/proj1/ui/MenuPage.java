@@ -275,7 +275,11 @@ public class MenuPage {
 				break;
 			case 3:
 				if (isPatronGood)
-					resourcesMenu(in, patronId);
+					checkedOutResources(in, patronId);
+				break;
+			case 4:
+				if (isPatronGood)
+					showPendingRequests(patronId);
 				break;
 			case 5:
 				if (isPatronGood)
@@ -346,6 +350,7 @@ public class MenuPage {
 
 			switch (selectedOption) {
 			case 1:
+				resourcesMenu(in, patronID);
 				break;
 			case 2:
 				facultyConfStudyMenu(in, patronID);
