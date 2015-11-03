@@ -14,7 +14,7 @@ BEGIN
   
   -- This is to send remainder about cancellation
   OPEN c_result FOR
-    select * from CAM_QUEUE_TOPPER;
+    select * from CAM_QUEUE_TOPPER WHERE REQUEST_DATE = booked_date;
     
     LOOP
        FETCH c_result INTO my_record;
@@ -28,7 +28,7 @@ BEGIN
     CLOSE c_result;
     -- This is to send remainder to the person next in the queue
     OPEN c_result FOR
-    select * from CAM_QUEUE_TOPPER;
+    select * from CAM_QUEUE_TOPPER WHERE REQUEST_DATE = booked_date;
     
     LOOP
        FETCH c_result INTO my_record;
