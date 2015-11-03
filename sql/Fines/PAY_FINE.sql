@@ -1,6 +1,6 @@
 create or replace PROCEDURE PAY_FINE(
  input_id IN VARCHAR2,
- patron_id IN NUMBER,
+ patron_id_in IN NUMBER,
  result OUT NUMBER
 ) 
 AS 
@@ -9,7 +9,7 @@ AS
  check_flag NUMBER;
  temp_patron_id NUMBER;
 BEGIN
- SELECT COUNT(*) INTO check_flag FROM ALL_FINES WHERE ID = input_id AND PATRON_ID = patron_id;
+ SELECT COUNT(*) INTO check_flag FROM ALL_FINES WHERE ID = input_id AND PATRON_ID = patron_id_in;
  IF check_flag = 0 THEN
    result := 0;
  ELSE
@@ -23,11 +23,11 @@ BEGIN
      UPDATE FINES SET STATUS = 'PAID' WHERE ID = fine_id;
    END IF;
    BEGIN
-     SELECT PATRON_ID INTO temp_patron_id FROM ALL_FINES WHERE PATRON_ID = patron_id;
+     SELECT PATRON_ID INTO temp_patron_id FROM ALL_FINES WHERE PATRON_ID = patron_id_in;
    EXCEPTION
    WHEN NO_DATA_FOUND THEN
      BEGIN
-       SELECT ID INTO temp_patron_id FROM PATRON WHERE ID=patron_id AND STATUS = 'BAD';
+       SELECT ID INTO temp_patron_id FROM PATRON WHERE ID=patron_id_in AND STATUS = 'BAD';
        UPDATE PATRON SET STATUS = 'GOOD' WHERE ID = temp_patron_id;
      EXCEPTION
      WHEN NO_DATA_FOUND THEN
