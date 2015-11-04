@@ -2,6 +2,8 @@ package edu.ncsu.csc540.proj1.main;
 
 import java.util.Scanner;
 
+import edu.ncsu.csc540.proj1.db.DBBuilder;
+import edu.ncsu.csc540.proj1.db.DbConnector;
 import edu.ncsu.csc540.proj1.db.OracleAccess;
 import edu.ncsu.csc540.proj1.ui.MenuPage;
 
@@ -22,11 +24,32 @@ public class Main {
         //New MenuPage object
         MenuPage menu = new MenuPage();
         do {
+        	Scanner in = new Scanner(System.in);
+        	System.out.println("Setting the DB: \n\t Please provide Unity ID and password to setup the DB.");
+        	
+        	System.out.print("\t Please enter the Unity ID:");
+        	String userName = in.next();
+        	DbConnector.user = userName;
+        	
+        	System.out.print("\t Please enter the password:");
+        	String password = in.next();
+        	DbConnector.password = password;
+        	
+        	System.out.println("\t1. Enter 1 to load fresh data. (All the old data will be lost!!)");
+        	System.out.println("\t1. Enter 2 to continue with existing data.");
+        	
+        	int option = in.nextInt();
+        	if(option == 1){
+        		DBBuilder db = new DBBuilder();
+            	db.refreshDb();
+        	}
+        	
+        	
             //Welcome message
-            System.out.println("Welcome to the library system.\n");
+            System.out.println(" \n\n\n\n\n\n--------------------------------- DB setup completed ---------------------------- \nWelcome to the library system.\n");
 
             //Display login option
-            Scanner in = new Scanner(System.in);
+            
             int patron_id = 0;
             while(patron_id == 0) {
                 patron_id = menu.loginMenu(in);

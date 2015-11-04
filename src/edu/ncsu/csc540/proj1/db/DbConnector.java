@@ -16,12 +16,12 @@ public class DbConnector {
     /**
      * Username for NCSU Oracle Server (unity ID)
      */
-    private String user = "rchandh";
+    public static String user;
 
     /**
      * Password for NCSU Oracle Server (ID#)
      */
-    private String password = "200103851";
+    public static String password;
 
     public Connection getConnection() {
         try {

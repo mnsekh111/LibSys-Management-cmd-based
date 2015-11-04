@@ -104,6 +104,11 @@ public class DBBuilder {
      * @param args
      */
     public static void main(String[] args) {
+    	DBBuilder db = new DBBuilder();
+    	db.refreshDb();
+    }
+    
+    public void refreshDb(){
         conn = new DbConnector();
         connect = conn.getConnection();
 
