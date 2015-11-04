@@ -13,7 +13,7 @@ begin
   loop 
     fetch checks_out_cur into checks_out_rec;
     exit when checks_out_cur%notfound;
-    time_diff := checks_out_rec.end_time - sysdate;
+    time_diff := TRUNC(checks_out_rec.end_time) - TRUNC(sysdate);
     select pid into pub_id from Copies where id = checks_out_rec.copy_id;
     select title into pub_title from Publications where id = pub_id;
     
