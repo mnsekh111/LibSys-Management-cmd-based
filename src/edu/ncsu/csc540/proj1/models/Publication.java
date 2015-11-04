@@ -268,6 +268,23 @@ public class Publication {
         }
     }
 
+    public void renewCopies(int copyId,int patronId){
+    	int counter = 1;
+        try {
+            csmt =  conn.prepareCall("{call renew(?,?,?)}");
+            csmt.setInt(counter++, copyId);
+            csmt.setInt(counter++, patronId);
+            csmt.registerOutParameter(counter, OracleTypes.VARCHAR);
+            csmt.execute();
+            String output = ((OracleCallableStatement)csmt).getString(counter);
+            System.out.println("\n"+output + "\n");
+
+            csmt.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
     /**
      * Closes connections
      */

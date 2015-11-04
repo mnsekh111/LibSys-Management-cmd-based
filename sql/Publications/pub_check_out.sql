@@ -38,7 +38,7 @@ begin
               if(PATRON_TYPE(patronid) = 0) then
                 insert into CHECKS_OUT values(checks_out_id.NEXTVAL,patronid,cid,SYSDATE,sysdate + numtodsinterval(30,'day'),null);
               else
-                insert into CHECKS_OUT values(checks_out_id.NEXTVAL,patronid,cid,SYSDATE,sysdate + numtodsinterval(4,'day'),null);
+                insert into CHECKS_OUT values(checks_out_id.NEXTVAL,patronid,cid,SYSDATE,sysdate + numtodsinterval(14,'day'),null);
               end if;
           END case;
           output_message := output_message || '..' || 'Checked out successfully';

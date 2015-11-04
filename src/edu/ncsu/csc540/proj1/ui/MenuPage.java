@@ -594,12 +594,17 @@ public class MenuPage {
 				do {
 					pub.getCheckedout(patronId);
 					System.out.println("\t1. Return");
+					System.out.println("\t2. Renew");
 					System.out.println("\t0. Back");
 					innerOption = in.nextInt();
-					if (innerOption != 0) {
+					if (innerOption == 1) {
 						System.out.println("Enter ID");
 						int idToReturn = in.nextInt();
 						pub.returnCopy(idToReturn);
+					}else if (innerOption ==2){
+						System.out.println("Enter ID");
+						int idToRenew = in.nextInt();
+						pub.renewCopies(idToRenew, patronId);
 					}
 				} while (innerOption != 0);
 			} else if (selectedOption == 2) {
