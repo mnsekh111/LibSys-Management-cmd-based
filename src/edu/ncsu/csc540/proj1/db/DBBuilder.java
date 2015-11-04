@@ -15,6 +15,12 @@ import java.util.Arrays;
  * @author Dixon Crews
  */
 public class DBBuilder {
+	
+	public static String absolute_path;
+	
+	public DBBuilder(String absolute_path){
+		DBBuilder.absolute_path = absolute_path;
+	}
 
     /**
      * Path to the createTables.sql file
@@ -104,7 +110,7 @@ public class DBBuilder {
      * @param args
      */
     public static void main(String[] args) {
-    	DBBuilder db = new DBBuilder();
+    	DBBuilder db = new DBBuilder("");
     	db.refreshDb();
     }
     
@@ -187,7 +193,8 @@ public class DBBuilder {
         boolean useDashDelimeter1 = startJobsPath.equals(path);
 
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(new File(path)));
+        	
+            BufferedReader reader = new BufferedReader(new FileReader(new File(DBBuilder.absolute_path+File.separator+path)));
             String line = "";
             String currentQuery = "";
             while((line = reader.readLine()) != null) {

@@ -35,12 +35,14 @@ public class Main {
         	String password = in.next();
         	DbConnector.password = password;
         	
-        	System.out.println("\t1. Enter 1 to load fresh data. (All the old data will be lost!!)");
-        	System.out.println("\t1. Enter 2 to continue with existing data.");
+        	System.out.println("\t Enter 1 to load fresh data. (All the old data will be lost!!)");
+        	System.out.println("\t Enter 2 to continue with existing data.");
         	
         	int option = in.nextInt();
         	if(option == 1){
-        		DBBuilder db = new DBBuilder();
+        		System.out.print("Please enter the absolute path of unziped folder: ");
+        		String stPath = in.next();
+        		DBBuilder db = new DBBuilder(stPath);
             	db.refreshDb();
         	}
         	
