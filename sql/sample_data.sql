@@ -107,11 +107,11 @@ INSERT INTO Cameras (id,make,model,config,lid,memory,status) VALUES (1,'Olympus'
 INSERT INTO Cameras (id,make,model,config,lid,memory,status) VALUES (2,'Canon','EOS Rebel T4i','18-­135mm EF­S IS STM Lens',0,'32GB',1);
 INSERT INTO Cameras (id,make,model,config,lid,memory,status) VALUES (3,'Canon','EOS Rebel T4i','18­-135mm EF­S IS STM Lens',0,'32GB',1);
 
-INSERT INTO CHECKS_OUT (id,patron_id,copy_id,start_time,end_time) VALUES (1,1,3,'08-Nov-2015','13-Nov-2015');
+INSERT INTO CHECKS_OUT (id,patron_id,copy_id,start_time,end_time) VALUES (1,1,4,'08-Nov-2015','13-Nov-2015');
 INSERT INTO CHECKS_OUT (id,patron_id,copy_id,start_time,end_time) VALUES (2,4,7,'07-Nov-2015','11-Nov-2015');
 INSERT INTO CHECKS_OUT (id,patron_id,copy_id,start_time,end_time) VALUES (3,2,8,'01-Aug-2015','08-Aug-2015');
 UPDATE Copies SET status = 'OUT' WHERE id = 9;
-INSERT INTO CHECKS_OUT (id,patron_id,copy_id,start_time,end_time) VALUES (4,3,3,'01-Oct-2015','10-Oct-2015');
+INSERT INTO CHECKS_OUT (id,patron_id,copy_id,start_time,end_time) VALUES (4,3,4,'01-Oct-2015','10-Oct-2015');
 UPDATE Copies SET status = 'OUT' WHERE id = 5;
 
 INSERT INTO Booked (patron_id,room_number,start_time,end_time,checked_out,checked_in,status) VALUES (5,3,TO_DATE('2015/11/01 09:00', 'YYYY/MM/DD HH24:MI'),TO_DATE('2015/11/01 11:30', 'YYYY/MM/DD HH24:MI'),NULL,NULL,'INVALID');
