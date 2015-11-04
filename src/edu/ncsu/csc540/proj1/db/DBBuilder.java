@@ -65,7 +65,8 @@ public class DBBuilder {
             "sql"+File.separator+"View"+File.separator+"pub_check_out_screen_view_hist.sql",
             "sql"+File.separator+"View"+File.separator+"pub_check_out_screen_view.sql",
             "sql"+File.separator+"View"+File.separator+"pub_res_req_screen_view.sql",
-            "sql"+File.separator+"bharathi_schedulers.sql"
+            "sql"+File.separator+"bharathi_schedulers.sql",
+            "sql"+File.separator+"Final_Queries"+File.separator+"Queries.sql",
             };
 
     /**
