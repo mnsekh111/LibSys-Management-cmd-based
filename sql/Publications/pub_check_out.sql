@@ -7,6 +7,8 @@ begin
   select * into copy_record from Copies where id = cid;
   if(SQL%NOTFOUND) then
     output_message := 'That copy is not valid';
+  elsif(is_pub_checked_out = 1) then
+    output_message := 'You already have this book';	
   else 
     copy_status := copy_record.status;
     if(copy_status = 'OUT') then
